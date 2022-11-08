@@ -229,12 +229,17 @@
                             <li><a href="{% url 'equipments' %}">Equipments</a></li>
                         </ul>
                     </li> 
-                 	{% endif %}   
+                 	{% endif %} 
+                 	{% if request.user.is_authenticated %}
+                 	<li class="d-md-none d-block">
+                        <a href="{% url 'profile' username=data.username %}"><i class="ti-user"></i> Profile</a>
+                    </li> 
+                    {% endif %}   
                     {% if request.user.is_authenticated %}
                     <li class="d-md-none d-block">
                         <a href="{% url 'logout' %}"><i class="ti-power-off"></i> Sign out</a>
                     </li>  
-                    {% endif %}                    
+                    {% endif %}               
                 </ul>
             </nav>        
         </div>
