@@ -20,7 +20,7 @@ DEBUG = False
 if DEBUG:
     ALLOWED_HOSTS = []
 else:
-    ALLOWED_HOSTS = ['localhost','127.0.0.1','192.168.43.106','myauditor.herokuapp.com','www.myauditor.herokuapp.com']
+    ALLOWED_HOSTS = ['localhost','127.0.0.1','192.168.43.106','myauditer.herokuapp.com','www.myauditer.herokuapp.com']
 
 
 # Application definition
