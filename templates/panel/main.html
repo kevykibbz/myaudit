@@ -1,0 +1,359 @@
+{% load static %}
+{% load humanize %}
+<!doctype html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="copyright" content="Legit Crew, https://www.devme.com/">
+    <title>{% if obj.site_name %} {{obj.site_name}}  {% else %} {{site_name}} {% endif %} / {{title}}</title>
+    <meta name="description" content="{{obj.description}}">
+    <meta name="author" content="{{designer_name}}">
+    <meta name="theme-color" content="{{obj.theme_color}}">
+    <meta name="msapplication-navbutton-color" content="{{obj.theme_color}}">
+    <meta name="apple-mobile-web-app-status-bar-style" content="{{obj.theme_color}}">
+    <meta name="keywords" content="{{obj.key_words}}">
+    <meta property="og:site_name" content="{{obj.site_name}}">
+    <meta property="og:url" content="{{obj.site_url}}">
+    <meta http-equiv="Content-type" content="text/html;charset:utf-8">
+    <meta property="og:type" content="website"> 
+    <meta property="og:type" content="website"> 
+    <meta property="twitter:site" content="https://twitter.com/Kevin36285655">
+    <meta property="twitter:title" content="@Kevin36285655">
+    <meta property="twitter:image" content="https://twitter.com/Kevin36285655/photo">
+    <meta property="twitter:description" content="Life's Simple.">
+    <meta property="twitter:text:title" content="Life's Simple.">
+    <meta property="og:title" content="{{obj.site_name}} | {{title}}">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:description" content="{{obj.description}}">
+    <meta property="og:image" content="{{obj.favicon.url}}">
+    <meta name="apple-mobile-web-app-title" content="{{obj.site_name}}">
+    <meta name="application-name" content="{{obj.site_name}}">
+    <meta name="msapplication-TileColor" content="{{obj.theme_color}}">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="canonical" href="{{request.get_full_path}}" />
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <link rel="shortcut icon" href="{{obj.favicon.url}}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'panel/assets/css/style.min.css' %}">
+    <link rel="stylesheet" href="{% static 'panel/assets/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'panel/assets/plugins/select2/select2.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'panel/assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css' %}">
+    <link rel="stylesheet" type="text/css"  href="{% static 'panel/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'panel/assets/plugins/bootstrap-select/css/bootstrap-select.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'panel/assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'panel/assets/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'panel/assets/css/main.css' %}"/>
+    <link rel="stylesheet" href="{% static 'panel/assets/css/theme1.css' %}"/>
+    <link rel="stylesheet" href="{% static 'panel/assets/css/custom2.css' %}"/>
+    <style>
+       .sidebar
+       {
+        overflow:hidden !important;
+       } 
+        .sidebar:hover
+       {
+        overflow:auto;
+       } 
+    </style>
+<body class="font-montserrat">
+    <!-- Page Loader -->
+    <div class="page-loader-wrapper">
+        <div class="loader">
+        </div>
+    </div>
+
+    <div id="main_content">
+        <div id="header_top" class="header_top">
+            <div class="container">
+                <div class="hleft">
+                    <a class="header-brand" href="{% url 'dashboard' %}">
+                        <i class="fa fa-lightbulb-o" style="font-size:40px;"></i>
+                    </a>
+                    <div class="dropdown">
+                        {% if request.user.is_authenticated %}
+                        <a href="javascript:void(0)" class="nav-link user_btn">
+                            <img class="avatar" src="{% static 'panel/assets/images/loader.gif' %}" data-src="{{data.extendedauthuser.profile_pic.url}}" alt="{{data.get_full_name}}" title="{{data.get_full_name}} menu" data-toggle="tooltip" data-placement="right"/>
+                        </a>
+                        {% endif %}                 
+                        <a href="mailto:{{obj.site_email}}"  class="nav-link icon xs-hide"><i class="ti-help"></i></a>
+                        <a href="javascript:void(0)" class="nav-link icon settingbar xs-hide"><i class="fa fa-paint-brush" data-toggle="tooltip" data-placement="right" title="Themes"></i></a>
+                    </div>
+                </div>
+                <div class="hright">
+                    <div class="dropdown">
+                        <a href="javascript:void(0)" class="nav-link icon settingbar"><i class="fa fa-gear fa-spin" data-toggle="tooltip" data-placement="right" title="Settings"></i></a>
+                        <a href="javascript:void(0)" class="nav-link icon menu_toggle"><i class="fa  fa-align-left"></i></a>
+                    </div>            
+                </div>
+            </div>
+        </div>
+        <div id="rightsidebar" class="right_sidebar">
+            <a href="javascript:void(0)" class="p-3 settingbar float-right"><i class="fa fa-close"></i></a>
+            <div class="p-4">
+                <div class="mb-4">
+                    <h6 class="font-14 font-weight-bold text-muted">Font Style</h6>
+                    <div class="custom-controls-stacked font_setting">
+                        <label class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" class="custom-control-input" name="font" value="font-opensans">
+                            <span class="custom-control-label">Open Sans Font</span>
+                        </label>
+                        <label class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" class="custom-control-input" name="font" value="font-montserrat" checked="">
+                            <span class="custom-control-label">Montserrat Google Font</span>
+                        </label>
+                        <label class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" class="custom-control-input" name="font" value="font-roboto">
+                            <span class="custom-control-label">Robot Google Font</span>
+                        </label>
+                    </div>
+                </div>
+                <hr>
+                <div>
+                    <h6 class="font-14 font-weight-bold mt-4 text-muted">General Settings</h6>
+                    <ul class="setting-list list-unstyled mt-1 setting_switch">
+                        <li>
+                            <label class="custom-switch">
+                                <span class="custom-switch-description">Night Mode</span>
+                                <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input btn-darkmode">
+                                <span class="custom-switch-indicator"></span>
+                            </label>
+                        </li>
+                        <li>
+                            <label class="custom-switch">
+                                <span class="custom-switch-description">Fix Navbar top</span>
+                                <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input btn-fixnavbar">
+                                <span class="custom-switch-indicator"></span>
+                            </label>
+                        </li>
+                        <li>
+                            <label class="custom-switch">
+                                <span class="custom-switch-description">Header Dark</span>
+                                <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input btn-pageheader" checked="">
+                                <span class="custom-switch-indicator"></span>
+                            </label>
+                        </li>
+                        <li>
+                            <label class="custom-switch">
+                                <span class="custom-switch-description">Min Sidebar Dark</span>
+                                <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input btn-min_sidebar">
+                                <span class="custom-switch-indicator"></span>
+                            </label>
+                        </li>
+                        <li>
+                            <label class="custom-switch">
+                                <span class="custom-switch-description">Sidebar Dark</span>
+                                <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input btn-sidebar">
+                                <span class="custom-switch-indicator"></span>
+                            </label>
+                        </li>
+                        <li>
+                            <label class="custom-switch">
+                                <span class="custom-switch-description">Icon Color</span>
+                                <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input btn-iconcolor">
+                                <span class="custom-switch-indicator"></span>
+                            </label>
+                        </li>
+                        <li>
+                            <label class="custom-switch">
+                                <span class="custom-switch-description">Gradient Color</span>
+                                <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input btn-gradient">
+                                <span class="custom-switch-indicator"></span>
+                            </label>
+                        </li>
+                        <li>
+                            <label class="custom-switch">
+                                <span class="custom-switch-description">Box Shadow</span>
+                                <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input btn-boxshadow">
+                                <span class="custom-switch-indicator"></span>
+                            </label>
+                        </li>
+                        <li>
+                            <label class="custom-switch">
+                                <span class="custom-switch-description">Box Layout</span>
+                                <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input btn-boxlayout">
+                                <span class="custom-switch-indicator"></span>
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="user_div">
+            <h5 class="brand-name mb-4">{{obj.site_name}}<a href="javascript:void(0)" class="user_btn"><i class="ti-angle-left"></i></a></h5>
+            <div class="card-body">
+               <div class="text-center">
+                    {% if request.user.is_authenticated %}
+                    <a href="#">
+                        <img style="width:80px;height:80px;" class="img-responsive card-profile-img" src="{% static 'panel/assets/images/loader.gif' %}" data-src="{{data.extendedauthuser.profile_pic.url}}" alt="{{data.get_full_name}}" title="{{data.get_full_name}}"/>
+                    </a>
+                    {% endif %}
+                    <h6 class="mb-0">{{data.get_full_name}}</h6>
+                    <span>{{data.email}}</span>
+               </div>
+                <hr>
+                <p>Activity</p>
+                <ul class="new_timeline">
+                    {% for activity in activities %}
+                    <li>
+                        <div class="bullet pink"></div>
+                        <div class="time">{{activity.created_on|timesince}}</div>
+                        <div class="desc">
+                            <p>{{activity.name}}</p>
+                        </div>
+                    </li>
+                    {% empty %}
+                       <div class="text-center"> 
+                            <p><i class="ti-info-alt text-success"></i> No Activity found.</p>
+                       </div>   
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div id="left-sidebar" class="sidebar">
+            <h5 class="brand-name">{{obj.site_name}} <a href="javascript:void(0)" class="menu_option float-right"><i class="ti-layout-grid3 font-16" data-toggle="tooltip" data-placement="left" title="Grid & List Toggle"></i></a></h5>
+            <nav id="left-sidebar-nav" class="sidebar-nav">
+                <ul class="metismenu">
+                    <li class="g_heading">Menu</li>
+                    <li class="active"><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i><span>Dashboard</span></a></li> 
+                    {% if data.is_superuser %}
+                    <li>
+                        <a href="javascript:void(0)" class="has-arrow arrow-c"><i class="ti-settings"></i><span>Manage Settings</span></a>
+                        <ul>
+                            <li><a href="{% url 'meters' %}">Meters</a></li>
+                            <li><a href="{% url 'equipments' %}">Equipments</a></li>
+                        </ul>
+                    </li> 
+                 	{% endif %}   
+                    {% if request.user.is_authenticated %}
+                    <li class="d-md-none d-block">
+                        <a href="{% url 'logout' %}"><i class="ti-power-off"></i> Sign out</a>
+                    </li>  
+                    {% endif %}                    
+                </ul>
+            </nav>        
+        </div>
+
+        <div class="page">
+            <div id="page_top" class="section-body top_dark">
+                <div class="container-fluid">
+                    <div class="page-header">
+                        <div class="left">
+                            <a href="javascript:void(0)" class="icon menu_toggle mr-3 "><i class="fa fa-align-left"></i></a>
+                        </div>
+                        <div class="text-md-left text-center">
+                            <h1 class="page-title text-truncate">{{title}}</h1>                        
+                        </div>
+                        <div class="right">
+                            <div class="notification d-flex">
+                                <div class="dropdown d-flex">
+                                    <a class="nav-link icon d-none d-md-flex btn btn-default btn-icon ml-2" data-toggle="dropdown"><i class="ti-user"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                        {% if request.user.is_authenticated %}
+                                        <a class="dropdown-item" href="{% url 'profile' username=data.username %}"><i class="dropdown-icon ti-user"></i> Profile</a>
+                                        {% endif %}
+                                        {% if not data.is_staff %}
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="mailto:{{obj.site_email}}"><i class="dropdown-icon ti-help"></i> Need help?</a>
+                                        {% endif %}
+
+                                        {% if request.user.is_authenticated %}
+                                        <a class="dropdown-item" href="{% url 'logout' %}"><i class="ti-power-off"></i> Sign out</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% block body %}  
+            {% endblock %}    
+            <div class="section-body">
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <a target="_blank" href="{{designer_link}}">&copy; {% now 'Y' %} {{obj.site_name}}.All rights Reserved. Coded and Designed By {{designer_name}}</a>
+                            </div>
+                            <div class="col-md-6 col-sm-12 text-md-right">
+                                <ul class="list-inline mb-0">
+                                    <li class="list-inline-item"><a href="#">About us</a></li>
+                                    <li class="list-inline-item"><a href="#">FAQ</a></li>
+                                    <li class="list-inline-item"><a href="#" class="btn btn-outline-primary btn-sm">Terms And Conditions</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+          </div>
+        </div>    
+    </div>
+    <!-- small model -->
+    <div id="myModal" class="modal fade small-model">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="icon-box">
+                        <i class="ti-check"></i>
+                    </div>              
+                    <h4 class="modal-title w-100"></h4> 
+                </div>
+                <div class="modal-body">
+                    <p class="text-center"></p>
+                </div>
+               <div class="row">
+                    <div class="col-12 text-center">
+                        <button class="btn btn-success btn-block btn-round" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+    <!-- //small model -->
+
+    <!-- delete model -->
+    <div class="modal fade delete-model">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="icon-box" style="background:#d64242 !important" data-dismiss="modal">
+                        <i class="ti-close"></i>
+                    </div>              
+                    <h4 class="modal-title w-100"></h4> 
+                </div>
+                <div class="modal-body">
+                    <p class="text-center"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5 col-12 mx-auto cookie-container" style="z-index:9999;">
+            <p>We use cookie in this website to give you the best experience on our site and show you relevant ads.To find out more, read our <a class="page-refresher" href="#">privacy policy</a> and <a class="page-refresher" href="#">terms and conditions</a></p>
+            <div class="mt-2 text-center">
+                <button class="btn cookieBtn">ok</button>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'panel/assets/js/jquery-3.5.1.min.js' %}"></script>
+    <script src="{% static 'panel/assets/bundles/lib.vendor.bundle.js' %}"></script>
+    <script src="{% static 'panel/assets/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'panel/assets/bundles/apexcharts.bundle.js' %}"></script>
+    <script src="{% static 'panel/assets/bundles/counterup.bundle.js' %}"></script>
+    <script src="{% static 'panel/assets/bundles/knobjs.bundle.js' %}"></script>
+    <script src="{% static 'panel/assets/bundles/c3.bundle.js' %}"></script>
+    <script src="{% static 'panel/assets/js/core.js' %}"></script>
+    <script src="{% static 'panel/assets/js/page/project-index.js' %}"></script>
+    <script src="{% static 'panel/assets/plugins/select2/select2.min.js' %}"></script>
+    <script src="{% static 'panel/assets/plugins/nouislider/nouislider.js' %}"></script>
+    <script src="{% static 'panel/assets/js/page/jquery-datatable.js' %}"></script>
+    <script src="{% static 'panel/assets/js/custom.js' %}"></script>
+</body>
+</html>

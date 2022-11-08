@@ -1,0 +1,189 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="copyright" content="Legit Crew, https://www.devme.com/">
+    <title>{% if obj.site_name %} {{obj.site_name}}  {% else %} {{site_name}} {% endif %} | {{title}}</title>
+    <meta name="description" content="{{obj.description}}">
+    <meta name="author" content="{{designer_name}}">
+    <meta name="theme-color" content="{{obj.theme_color}}">
+    <meta name="msapplication-navbutton-color" content="{{obj.theme_color}}">
+    <meta name="apple-mobile-web-app-status-bar-style" content="{{obj.theme_color}}">
+    <meta name="keywords" content="{{obj.key_words}}">
+    <meta property="og:site_name" content="{{obj.site_name}}">
+    <meta property="og:url" content="{{obj.site_url}}">
+    <meta http-equiv="Content-type" content="text/html;charset:utf-8">
+    <meta property="og:type" content="website"> 
+    <meta property="og:type" content="website"> 
+    <meta property="twitter:site" content="https://twitter.com/Kevin36285655">
+    <meta property="twitter:title" content="@Kevin36285655">
+    <meta property="twitter:image" content="https://twitter.com/Kevin36285655/photo">
+    <meta property="twitter:description" content="Life's Simple.">
+    <meta property="twitter:text:title" content="Life's Simple.">
+    <meta property="og:title" content="{{obj.site_name}} | {{title}}">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:description" content="{{obj.description}}">
+    <meta property="og:image" content="{{obj.favicon.url}}">
+    <meta name="apple-mobile-web-app-title" content="{{obj.site_name}}">
+    <meta name="application-name" content="{{obj.site_name}}">
+    <meta name="msapplication-TileColor" content="{{obj.theme_color}}">
+    <meta name="msapplication-config" content="{% static 'manager/assets/images/logos/browserconfig.xml' %}">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="canonical" href="{{request.get_full_path}}" />
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <link rel="shortcut icon" href="{{obj.favicon.url}}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'panel/assets/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'panel/assets/css/style.min.css' %}">
+    <link rel="stylesheet" href="{% static 'panel/assets/css/custom2.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'panel/assets/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'manager/assets/css/font-awesome.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'panel/assets/css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'panel/assets/plugins/charts-c3/c3.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'panel/assets/css/main.css' %}"/>
+    <link rel="stylesheet" href="{% static 'panel/assets/css/theme1.css' %}"/>
+    <style type="text/css">
+   .seperator 
+   {
+      float: left;
+      width: 100%;
+      border-top: 1px solid #ccc;
+      text-align: center;
+      margin: 50px 0 0;
+    }
+    .seperator b 
+    {
+      width: 40px;
+      height: 40px;
+      font-size: 16px;
+      text-align: center;
+      line-height: 40px;
+      background: #fff;
+      display: inline-block;
+      border: 1px solid #e0e0e0;
+      border-radius: 50%;
+      position: relative;
+      top: -22px;
+      z-index: 1;
+    }
+    .loginpage
+    {
+        height:400px;
+        overflow-y:hidden;
+    }
+    .loginpage:hover
+    {
+        overflow-y:scroll !important;
+    }
+    .social-icon 
+    {
+        width: 100%;
+        font-size: 20px;
+        padding-top: 20px;
+        color: #fff;
+        text-align: center;
+        float: left;
+    }
+    .social-icon a 
+    {
+        font-size: 20px;
+        color: white;
+        height:80px;
+        width:80px;
+        margin: 0px 10px;
+        padding:10px 10px;
+        border: none;
+        cursor: pointer;
+        text-align:center;
+    }
+    .google
+    {
+        background:#ea4335;
+    } 
+    .google:hover
+    {
+        border:1px solid #ea4335;
+        color:#ea4335;
+        background:#fff;
+    } 
+    .twitter
+    {
+        background:#00acee;
+    } 
+    .twitter:hover
+    {
+        border:1px solid #00acee;
+        color:#00acee;
+        background:#fff;
+    }
+    .instagram
+    {
+        background:#3f729b;
+    } 
+    .instagram:hover
+    {
+        border:1px solid #3f729b;
+        color:#3f729b;
+        background:#fff;
+    }
+    </style>
+</head>
+<body class="font-montserrat">
+    <!-- Page Loader -->
+    <div class="page-loader-wrapper">
+        <div class="loader"></div>
+    </div>
+    <div id="main_content">
+
+        {% block body %}
+        {% endblock %}
+        <!-- small model -->
+        <div id="myModal" class="modal fade small-model">
+            <div class="modal-dialog modal-confirm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="icon-box">
+                            <i class="fa fa-check"></i>
+                        </div>              
+                        <h4 class="modal-title w-100"></h4> 
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-center"></p>
+                    </div>
+                   <div class="row">
+                        <div class="col-12 text-center">
+                            <button class="btn btn-success btn-block btn-round" data-dismiss="modal">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <!-- //small model -->
+    </div>
+    <div class="row">
+        <div class="col-md-5 col-12 mx-auto cookie-container" style="z-index:9999;">
+            <p>We use cookie in this website to give you the best experience on our site and show you relevant ads.To find out more, read our  <a class="page-refresher" href="#">privacy policy</a> and <a class="page-refresher" href="">terms and conditions</a></p>
+            <div class="mt-2 text-center">
+                <button class="btn cookieBtn">ok</button>
+            </div>
+        </div>
+    </div>
+    {{ id|json_script:"userid" }}
+    {{ room_name|json_script:"room-name" }}
+    <script src="{% static 'panel/assets/js/jquery-3.5.1.min.js' %}"></script>
+    <script src="{% static 'panel/assets/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'panel/assets/js/custom.js' %}"></script>
+    <script src="{% static 'panel/assets/bundles/lib.vendor.bundle.js' %}"></script>
+    <script src="{% static 'panel/assets/bundles/apexcharts.bundle.js' %}"></script>
+    <script src="{% static 'panel/assets/bundles/counterup.bundle.js' %}"></script>
+    <script src="{% static 'panel/assets/bundles/c3.bundle.js' %}"></script>
+    <script src="{% static 'panel/assets/js/core.js' %}"></script>
+    <script src="{% static 'panel/assets/js/page/project-index.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+{% extends 'panel/main.html' %}
+{% load static %}
+{% load humanize %}
+{% block body %}
+<div class="section-body">
+    <div class="container-fluid">
+        <div class="row clearfix">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <ol class="breadcrumb" style="background-color:transparent!important;">
+                                <li class="breadcrumb-item"><a class="fg-theme" href="{% url 'dashboard' %}">Home</a></li>
+                                <li class="breadcrumb-item"><a class="fg-theme" href="{% url 'meters' %}">Meters</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">{{title}}</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+        </div>
+        <div class="row clearfix">
+            <div class="col-md-5 col-12 mx-auto">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title text-truncate">{% if edit %} {{title}}{% endif %}</h3>
+                        <div class="card-options">
+                            <a href="javascript:void(0);" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                            <a href="javascript:void(0);" class="card-options-fullscreen" data-toggle="card-fullscreen"><i class="fe fe-maximize"></i></a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form class="ActiveForm" method="post" novalidate>
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label>Meter name</label>
+                                {{form.name}}
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="col-sm-12 text-center m-t-20">
+                                <button class="btn btn-primary btn-round"><i class="ti-save"></i> SAVE</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

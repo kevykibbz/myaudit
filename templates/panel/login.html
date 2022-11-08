@@ -1,0 +1,54 @@
+{% extends 'panel/auth.html' %}
+{% load static %}
+{% block body %}
+<div class="auth">
+    <div class="auth_left">
+        <div class="card">
+            <div class="text-center mb-2">
+                <a class="header-brand" href="{% url 'home' %}">
+                	<div class="row">
+                		<div class="col-12">
+                            <i class="fa fa-lightbulb-o" style="font-size:60px"></i>
+                		</div>
+                        <div class="col-12 text-center"> 
+                        <h5>{{obj.site_name}}</h5>   
+                        </div>
+                	</div>
+                </a>
+            </div>
+            <div class="card-body loginpage">
+                 <div class="row clearfix">
+                    <div class="col-12">
+                        <form class="ActiveForm" action="" method="post" novalidate>
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label class="form-label">Username/Email Address</label>
+                                {{form.username}}
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Password<a href="{% url 'password_reset' %}" class="float-right small"><i class="fa fa-question-circle"></i> I forgot password</a></label>
+                                {{form.password}}
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" name="rememberme" />
+                                <span class="custom-control-label">Remember me</span>
+                                </label>
+                            </div>
+                            <div class="form-footer">
+                                <button class="btn btn-primary btn-block btn-round" title="Sign In">Sign in</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer text-center">
+                <p>&copy;{% now 'Y' %} {{obj.site_name}}.Developed by <a target="_blank" href="designer_link">{{designer_name}}</a></p>
+            </div>
+        </div>        
+    </div>
+    <div class="auth_right full_img"></div>
+</div>
+{% endblock %}

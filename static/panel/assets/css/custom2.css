@@ -1,0 +1,285 @@
+::-webkit-scrollbar
+{
+    width:8px;
+}
+::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px #3d71a1;
+    box-shadow: inset 0 0 6px #3d71a1;
+    border-radius:10px;  
+}
+::-webkit-scrollbar-thumb
+{
+    -webkit-box-shadow: inset 0 0 6px #3d71a1;
+    box-shadow: inset 0 0 6px #3d71a1;
+    border-radius:10px;
+}
+.page-loader-wrapper .loader 
+{
+    position: relative;
+    top: calc(50% - 50px) !important;
+    justify-content: center;
+    width: 100%;
+}
+#id_phone_0,
+#id_whatsapp_phone_0
+{
+    width:30%;
+    float:left;
+    padding:6.5px 0;
+}
+#id_phone_1,
+#id_whatsapp_phone_1
+{
+    width:68%;
+    float:right;
+}
+.profpic
+{
+    position:absolute;
+    top:52px;
+    left:30%;
+    z-index:99;
+    width:150px;
+    border:2px solid #fff;
+    border-radius:50%;
+}
+.btn-round
+{
+    border-radius:30%;
+    padding:10px 10px;
+}
+.hh-grayBox 
+{
+margin-bottom: 20px;
+margin-top: 20px;
+}
+.pt45{padding:3px 0;}
+#writer .order-tracking
+{
+text-align: center;
+width:25%;
+position: relative;
+display: block;
+} 
+#customer .order-tracking
+{
+text-align: center;
+width:33.33%;
+position: relative;
+display: block;
+}
+.order-tracking .is-complete
+{
+display: block;
+position: relative;
+border-radius: 50%;
+height: 30px;
+width: 30px;
+border: 0px solid #AFAFAF;
+background-color: #f7be16;
+margin: 0 auto;
+transition: background 0.25s linear;
+-webkit-transition: background 0.25s linear;
+z-index: 2;
+}
+.order-tracking .is-complete:after {
+display: block;
+position: absolute;
+content: '';
+height: 14px;
+width: 7px;
+top: -2px;
+bottom: 0;
+left: 5px;
+margin: auto 0;
+border: 0px solid #AFAFAF;
+border-width: 0px 2px 2px 0;
+transform: rotate(45deg);
+opacity: 0;
+}
+.order-tracking.completed .is-complete{
+border-color: #27aa80;
+border-width: 0px;
+background-color: #27aa80;
+}
+.order-tracking.completed .is-complete:after {
+border-color: #fff;
+border-width: 0px 3px 3px 0;
+width: 7px;
+left: 11px;
+opacity: 1;
+}
+.order-tracking p {
+color: #A4A4A4;
+font-size: 16px;
+margin-top: 8px;
+margin-bottom: 0;
+line-height: 20px;
+}
+.order-tracking p span{font-size: 14px;}
+.order-tracking.completed p{color: #000;}
+.order-tracking::before {
+content: '';
+display: block;
+height: 3px;
+width: calc(100% - 40px);
+background-color: #f7be16;
+top: 13px;
+position: absolute;
+left: calc(-50% + 20px);
+z-index: 0;
+}
+.order-tracking:first-child:before{display: none;}
+.order-tracking.completed:before{background-color: #27aa80;}
+.cookie-container
+{
+    position:fixed;
+    bottom:-100%;
+    left:0;
+    right:0;
+    background:#2f3640;
+    color:#f5f6fa;
+    padding:5px 32px;
+    transition:400ms;
+    box-shadow:0 -2px 16px rgba(47,54,64,0.39);
+}
+.cookie-container.active
+{
+    bottom:0;  
+}
+.cookie-container p
+{
+    color:#f5f6fa;
+}
+.cookie-container button
+{
+  background:#3d71a1 !important;
+  color:#f5f6fa;
+  padding:10px 48px !important;
+  font-size:18px !important;
+  margin-bottom:16px !important;
+  border-radius:8px !important;
+  transition:all .3s ease-in-out;
+}
+.cookie-container button:hover
+{
+  color:#3d71a1 !important;
+  border-color:#3d71a1 !important;
+  background:#f5f6fa !important;
+}
+.chat_app .chat_windows .chat-message {
+    border: 1px solid #3d71a1 !important;
+    border-radius:10px;
+}
+.tabber
+{
+    overflow-x:scroll; 
+    overflow-y: hidden; 
+    white-space:nowrap;
+}
+.tabber li
+{
+display:inline-block;
+}
+.profbadge {
+width: 40px;
+height: 40px;
+line-height: 38px;
+border-radius: 50%;
+background: red;
+color: #fff;
+font-weight: bold;
+text-align: center;
+cursor: pointer;
+margin: 10px;
+}
+.dropdown-menu {
+box-shadow: 0 2px 20px 0 rgba(0,0,0,0.25);
+border: 0;
+min-width: 19rem !important;
+font-size: 14px;
+}
+.modal-confirm {        
+color: #636363;
+width: 325px;
+font-size: 14px;
+}
+.modal-confirm .modal-content {
+padding: 20px;
+border-radius: 5px;
+border: none;
+}
+.modal-confirm .modal-header {
+border-bottom: none;   
+position: relative;
+}
+.modal-confirm h4 {
+text-align: center;
+font-size: 26px;
+margin: 30px 0 -15px;
+}
+.modal-confirm .form-control, .modal-confirm .btn {
+min-height: 40px;
+border-radius: 3px; 
+}
+.modal-confirm .close {
+position: absolute;
+top: -5px;
+right: -5px;
+}   
+.modal-confirm .modal-footer {
+border: none;
+text-align: center;
+border-radius: 5px;
+font-size: 13px;
+}   
+.modal-confirm .icon-box {
+color: #fff;        
+position: absolute;
+margin: 0 auto;
+left: 0;
+right: 0;
+top: -70px;
+width: 95px;
+height: 95px;
+border-radius: 50%;
+z-index: 9;
+background: #34c240;
+padding: 15px;
+text-align: center;
+box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+}
+.modal-confirm .icon-box i {
+font-size: 58px;
+position: relative;
+top: 3px;
+}
+.modal-confirm.modal-dialog {
+margin: 80px auto;
+}
+.modal-confirm .btn {
+color: #fff;
+border-radius: 4px;
+background: #82ce34;
+text-decoration: none;
+transition: all 0.4s;
+line-height: normal;
+border: none;
+}
+.modal-confirm .btn:hover, .modal-confirm .btn:focus {
+background: #6fb32b;
+outline: none;
+}
+.nav-tabs>.nav-item>.nav-link.active 
+{
+    border: 1px solid #d92626 !important;
+    border-radius: 30px;
+}
+.bids 
+{
+    position: absolute;
+    top: -11px;
+    left: -11px;
+    font-size:10px;
+}

@@ -1,0 +1,20 @@
+{% extends 'panel/auth.html' %}
+{% load static %}
+{% load humanize %}
+{% block body %}
+<div class="auth">
+    <div class="auth_left">
+        <div class="card">
+            <div class="card-body">
+                <div class="display-3 text-muted text-center mb-5"><i class="si si-exclamation"></i> 404</div>
+                <h1 class="h3 mb-3 text-center">Oops.. You just found an error page..</h1>
+                <p class="h6 text-muted font-weight-normal mb-3">We are sorry but our service is currently not available&hellip;</p>
+                <div class="text-center">
+                	<a class="btn btn-primary  btn-round" href="javascript:history.back()"><i class="ti-arrow-left mr-2"></i>Go back</a>
+                </div>
+            </div>
+        </div>        
+    </div>
+    <div class="auth_right full_img"></div>
+</div>
+{% endblock %}

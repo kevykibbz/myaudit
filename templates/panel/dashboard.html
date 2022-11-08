@@ -1,0 +1,399 @@
+{% extends 'panel/main.html' %}
+{% load static %}
+{% load humanize %}
+{% block body %}
+<div class="section-body">
+    <div class="container-fluid">
+    	<div class="row clearfix">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3" >
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <ol class="breadcrumb" style="background-color:transparent!important;">
+                                <li class="breadcrumb-item"><a class="fg-theme" href="{% url 'dashboard' %}">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">{{title}}</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+        </div>
+        <div class="row clearfix">
+            <div class="col-lg-12">
+                <div class="d-lg-flex justify-content-between" >
+                    <ul class="nav nav-tabs tabber" id="pills-tab" role="tablist" style="display:inline-block;overflow-y:hidden;overflow-x: scroll;white-space: nowrap;" >
+                        <li class="nav-item"><a class="nav-link active show" data-toggle="tab" href="#Company_Settings">General Settings</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Email_Settings">Social Links</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#contact">Contact info</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#meters">Add Meters</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#equipments">Add Equipment</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section-body">
+    <div class="container-fluid">
+        <div class="row clearfix">
+            <div class="col-md-12">
+                <div class="tab-content">
+                    <div class="tab-pane active show" id="Company_Settings">
+                    	
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Company Settings</h3>
+                                <div class="card-options">
+                                    <a href="javascript:void(0);" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                    <a href="javascript:void(0);" class="card-options-fullscreen" data-toggle="card-fullscreen"><i class="fe fe-maximize"></i></a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form class="ActiveForm" method="post"  novalidate>
+                                	{% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label>Website Name <span class="text-danger">*</span></label>
+                                                {{form1.site_name}}
+                                                <div class="feedback"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label>Website URL <span class="text-danger">*</span></label>
+                                                <input name="site_url" value="{{request.scheme}}://{{request.get_host}}" aria-label="site_url" placeholder="eg example.com" type="url" class="form-control"  style="text-transform:lowercase;" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">               
+					                            <label for="id_theme_color">Website Logo</label>
+					                            <div class="custom-file" style="cursor:pointer">
+					                                {{form1.website_logo}}
+					                                <label for="customFileInput1" class="custom-file-label">Browse files</label>
+					                            </div>
+					                            current: <a class="fg-theme" target="_blank" href="{{obj.website_logo.url}}">{{obj.website_logo}}</a>
+					                            <div class="feedback"></div>
+					                        </div> 
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">               
+					                            <label for="id_theme_color">Footer Logo</label>
+					                            <div class="custom-file" style="cursor:pointer">
+					                                {{form1.footer_logo}}
+					                                <label for="customFileInput3" class="custom-file-label">Browse files</label>
+					                            </div>
+					                            current: <a class="fg-theme" target="_blank" href="{{obj.footer_logo.url}}">{{obj.footer_logo}}</a>
+					                            <div class="feedback"></div>
+					                        </div> 
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">               
+					                            <label for="id_theme_color">Website Favicon</label>
+					                            <div class="custom-file" style="cursor:pointer">
+					                                {{form1.favicon}}
+					                                <label for="customFileInput" class="custom-file-label">Browse files</label>
+					                            </div>
+					                            current: <a class="fg-theme" target="_blank" href="{{obj.favicon.url}}">{{obj.favicon}}</a>
+					                            <div class="feedback"></div>
+					                        </div> 
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">               
+					                            <label for="id_theme_color">Email Template Logo</label>
+					                            <div class="custom-file" style="cursor:pointer">
+					                                {{form1.email_template_logo}}
+					                                <label for="customFileInput4" class="custom-file-label">Browse files</label>
+					                            </div>
+					                            current: <a class="fg-theme" target="_blank" href="{{obj.email_template_logo.url}}">{{obj.email_template_logo}}</a>
+					                            <div class="feedback"></div>
+					                        </div> 
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">               
+					                            <label for="id_theme_color">Login Logo</label>
+					                            <div class="custom-file" style="cursor:pointer">
+					                                {{form1.login_logo}}
+					                                <label for="customFileInput2" class="custom-file-label">Browse files</label>
+					                            </div>
+					                            current: <a class="fg-theme" target="_blank" href="{{obj.login_logo.url}}">{{obj.login_logo}}</a>
+					                            <div class="feedback"></div>
+					                        </div> 
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label>Site Theme Color</label>
+                                                <div class="input-group colorpicker">
+		                                            {{form1.theme_color}}
+		                                            <div class="input-group-append">
+		                                                <span class="input-group-text"><span class="input-group-addon"> <i></i> </span></span>
+		                                            </div>
+		                                        </div>
+                                                <div class="feedback"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label>Site Key Words</label>
+                                                {{form1.key_words}}
+                                                <div class="feedback"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                        	<label>Website Description</label>
+                                            <div class="form-group"> 
+                                               {{form1.description}}
+                                               <div class="feedback"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12 text-center m-t-20">
+                                            <button  class="btn btn-primary btn-round"><i class="ti-save"></i> SAVE</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>                        
+                    </div>
+                    <div class="tab-pane" id="meters">
+                    	<div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Add Meter name</h3>
+                                <div class="card-options">
+                                    <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                    <a href="#" class="card-options-fullscreen" data-toggle="card-fullscreen"><i class="fe fe-maximize"></i></a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form class="ActiveForm" action="{% url 'add meter' %}" method="post" novalidate>
+                                	{% csrf_token %}						
+                                    <div class="row">
+                                        <div class="col-md-6 mx-auto">
+                                            <div class="form-group">
+					                            <label for="id_facebook">Meter name</label>
+					                            {{form5.name}}
+					                            <div class="feedback"></div>
+					                        </div>
+                                        </div>
+                                        <div class="col-sm-12 m-t-20 text-center">
+                                            <button class="btn btn-primary btn-round"><i class="ti-save"></i> SAVE</button>
+                                        </div>
+                                    </div>                            
+                                </form>
+                            </div>
+                        </div> 	
+                    </div>  
+                    <div class="tab-pane" id="equipments">
+                    	<div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Add Equipment name</h3>
+                                <div class="card-options">
+                                    <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                    <a href="#" class="card-options-fullscreen" data-toggle="card-fullscreen"><i class="fe fe-maximize"></i></a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form class="ActiveForm" action="{% url 'add equipment' %}" method="post" novalidate>
+                                	{% csrf_token %}						
+                                    <div class="row">
+                                        <div class="col-md-6 mx-auto">
+                                            <div class="form-group">
+					                            <label for="id_facebook">Equipment name</label>
+					                            {{form6.name}}
+					                            <div class="feedback"></div>
+					                        </div>
+                                        </div>
+                                        <div class="col-sm-12 m-t-20 text-center">
+                                            <button class="btn btn-primary btn-round"><i class="ti-save"></i> SAVE</button>
+                                        </div>
+                                    </div>                            
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="Email_Settings">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Social Links</h3>
+                                <div class="card-options">
+                                    <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                    <a href="#" class="card-options-fullscreen" data-toggle="card-fullscreen"><i class="fe fe-maximize"></i></a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form class="ActiveForm" action="{% url 'site social links' %}" method="post" novalidate>
+                                	{% csrf_token %}						
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+					                            <label for="id_facebook">Facebook</label>
+					                            {{form3.facebook}}
+					                            <div class="feedback"></div>
+					                        </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">               
+	                                            <label for="id_twitter">Twitter</label>
+	                                            {{form3.twitter}}
+	                                            <div class="feedback"></div>
+	                                        </div>
+                                        </div>
+                                        <div class="col-sm-6">
+	                                        <div class="form-group">               
+	                                            <label for="id_twitter">Instagram</label>
+	                                            {{form3.instagram}}
+	                                            <div class="feedback"></div>
+	                                        </div>
+	                                    </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">               
+					                            <label for="id_linkedin">Linkedin</label>
+					                            {{form3.linkedin}}
+					                            <div class="feedback"></div>
+						                    </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">               
+					                            <label for="id_whatsapp">Whatsapp</label>
+					                            {{form3.whatsapp}}
+					                            <div class="feedback"></div>
+					                        </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">               
+					                            <label for="id_youtube">Youtube</label>
+					                            {{form3.youtube}}
+					                            <div class="feedback"></div>
+					                        </div>
+                                        </div>
+                                        <div class="col-sm-12 m-t-20 text-center">
+                                            <button class="btn btn-primary btn-round"><i class="ti-save"></i> SAVE</button>
+                                        </div>
+                                    </div>                            
+                                </form>
+                            </div>
+                        </div>                    
+                    </div>
+                    <div class="tab-pane" id="meters">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Basic Settings</h3>
+                                <div class="card-options">
+                                    <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                    <a href="#" class="card-options-fullscreen" data-toggle="card-fullscreen"><i class="fe fe-maximize"></i></a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form  class="ActiveForm" method="post"  action="" novalidate>
+                                	{% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Number of words per page</label>
+                                                {{form5.number_of_words_per_page}}
+                                                <div class="feedback"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Sample essay topic</label>
+                                              	{{form5.essay_topic}}
+                                                <div class="feedback"></div>
+                                            </div>
+                                        </div> 
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Video URL</label>
+                                                {{form5.video_link}}
+                                                <div class="feedback"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Currency Code</label>
+                                                 {{form5.currency_code}}
+                                                <div class="feedback"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mx-auto">
+                                            <div class="form-group">
+                                                <label>Currency Symbol</label>
+                                                {{form5.currency_symbol}}
+                                                <div class="feedback"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 text-center m-t-20">
+                                            <button class="btn-round btn btn-primary"><i class="ti-save"></i> Save</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>                    
+                    </div>
+                    <div class="tab-pane" id="contact">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Contact</h3>
+                                <div class="card-options">
+                                    <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                    <a href="#" class="card-options-fullscreen" data-toggle="card-fullscreen"><i class="fe fe-maximize"></i></a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form class="ActiveForm" method="post" action="{% url 'site contact' %}" novalidate>
+			                        {% csrf_token %}
+			                        <div class="row">
+			                        	<div class="col-md-6">
+				                        	<div class="form-group">
+					                            <label for="id_site_name">WebSite Email Address <span class="text-danger">*</span></label>
+					                            {{form2.site_email}}
+					                            <div class="feedback"></div>
+					                        </div>
+				                    	</div>
+				                    	<div class="col-md-6">
+					                        <div class="selects-contant-boots">
+					                            <div class="form-group bs-select-1">               
+					                                <label for="id_key_words">Additional Site Email Address</label>
+					                                {{form2.site_email2}}
+					                                <div class="feedback"></div>
+					                            </div>
+					                        </div>
+					                    </div>
+					                    <div class="col-md-6">
+					                        <div class="form-group">               
+					                            <label for="id_location">Website location <span class="text-danger">*</span></label>
+					                            {{form2.location}}
+					                            <div class="feedback"></div>
+					                        </div>
+					                    </div>
+					                    <div class="col-md-6">
+					                        <div class="form-group">               
+					                            <label for="id_address">WebSite Address <span class="text-danger">*</span></label>
+					                            {{form2.address}}
+					                            <div class="feedback"></div>
+					                        </div>
+					                    </div>
+					                    <div class="col-md-6 mx-auto">
+					                        <label for="id_phone">WebsSite Phone Number <span class="text-danger">*</span></label>
+					                        <div class="form-group">               
+					                            {{form2.phone}}
+					                            <div class="feedback"></div>
+					                        </div>
+					                    </div>
+					                    <div class="col-12">
+					                    	<div class="col-sm-12 text-center m-t-20">
+		                                        <button class="btn-round btn btn-primary"><i class="ti-save"></i> Save</button>
+		                                    </div>
+					                    </div>
+			                        </div>
+			                    </form>
+                            </div>
+                        </div>                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

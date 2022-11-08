@@ -1,0 +1,77 @@
+{% extends 'panel/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block body %}
+<section class="w3l-about-breadcrumb">
+    <div class="breadcrumb-bg breadcrumb-bg-about py-5">
+        <div class="container py-lg-5 py-md-3">
+            <h2 class="title text-capitalize">{{title}}</h2>
+        </div>
+    </div>
+</section>
+<section class="w3l-breadcrumb">
+    <div class="container">
+        <ul class="breadcrumbs-custom-path">
+            <li><a href="/">Home</a></li>
+            <li class="active"><span class="fa fa-arrow-right mx-2" aria-hidden="true"></span> {{title}}</li>
+        </ul>
+    </div>
+</section>
+<section class="w3l-about py-5" id="about">
+    <div class="container py-lg-5 py-md-3">
+        <div class="about-block">
+            <h6 class="title-small">Available weekly energy consuption in ICDC</h6>
+           	<div class="mt-2 row">
+           		<div class="col-md-8 mx-auto">
+           			<div class="accordion" id="accordionExample">
+           				{% for reading in readings %}
+		            	<div class="card">
+		            		<div class="card-header" id="heading_{{reading.id}}">
+		            			<h5 class="mb-0">
+		            				<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_{{reading.id}}" aria-expanded="true" aria-controls="collapse_{{reading.id}}">{{reading.meter_name}}</button>
+		            			</h5>
+		            		</div>
+		            		<div id="collapse_{{reading.id}}" class="collapse show" aria-labelledby="heading_{{reading.id}}" data-parent="#accordionExample">
+		            			<div class="card-body">
+		            				<div class="tabel-responsive">
+		            					<table class="table table-hover table-stripped">
+		            						<tr>
+		            							<th>#</th>
+		            							<th>Week ending</th>
+		            							<th>Meter location</th>
+		            							<th>consuption</th>
+		            						</tr>
+		            						<tbody>
+		            							<tr>
+		            								<td>1</td>
+		            								<td>Nov 23,2021</td>
+		            								<td>ICDC</td>
+		            								<td>55000</td>
+		            							</tr>
+		            							
+		            							<tr>
+		            								<td colspan="3">Total Consuption</td>
+		            								<td>7899999</td>
+		            							</tr>
+		            						</tbody>
+		            					</table>
+		            				</div>
+		            			</div>
+		            		</div>
+		            	</div>
+		            	{% empty %}
+		            	<div class="card">
+		            		<div class="card-body">
+		            			<div class="text-center">
+		            				<p><i class="fa fa-exclamation-circle text-danger"></i> No reading data found.</p>
+		            			</div>
+		            		</div>
+		            	</div>
+		            	{% endfor %}
+		            </div> 
+           		</div>
+           	</div>
+        </div>
+    </div>
+</section>
+{% endblock %}
