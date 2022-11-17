@@ -88,41 +88,15 @@ class ExtendedAuthUser(models.Model):
     phone=PhoneNumberField(null=True,blank=True,verbose_name='phone',unique=True,max_length=13)
     initials=models.CharField(max_length=10,blank=True,null=True)
     category=models.CharField(max_length=100,blank=True,null=True)
-    balance=models.FloatField(blank=True,null=True,default=0)
-    reserved_money=models.FloatField(blank=True,null=True,default=0)
     serial_no=models.CharField(max_length=100,default=get_random_string,null=True,blank=True)
     bgcolor=models.CharField(max_length=10,blank=True,null=True,default=bgcolor)
     company=models.CharField(max_length=100,null=True,blank=True,default=env('SITE_NAME'))
     zipcode=models.CharField(max_length=100,null=True,blank=True,default='416')
     city=models.CharField(max_length=100,null=True,blank=True,default='Nairobi')
     country=models.CharField(max_length=100,null=True,blank=True,default='Kenya')
-    rating=models.FloatField(null=True,blank=True)
-    native_language=models.TextField(null=True,blank=True)
-    writer_cv=models.TextField(null=True,blank=True)
-    academic_degree=models.TextField(null=True,blank=True)
     timezone=models.CharField(max_length=200,null=True,blank=True,default='Africa/Nairobi')
-    degree=models.CharField(max_length=200,null=True,blank=True)
-    university=models.CharField(max_length=200,null=True,blank=True)
-    reference_id=models.CharField(max_length=200,null=True,blank=True)
-    exam_complete=models.BooleanField(default=False,blank=True,null=True)
-    profile_reg=models.BooleanField(default=False,blank=True,null=True)
     profile_pic=models.ImageField(upload_to='profiles/',null=True,blank=True,default="placeholder.jpg")
     role=models.CharField(choices=[('employee','Employee'),('admins','Admin'),],max_length=200,null=True,blank=True)
-    citation_style=models.TextField(null=True,blank=True)
-    is_deactivated=models.BooleanField(default=False,blank=True,null=True)
-    essay_part=models.BooleanField(default=False,blank=True,null=True)
-    test_passed=models.BooleanField(default=False,blank=True,null=True)
-    test_reason=models.CharField(max_length=200,null=True,blank=True)
-    completed_projects=models.IntegerField(null=True,blank=True,default=0)
-    inprogress_projects=models.IntegerField(null=True,blank=True,default=0)
-    is_experienced=models.BooleanField(default=False,blank=True,null=True)
-    is_featured=models.BooleanField(default=False,blank=True,null=True)
-    is_online=models.BooleanField(default=False,blank=True,null=True)
-    is_verified=models.BooleanField(default=False,blank=True,null=True)
-    certificate=models.ImageField(null=True,blank=True,upload_to='certs/',)
-    essay=models.FileField(null=True,blank=True,upload_to='docs/',)
-    essay_ok=models.BooleanField(default=True,blank=True,null=True)
-    pending_verification=models.BooleanField(default=False,blank=True,null=True)
     bio=models.TextField(null=True,blank=True,default='something about you...')
     nickname=models.CharField(max_length=100,null=True,blank=True,default='Your nickname')
     facebook=models.CharField(max_length=200,null=True,blank=True,default='https://facebook.com/username')
@@ -131,7 +105,6 @@ class ExtendedAuthUser(models.Model):
     linkedin=models.CharField(max_length=200,null=True,blank=True,default='https://linkedin.com/username')
     gender=models.CharField(choices=options,max_length=6,null=True,blank=True)
     birthday=models.DateField(null=True,blank=True)
-    graduation_year=models.DateField(null=True,blank=True)
     created_on=models.DateTimeField(default=now)
     class Meta:
         db_table='extended_auth_user'
@@ -156,6 +129,8 @@ class MeterModel(models.Model):
         verbose_name_plural='meter_tbl'
     def __str__(self)->str:
         return f'{self.user.username} meter info'
+    def __unicode__(self):
+        return self.name
 
 
 class EquipmentModel(models.Model):
@@ -167,12 +142,13 @@ class EquipmentModel(models.Model):
         verbose_name_plural='equipment_tbl'
     def __str__(self)->str:
         return f'{self.user.username} equipment info'
+    def __unicode__(self):
+        return self.name
 
 class ReadingModel(models.Model):
-    user=models.ForeignKey(User,on_delete=models.CASCADE)
     parent=models.ForeignKey(MeterModel,on_delete=models.CASCADE)
     meter_location=models.CharField(max_length=100,blank=True,null=True)
-    meter_reading=models.CharField(max_length=100,blank=True,null=True)
+    meter_reading=models.FloatField(blank=True,null=True)
     date=models.DateField(blank=True,null=True)
     created_on=models.DateTimeField(default=now)
     class Meta:
@@ -180,13 +156,15 @@ class ReadingModel(models.Model):
         verbose_name_plural='meter_readings_tbl'
     def __str__(self)->str:
         return f'{self.user.username} meter reading info'
+    def __unicode__(self):
+        return self.parent.name
 
 class CostModel(models.Model):
-    user=models.ForeignKey(User,on_delete=models.CASCADE)
     parent=models.ForeignKey(EquipmentModel,on_delete=models.CASCADE)
     quantity=models.CharField(max_length=100,blank=True,null=True)
     rating=models.CharField(max_length=100,blank=True,null=True)
     hours_used=models.CharField(max_length=100,blank=True,null=True)
+    total_cost=models.FloatField(blank=True,null=True)
     created_on=models.DateTimeField(default=now)
     class Meta:
         db_table='cost_tbl'

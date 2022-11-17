@@ -32,4 +32,7 @@ urlpatterns=[
     path('delete/equipment/<int:id>',views.deleteEquipment,name='delete equipment'),
     #home updater
     path('home/updater',views.homeUpdater,name='home updater'),
+    path('view/meter/<int:id>',views.openMeter,name='view meter'),
+    path('meter/reading/costs',costCalculatorReading.as_view(),name='cost'),
+    path('set/elecricity/billing/plan',views.setBilling,name='billing'),
 ]

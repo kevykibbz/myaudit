@@ -408,6 +408,14 @@ class WorkingConfigForm(forms.ModelForm):
         model=SiteModel
         fields=['working_days','working_hours',]
 
+
+
+class BillForm(forms.ModelForm):
+    electricity_bill=forms.CharField(widget=forms.NumberInput(attrs={'aria-label':'electricity_bill','class':'form-control input-rounded'}))
+    class Meta:
+        model=SiteModel
+        fields=['electricity_bill',]
+
 class MeterForm(forms.ModelForm):
     name=forms.CharField(widget=forms.TextInput(attrs={'aria-label':'name','class':'form-control input-rounded'}))
     class Meta:
@@ -453,7 +461,7 @@ class EquipmentForm(forms.ModelForm):
 class ReadingForm(forms.ModelForm):
     meter_name=forms.CharField(widget=forms.TextInput(attrs={'aria-label':'meter_name','placeholder':'Meter name'}))
     meter_location=forms.CharField(widget=forms.TextInput(attrs={'aria-label':'meter_location','placeholder':'Meter reading location'}))
-    meter_reading=forms.CharField(widget=forms.TextInput(attrs={'aria-label':'meter_reading','placeholder':'Meter reading'}))
+    meter_reading=forms.CharField(widget=forms.NumberInput(attrs={'aria-label':'meter_reading','placeholder':'Meter reading'}))
     date=forms.DateField(widget=forms.DateInput(attrs={'type':'date','aria-label':'date','placeholder':'Date of meter reading'}))
     class Meta:
         model=ReadingModel
@@ -462,7 +470,8 @@ class ReadingForm(forms.ModelForm):
 class CostForm(forms.ModelForm):
     quantity=forms.CharField(widget=forms.TextInput(attrs={'aria-label':'quantity','placeholder':'Quantity'}))
     rating=forms.CharField(widget=forms.TextInput(attrs={'aria-label':'rating','placeholder':'Equipment rating'}))
-    hours_used=forms.CharField(widget=forms.TextInput(attrs={'aria-label':'hours_used','placeholder':'Hours use'}))
+    hours_used=forms.CharField(widget=forms.NumberInput(attrs={'aria-label':'hours_used','placeholder':'Hours use'}))
+    equipment=forms.CharField(widget=forms.TextInput(attrs={'aria-label':'equipment','placeholder':'Hours use'}))
     class Meta:
         model=CostModel
         fields=['quantity','rating','hours_used',]

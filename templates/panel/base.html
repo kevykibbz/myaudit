@@ -118,6 +118,9 @@
                     </li> 
                     <li class="nav-item @@services__active">
                       <a class="nav-link" href="#">Analyzer</a>
+                    </li> 
+                    <li class="nav-item @@services__active">
+                      <a class="nav-link" href="{% url 'cost' %}">Cost results</a>
                     </li>
                     <li class="nav-item ml-3 text-md-left text-center">
                       <a href="{% url 'cost calculator' %}" class="btn btn-outline-primary btn-style mr-2">Cost calculator</a>
@@ -215,8 +218,9 @@
                 </div>
             </div>
         </div>
+        
         <div id="myModal" class="modal fade small-model">
-        <div class="modal-dialog modal-confirm">
+          <div class="modal-dialog modal-confirm">
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="icon-box">

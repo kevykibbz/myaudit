@@ -10131,10 +10131,12 @@ button.navbar-toggler.collapsed .icon-expand {
   text-align: center; }
 
 .form-style-w3ls input[type="text"],
+.form-style-w3ls input[type="number"],
 .form-style-w3ls input[type="date"],
 .form-style-w3ls input[type="email"],
 .form-style-w3ls input[type="password"],
-select {
+select
+{
   outline: none;
   font-size: 18px;
   border: none;

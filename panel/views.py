@@ -25,7 +25,7 @@ from django.contrib.auth.hashers import make_password
 from django.db.models import Avg
 import timeago,datetime
 from  django.contrib.auth.models import Group
-
+from django.db.models import Sum
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
@@ -55,9 +55,10 @@ class Home(View):
     def post(self,request,*args ,**kwargs):
         form=ReadingForm(request.POST or None)
         if form.is_valid():
+            meter=MeterModel.objects.get(id__exact=form.cleaned_data.get('meter_name',None))
             obj=form.save(commit=False)
             obj.user=request.user
-            obj.parent=form.cleaned_data.get('meter_name',None)
+            obj.parent=meter
             obj.save()
             return JsonResponse({'valid':True,'message':'Meter readings submitted successfuly.'},content_type='application/json')
         else:
@@ -67,7 +68,9 @@ class Home(View):
 class weeklyConsuption(View):
     def get(self,request):
         obj=check_data()
-        data=ReadingModel.objects.all().order_by("-id")
+        meters=MeterModel.objects.all().order_by("created_on")
+        inner_qs=MeterModel.objects.values_list('id',flat=True)
+        data=ReadingModel.objects.filter(parent_id__in=inner_qs).order_by("parent_id","-created_on")
         paginator=Paginator(data,30)
         page_num=request.GET.get('page')
         readings=paginator.get_page(page_num)
@@ -76,9 +79,45 @@ class weeklyConsuption(View):
             'obj':obj,
             'data':request.user,
             'readings':readings,
+            'meters':meters,
         }
         return render(request,'panel/consuption.html',context=data)
 
+def openMeter(request,id):
+    obj=check_data()
+    meter=get_object_or_404(MeterModel,id__exact=id)
+    total=ReadingModel.objects.filter(parent_id__exact=id).aggregate(Sum('meter_reading'))
+    data=ReadingModel.objects.filter(parent_id__exact=id).order_by("parent_id","-created_on")
+    paginator=Paginator(data,30)
+    page_num=request.GET.get('page')
+    readings=paginator.get_page(page_num)
+    data={
+        'title':'weekly Consuption',
+        'obj':obj,
+        'data':request.user,
+        'readings':readings,
+        'total':total,
+        'meter':meter,
+    }
+    return render(request,'panel/single_meter.html',context=data)
+
+
+class costCalculatorReading(View):
+    def get(self,request):
+        obj=check_data()
+        data=CostModel.objects.all().order_by("-id")
+        total=CostModel.objects.aggregate(Sum('total_cost'))
+        paginator=Paginator(data,30)
+        page_num=request.GET.get('page')
+        costs=paginator.get_page(page_num)
+        data={
+            'title':'Cost Calculator',
+            'obj':obj,
+            'data':request.user,
+            'costs':costs,
+            'total':total,
+        }
+        return render(request,'panel/cost.html',context=data)
 
 class costCalculator(View):
     def get(self,request):
@@ -95,10 +134,16 @@ class costCalculator(View):
         return render(request,'panel/cost_calculator.html',context=data)
     def post(self,request,*args ,**kwargs):
         form=CostForm(request.POST or None)
+        site=check_data()
         if form.is_valid():
             obj=form.save(commit=False)
-            obj.user=request.user
-            obj.parent=form.cleaned_data.get('meter_name',None)
+            rating=int(form.cleaned_data.get('rating',None))/1000
+            quantity=form.cleaned_data.get('quantity',None)
+            hours_used=form.cleaned_data.get('hours_used',None)
+            total_cost=rating*int(quantity)*int(hours_used)*int(site.electricity_bill)
+            obj.total_cost=total_cost
+            equipment=EquipmentModel.objects.get(id__exact=form.cleaned_data.get('equipment',None))
+            obj.parent=equipment
             obj.save()
             return JsonResponse({'valid':True,'message':'Equipment readings submitted successfuly.'},content_type='application/json')
         else:
@@ -171,6 +216,7 @@ class Dashboard(View):
         form4=WorkingConfigForm(instance=obj)
         form5=MeterForm()
         form6=EquipmentForm()
+        form7=BillForm(instance=obj)
         obj=check_data()
         data={
             'title':'Dashboard',
@@ -182,6 +228,7 @@ class Dashboard(View):
             'form4':form4,
             'form5':form5,
             'form6':form6,
+            'form7':form7,
         }
         return render(request,'panel/dashboard.html',context=data)
     def post(self,request,*args , **kwargs):
@@ -347,6 +394,22 @@ def addMeter(request):
             usr=form.save(commit=False)
             usr.user=request.user
             usr.save()
+            return JsonResponse({'valid':True,'message':'data saved successfully'},status=200,content_type='application/json')
+        else:
+            return JsonResponse({'valid':False,'uform_errors':form.errors},status=200,content_type='application/json')
+
+
+
+#billing
+login_required(login_url='/accounts/login')
+@allowed_users(allowed_roles=['admins'])
+@api_view(['POST',])
+def setBilling(request):
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        obj=check_data()
+        form=BillForm(request.POST or None,instance=obj)
+        if form.is_valid():
+            form.save()
             return JsonResponse({'valid':True,'message':'data saved successfully'},status=200,content_type='application/json')
         else:
             return JsonResponse({'valid':False,'uform_errors':form.errors},status=200,content_type='application/json')

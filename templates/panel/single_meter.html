@@ -24,11 +24,10 @@
            	<div class="mt-2 row">
            		<div class="col-md-8 mx-auto">
            			<div class="accordion" id="accordionExample">
-           				{% for meter in meters %}
            					<div class="card">
 		            			<div class="card-header" id="heading_{{meter.id}}">
 			            			<h5 class="mb-0">
-			            				<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_{{meter.id}}" aria-expanded="true" aria-controls="collapse_{{meter.id}}">{{forloop.counter}}.{{meter.name}}</button>
+			            				<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_{{meter.id}}" aria-expanded="true" aria-controls="collapse_{{meter.id}}">{{meter.id}}.{{meter.name}}</button>
 			            			</h5>
 			            		</div>
 			            		<div id="collapse_{{meter.id}}" class="collapse show" aria-labelledby="heading_{{meter.id}}" data-parent="#accordionExample">
@@ -43,41 +42,36 @@
 			            						</tr>
 			            						<tbody>
 			            							{% for reading in readings %}
-			            								{% if reading.parent_id == meter.id %}
 			            								<tr>
 				            								<td>{{forloop.counter}}.</td>
 				            								<td>{{reading.created_on|naturaltime}}</td>
 				            								<td>{{reading.meter_location}}</td>
 				            								<td>{{reading.meter_reading}} KW</td>
 				            							</tr>
-			            								{% endif %}
 			            							{% empty %}
 			            							<tr>
-			            								<td>
-			            									<p>No data found</p>
+			            								<td colspan="4" class="text-center">
+			            									<p><i class="fa fa-exclamation-circle"></i> No data found</p>
 			            								</td>
 			            							</tr>
 			            							{% endfor %}
+			            							{% if reading %}
 			            							<tr>
-			            								<td colspan="4" class="text-center">
-			            									<a href="{% url 'view meter' id=meter.id %}">view</a>
-			            								</td>
-			            							</tr>
+	                                                    <td colspan="3">Total Consuption</td>
+	                                                    <td>{{total.meter_reading__sum|intcomma|default:0}} KW</td>
+	                                                </tr>
+	                                                {% endif %}
+	                                                <tr>
+	                                                	<td colspan="4">
+	                                                		<a href="{% url 'weekly consuption' %}"><i class="fa fa-arrow-left"></i> Back</a>
+	                                                	</td>
+	                                                </tr>
 			            						</tbody>
 			            					</table>
 			            				</div>
 			            			</div>
 			            		</div>
 			            	</div>
-		            	{% empty %}
-		            	<div class="card">
-		            		<div class="card-body">
-		            			<div class="text-center">
-		            				<p><i class="fa fa-exclamation-circle text-danger"></i> No reading data found.</p>
-		            			</div>
-		            		</div>
-		            	</div>
-		            	{% endfor %}
 		            </div> 
            		</div>
            	</div>

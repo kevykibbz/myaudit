@@ -13,6 +13,7 @@ class SiteModel(models.Model):
     site_name=models.CharField(null=True,blank=True,max_length=100,default=env('SITE_NAME'))
     site_email=models.CharField(null=True,blank=True,max_length=100,default=env('SITE_EMAIL'))
     site_email2=models.CharField(null=True,blank=True,max_length=100,default=env('SITE_EMAIL2'))
+    electricity_bill=models.IntegerField(null=True,blank=True,default=2)
     theme_color=models.CharField(null=True,blank=True,max_length=100,default=env('THEME_COLOR'))
     site_url=models.URLField(null=True,blank=True,default=env('SITE_URL'))
     description=models.TextField(null=True,blank=True,default=env('SITE_DESCRIPTION'))

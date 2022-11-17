@@ -28,7 +28,7 @@
                         <div class="form-style-w3ls">
                         	<div class="form-group">
                         		<label for="">Select equipment</label>
-                              	<select class="form-control" name="state" data-width="100%">
+                              	<select class="form-control" name="equipment" data-width="100%">
 	                                <option value="" selected disabled>Select equiment</option>
 	                                {% for item in equipments %}
 	                                <option value="{{item.id}}">{{item.name}}</option>
@@ -44,7 +44,7 @@
                         	</div>
                             
                             <div class="form-group">
-                            	<label for="">Device rating</label>
+                            	<label for="">Device rating(Watts)</label>
                             	{{form.rating}}
                         		<div class="feedback"></div>
                             </div>
