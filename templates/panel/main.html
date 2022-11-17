@@ -233,6 +233,9 @@
                  	{% if request.user.is_authenticated %}
                  	<li class="d-md-none d-block">
                         <a href="{% url 'profile' username=data.username %}"><i class="ti-user"></i> Profile</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'historical data'  %}"><i class="fa fa-align-left"></i> Historical data</a>
                     </li> 
                     {% endif %}   
                     {% if request.user.is_authenticated %}

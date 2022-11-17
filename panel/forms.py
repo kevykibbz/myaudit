@@ -468,13 +468,17 @@ class ReadingForm(forms.ModelForm):
         fields=['meter_name','meter_location','meter_reading','date',]
 
 class CostForm(forms.ModelForm):
-    quantity=forms.CharField(widget=forms.TextInput(attrs={'aria-label':'quantity','placeholder':'Quantity'}))
-    rating=forms.CharField(widget=forms.TextInput(attrs={'aria-label':'rating','placeholder':'Equipment rating'}))
-    hours_used=forms.CharField(widget=forms.NumberInput(attrs={'aria-label':'hours_used','placeholder':'Hours use'}))
-    equipment=forms.CharField(widget=forms.TextInput(attrs={'aria-label':'equipment','placeholder':'Hours use'}))
+    quantity=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','aria-label':'quantity','placeholder':'Quantity'}))
+    rating=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','aria-label':'rating','placeholder':'Equipment rating'}))
+    hours_used=forms.CharField(widget=forms.NumberInput(attrs={'class':'form-control','aria-label':'hours_used','placeholder':'Hours use'}),required=False)
+    equipment=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','aria-label':'equipment','placeholder':'Hours use'}))
+    details=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','aria-label':'details','placeholder':'Details'}))
+    account=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','aria-label':'account','placeholder':'Account'}))
+    name=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','aria-label':'name','placeholder':'Name'}))
+    total_cost=forms.CharField(widget=forms.NumberInput(attrs={'class':'form-control','aria-label':'name','placeholder':'Name'}))
     class Meta:
         model=CostModel
-        fields=['quantity','rating','hours_used',]
+        fields=['quantity','rating','hours_used','details','account','name','total_cost',]
 
 #HomeForm
 class HomeForm(forms.ModelForm):

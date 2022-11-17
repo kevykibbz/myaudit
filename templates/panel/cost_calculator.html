@@ -26,6 +26,16 @@
                         <h5 class="mb-4">Equipmebt details</h5>
                         {% csrf_token %}
                         <div class="form-style-w3ls">
+                            <div class="form-group">
+                                <label for="">Name</label>
+                                {{form.name}}
+                                <div class="feedback"></div>
+                            </div> 
+                            <div class="form-group">
+                                <label for="">Account</label>
+                                {{form.account}}
+                                <div class="feedback"></div>
+                            </div>
                         	<div class="form-group">
                         		<label for="">Select equipment</label>
                               	<select class="form-control" name="equipment" data-width="100%">
@@ -37,14 +47,19 @@
 	                                {% endfor %}
 	                            </select>
                             </div>
+
                         	<div class="form-group">
                         		<label for="">Quantity</label>
                         		{{form.quantity}}
                         		<div class="feedback"></div>
                         	</div>
-                            
                             <div class="form-group">
-                            	<label for="">Device rating(Watts)</label>
+                                <label for="">Details</label>
+                                {{form.details}}
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="form-group">
+                            	<label for="">Device rating(KiloWatts)</label>
                             	{{form.rating}}
                         		<div class="feedback"></div>
                             </div>

@@ -35,4 +35,8 @@ urlpatterns=[
     path('view/meter/<int:id>',views.openMeter,name='view meter'),
     path('meter/reading/costs',costCalculatorReading.as_view(),name='cost'),
     path('set/elecricity/billing/plan',views.setBilling,name='billing'),
+    path('historical/data',views.historicalData,name='historical data'),
+    path('delete/historical/data/<int:id>',views.deleteHistoricalData,name='delete data'),
+    path('add/historical/data',addHistoricalData.as_view(),name='add historical data'),
+    path('edit/historical/data/<int:id>',editHistoricalData.as_view(),name='edit data'),
 ]

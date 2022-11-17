@@ -22,14 +22,17 @@
         <div class="about-block">
             <h6 class="title-small text-center">Total cost of energy consuption in ICDC</h6>
            	<div class="mt-2 row">
-           		<div class="col-md-10 mx-auto">
+           		<div class="col-12">
            			<div class="table-responsive">
            				<table class="table table hover table-striped">
            					<thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Name</th>
+                                    <th>Account</th>
                                     <th>Equipment</th>
                                     <th>Quantity</th>
+                                    <th>Details</th>
                                     <th>Device rating(Watts)</th>
                                     <th>Hours Used</th>
                                     <th>Created on</th>
@@ -40,23 +43,26 @@
                             	{% for cost in costs %}
                             	<tr>
                             		<td>{{forloop.counter}}.</td>
+                            		<td class="text-capitalize">{{cost.name|default:'Not set'}}</td>
+                            		<td class="text-capitalize">{{cost.account|default:'Not set'}}</td>
                             		<td class="text-capitalize">{{cost.parent.name}}</td>
                             		<td>{{cost.quantity|intcomma|default:0}} </td>
-                            		<td>{{cost.rating}} W</td>
+                            		<td>{{cost.details|default:'Not set'}} </td>
+                            		<td>{{cost.rating}} KW</td>
                             		<td>{{cost.hours_used}} Hrs</td>
                             		<td>{{cost.created_on|naturaltime}}</td>
                             		<td>Ksh {{cost.total_cost|intcomma|default:0}}</td>
                             	</tr>
                             	{% empty %}
                             	<tr>
-    								<td colspan="7" class="text-center">
+    								<td colspan="10" class="text-center">
     									<p><i class="fa fa-exclamation-circle"></i> No data found</p>
     								</td>
     							</tr>
     							{% endfor %}
     							{% if total %}
     							<tr>
-                                    <td colspan="6">Total Cost:</td>
+                                    <td colspan="9">Total Cost:</td>
                                     <td>Ksh {{total.total_cost__sum|intcomma|default:0}}</td>
                                 </tr>
                                 {% endif %}

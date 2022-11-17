@@ -874,3 +874,73 @@ $(document).on('change','#mychoice',function()
 {
   sessionStorage.mychoice=true;
 });
+
+
+$(document).on('click','.delete-button',function()
+{
+  var el=$(this),
+  url=el.data('url');
+  if(el.parent().hasClass('callers'))
+  {
+    el.hide().parent().append(`<div style="display:inline" class="action_options"><button  class="btn btn-secondary btn-round cancelBtn"><i class="ti-close"></i> Cancel</button><button style="background:#d64242 !important" data-url="${url}" class="btn btn-danger btn-round confirmBtn"><i class="ti-check"></i> Confirm</button></div>`);
+  }
+  else
+  {
+    el.wrap('<div style="display:inline"  class="callers"></div>');
+    el.hide().parent().append(`<div style="display:inline" class="action_options"><button  class="btn btn-secondary btn-round cancelBtn"><i class="ti-close"></i> Cancel</button><button style="background:#d64242 !important" data-url="${url}" class="btn btn-danger btn-round confirmBtn"><i class="ti-check"></i> Confirm</button></div>`);
+  }
+});
+
+$(document).on('click','.cancelBtn',function()
+{
+  $(this).parents('.callers,td').find('button').show()
+  $(this).parent().remove();
+});
+
+$(document).on('click','.confirmBtn',function()
+{
+  var el=$(this),
+  btn_text=el.html(),
+  remover=el.parents('.alert,.orderslist,tr'),
+  card_body=el.parents('.card-body'),
+  updater=el.parents('.card').find('.spanner'),
+  url=el.data('url');
+  $.ajax(
+  {
+    url:url,
+    dataType:'json',
+    beforeSend:function()
+    {
+      el.html('<i class="spinner-border spinner-border-sm" role="status"></i> Please wait...');
+    },
+    success:function(callback)
+    {
+      el.html(btn_text);
+      if(callback.deleted)
+      {
+        $('.small-model').modal('show');
+        $('.small-model').find('.modal-title').text('Warning');
+        $('.small-model').find('.modal-body').html('<div class="text-warning text-center"><i class="fa fa-exclmation-circle"></i> '+callback.message+'</div>');
+        return;
+      }
+    
+
+      $('body .support').html(parseInt($(document).find('.support').html()) -1)
+      updater.html(parseInt(updater.html()) -1)
+      if(el.parents('.card-body').children().length > 0)
+      {
+        remover.remove();
+      }
+      if(parseInt(updater.html()) < 1)
+      {
+        card_body.html(`<div class="col-12 text-center my-auto"><img src="/static/panel/assets/images/search.svg" class="width360 mb-3" /><h4><i class="ti-info-alt"></i> No data found</h4></div>`);
+      }
+    },
+    error(err)
+    {
+      el.html(btn_text);
+      console.log(err.status+':'+err.statusText);
+    }
+  });
+
+});

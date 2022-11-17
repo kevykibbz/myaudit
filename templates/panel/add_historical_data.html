@@ -1,0 +1,102 @@
+{% extends 'panel/main.html' %}
+{% load static %}
+{% load humanize %}
+{% block body %}
+<div class="section-body">
+    <div class="container-fluid">
+        <div class="row clearfix">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <ol class="breadcrumb" style="background-color:transparent!important;">
+                                <li class="breadcrumb-item"><a class="fg-theme" href="{% url 'dashboard' %}">Home</a></li>
+                                <li class="breadcrumb-item"><a class="fg-theme" href="{% url 'historical data' %}">Historical Data</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">{{title}}</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+        </div>
+        <div class="row clearfix">
+            <div class="col-md-6 col-12 mx-auto">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">{% if edit %} {{title}}{% else %} {{title}} {% endif %}</h3>
+                        <div class="card-options">
+                            <a href="javascript:void(0);" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                            <a href="javascript:void(0);" class="card-options-fullscreen" data-toggle="card-fullscreen"><i class="fe fe-maximize"></i></a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" class="ActiveForm" novalidate>
+	                        {% csrf_token %}
+	                        <div class="row">
+	                        	<div class="col-md-6">
+	                        		<div class="form-group">
+		                                <label for="">Name</label>
+		                                {{form.name}}
+		                                <div class="feedback"></div>
+		                            </div>
+	                        	</div>
+	                        	<div class="col-md-6">
+		                            <div class="form-group">
+		                                <label for="">Account</label>
+		                                {{form.account}}
+		                                <div class="feedback"></div>
+		                            </div>
+		                        </div>
+		                        <div class="col-md-6">
+		                        	<div class="form-group">
+		                        		<label for="">Select equipment</label>
+		                              	<select class="form-control" name="equipment" data-width="100%">
+			                                <option value="" selected disabled>Select equiment</option>
+			                                {% for item in equipments %}
+			                                <option value="{{item.id}}">{{item.name}}</option>
+			                                {% empty %}
+			                                <option value="" disabled="">No equipment(s) found</option>
+			                                {% endfor %}
+			                            </select>
+		                            </div>
+		                        </div>
+		                        <div class="col-md-6">
+		                        	<div class="form-group">
+		                        		<label for="">Quantity</label>
+		                        		{{form.quantity}}
+		                        		<div class="feedback"></div>
+		                        	</div>
+		                        </div>
+		                        <div class="col-md-6">
+		                            <div class="form-group">
+		                                <label for="">Details</label>
+		                                {{form.details}}
+		                                <div class="feedback"></div>
+		                            </div>
+		                        </div>
+		                        <div class="col-md-6">
+		                            <div class="form-group">
+		                            	<label for="">Device rating(KiloWatts)</label>
+		                            	{{form.rating}}
+		                        		<div class="feedback"></div>
+		                            </div>
+		                        </div>
+		                        <div class="col-12">
+		                            <div class="form-group">
+		                            	<label for="">Amount</label>
+		                            	{{form.total_cost}}
+		                        		<div class="feedback"></div>
+		                            </div>
+		                        </div>
+		                       <div class="col-md-12 mx-auto">
+	                            	<button class="btn btn-round btn-outline-primary btn-block"> Submit</button>
+	                            </div>
+	                        </div> 
+	                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

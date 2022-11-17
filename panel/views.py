@@ -137,7 +137,7 @@ class costCalculator(View):
         site=check_data()
         if form.is_valid():
             obj=form.save(commit=False)
-            rating=int(form.cleaned_data.get('rating',None))/1000
+            rating=int(form.cleaned_data.get('rating',None))
             quantity=form.cleaned_data.get('quantity',None)
             hours_used=form.cleaned_data.get('hours_used',None)
             total_cost=rating*int(quantity)*int(hours_used)*int(site.electricity_bill)
@@ -240,6 +240,24 @@ class Dashboard(View):
                 return JsonResponse({'valid':True,'message':'data saved successfully'},status=200,content_type='application/json')
             else:
                 return JsonResponse({'valid':False,'uform_errors':form.errors},status=200,content_type='application/json')
+
+@login_required(login_url='/accounts/login')
+@api_view(['GET',])
+def historicalData(request):
+    obj=check_data()
+    data=CostModel.objects.all().order_by("-id")
+    paginator=Paginator(data,30)
+    page_num=request.GET.get('page')
+    items=paginator.get_page(page_num)
+    data={
+        'title':'Historical Data',
+        'obj':obj,
+        'data':request.user,
+        'items':items,
+        'items_count':paginator.count,
+    }
+    return render(request,'panel/historical_data.html',context=data)
+
 
 
 #ProfileView
@@ -563,3 +581,70 @@ def homeUpdater(request):
             return JsonResponse({'valid':True,'message':'data saved successfully'},status=200,content_type='application/json')
         else:
             return JsonResponse({'valid':False,'uform_errors':form.errors},status=200,content_type='application/json')
+
+
+#deleteHistoricalData
+@login_required(login_url='/accounts/login')
+@api_view(['GET',])
+@allowed_users(allowed_roles=['admins','customer'])
+def deleteHistoricalData(request,id):
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        obj=get_object_or_404(CostModel,id=id)
+        obj.delete()
+        return JsonResponse({'deleted':False,'message':'Data deleted successfuly.'},content_type='application/json')
+
+
+#addHistoricalData
+@method_decorator(login_required(login_url='/accounts/login'),name='dispatch')
+@method_decorator(allowed_users(allowed_roles=['admins']),name='dispatch')
+class addHistoricalData(View):
+    def get(self ,request):
+        obj=check_data()
+        form=CostForm() 
+        equipments=EquipmentModel.objects.all().order_by("-id")   
+        data={
+            'title':'Add Historical Data',
+            'obj':obj,
+            'data':request.user,
+            'form':form,
+            'equipments':equipments,
+        }
+        return render(request,'panel/add_historical_data.html',context=data)
+
+    def post(self,request,*args ,**kwargs):
+        form=CostForm(request.POST or None)
+        if form.is_valid():
+            saveobj=form.save(commit=False)
+            equipment=EquipmentModel.objects.get(id__exact=form.cleaned_data.get('equipment',None))
+            saveobj.parent=equipment
+            saveobj.save()
+            return JsonResponse({'valid':True,'message':'Historical data added successfuly.'},content_type='application/json')
+        else:
+            return JsonResponse({'valid':False,'uform_errors':form.errors,},content_type='application/json')
+
+#editHistoricalData
+@method_decorator(login_required(login_url='/accounts/login'),name='dispatch')
+@method_decorator(allowed_users(allowed_roles=['admins']),name='dispatch')
+class editHistoricalData(View):
+    def get(self ,request,id):
+        obj=check_data()
+        data=get_object_or_404(CostModel,id__exact=id)
+        form=CostForm(instance=data) 
+        equipments=EquipmentModel.objects.all().order_by("-id")   
+        data={
+            'title':'Edit Historical Data',
+            'obj':obj,
+            'data':request.user,
+            'form':form,
+            'equipments':equipments,
+        }
+        return render(request,'panel/add_historical_data.html',context=data)
+
+    def post(self,request,id,*args ,**kwargs):
+        data=get_object_or_404(CostModel,id__exact=id)
+        form=CostForm(request.POST or None,instance=data)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'valid':True,'message':'Historical data edited successfuly.'},content_type='application/json')
+        else:
+            return JsonResponse({'valid':False,'uform_errors':form.errors,},content_type='application/json')

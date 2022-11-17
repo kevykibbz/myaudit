@@ -161,6 +161,9 @@ class ReadingModel(models.Model):
 
 class CostModel(models.Model):
     parent=models.ForeignKey(EquipmentModel,on_delete=models.CASCADE)
+    details=models.TextField(blank=True,null=True)
+    account=models.CharField(max_length=100,blank=True,null=True)
+    name=models.CharField(max_length=100,blank=True,null=True)
     quantity=models.CharField(max_length=100,blank=True,null=True)
     rating=models.CharField(max_length=100,blank=True,null=True)
     hours_used=models.CharField(max_length=100,blank=True,null=True)
