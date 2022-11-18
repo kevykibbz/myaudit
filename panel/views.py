@@ -83,6 +83,19 @@ class weeklyConsuption(View):
         }
         return render(request,'panel/consuption.html',context=data)
 
+
+
+#analyzer
+def analyzer(request):
+    obj=check_data()
+    data={
+        'title':'Analyzer',
+        'obj':obj,
+        'data':request.user,
+    }
+    return render(request,'panel/analyzer.html',context=data)
+
+
 def openMeter(request,id):
     obj=check_data()
     meter=get_object_or_404(MeterModel,id__exact=id)

@@ -39,4 +39,5 @@ urlpatterns=[
     path('delete/historical/data/<int:id>',views.deleteHistoricalData,name='delete data'),
     path('add/historical/data',addHistoricalData.as_view(),name='add historical data'),
     path('edit/historical/data/<int:id>',editHistoricalData.as_view(),name='edit data'),
+    path('data/analyzer',views.analyzer,name='analyzer'),
 ]

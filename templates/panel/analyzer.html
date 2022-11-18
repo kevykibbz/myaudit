@@ -1,10 +1,6 @@
 {% load static %}
-{% load humanize %}
-<!doctype html>
-<html lang="en" dir="ltr">
-
-<head>
-    <meta charset="utf-8">
+<!DOCTYPE HTML>
+<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="copyright" content="Legit Crew, https://www.devme.com/">
@@ -44,55 +40,134 @@
     <link href="//fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'panel/assets/css/style-starter.css' %}">
     <link rel="stylesheet" href="{% static 'panel/assets/css/custom.css' %}" />
-    <style type="text/css">
-    .border-edit
-    {
-        border:3px solid #51be78;
-        padding:8px;
-    }
-    .border-edit i
-    {
-        position:absolute;
-        bottom:-2px;
-        right:-1px;
-        width:30px;
-        height:30px;
-        background-color:#51be78;
-        cursor:pointer;
-        color:#fff;
-        line-height:30px;
-        text-align:center;
-        transition:all;
-    }
-    .border-edit i:hover
-    {
-        color:#51be78;
-        background:#fff;
-        border-bottom:3px solid #fff;
-        border-right-color:3px solid #fff;
-    }
-    </style>
+<html>
+<head>
+<script type="text/javascript">
+window.onload = function () 
+{
+	var chart = new CanvasJS.Chart("chartContainer", {
+	theme: "light1", // "light2", "dark1", "dark2"
+	animationEnabled: false, // change to true		
+	title:{
+		text: "Daily Consumption in (KW)"
+	},
+	data: [
+	{
+		// Change type to "bar", "area", "spline", "pie",etc.
+		type: "column",
+		dataPoints: [
+			{ label: "Sunday",  y: 10  },
+			{ label: "Monday", y: 15  },
+			{ label: "Tuesday", y: 25  },
+			{ label: "Wednesday",  y: 30  },
+			{ label: "Thursday",  y: 28  },
+			{ label: "Friday",  y: 28  },
+			{ label: "Saturday",  y: 28  }
+		]
+	}
+	]
+});
+chart.render();
+
+var dps = []; // dataPoints
+var chart = new CanvasJS.Chart("chartContainer1", {
+	title :{
+		text: "Dynamic Data"
+	},
+	data: [{
+		type: "line",
+		dataPoints: dps
+	}]
+});
+
+
+var chart = new CanvasJS.Chart("chartContainer3", {
+	animationEnabled: true,
+	title:{
+		text: "Customer equipemnt rating against month"
+	},
+	axisX:{
+		valueFormatString: "DD MMM",
+		crosshair: {
+			enabled: true,
+			snapToDataPoint: true
+		}
+	},
+	axisY: {
+		title: "Rating in KW",
+		valueFormatString: "##0.00 KW",
+		crosshair: {
+			enabled: true,
+			snapToDataPoint: true,
+			labelFormatter: function(e) {
+				return "$" + CanvasJS.formatNumber(e.value, "##0.00");
+			}
+		}
+	},
+	data: [{
+		type: "area",
+		xValueFormatString: "DD MMM",
+		yValueFormatString: "##0.00 KW",
+		dataPoints: [
+			{ x: new Date(2016, 07, 01), y: 76.727997 },
+			{ x: new Date(2016, 07, 02), y: 75.459999 },
+			{ x: new Date(2016, 07, 03), y: 76.011002 },
+			{ x: new Date(2016, 07, 04), y: 75.751999 },
+			{ x: new Date(2016, 07, 05), y: 77.500000 },
+			{ x: new Date(2016, 07, 08), y: 77.436996 },
+			{ x: new Date(2016, 07, 09), y: 79.650002 },
+			{ x: new Date(2016, 07, 10), y: 79.750999 },
+			{ x: new Date(2016, 07, 11), y: 80.169998 },
+			{ x: new Date(2016, 07, 12), y: 79.570000 },
+			{ x: new Date(2016, 07, 15), y: 80.699997 },
+			{ x: new Date(2016, 07, 16), y: 79.686996 },
+			{ x: new Date(2016, 07, 17), y: 78.996002 },
+			{ x: new Date(2016, 07, 18), y: 78.899002 },
+			{ x: new Date(2016, 07, 19), y: 77.127998 },
+			{ x: new Date(2016, 07, 22), y: 76.759003 },
+			{ x: new Date(2016, 07, 23), y: 77.480003 },
+			{ x: new Date(2016, 07, 24), y: 77.623001 },
+			{ x: new Date(2016, 07, 25), y: 76.408997 },
+			{ x: new Date(2016, 07, 26), y: 76.041000 },
+			{ x: new Date(2016, 07, 29), y: 76.778999 },
+			{ x: new Date(2016, 07, 30), y: 78.654999 },
+			{ x: new Date(2016, 07, 31), y: 77.667000 }
+		]
+	}]
+});
+chart.render();
+var chart = new CanvasJS.Chart("chartContainer4", {
+	theme: "light2", // "light1", "light2", "dark1", "dark2"
+	exportEnabled: true,
+	animationEnabled: true,
+	title: {
+		text: "Desktop Browser Market Share in 2016"
+	},
+	data: [{
+		type: "pie",
+		startAngle: 25,
+		toolTipContent: "<b>{label}</b>: {y}%",
+		showInLegend: "true",
+		legendText: "{label}",
+		indexLabelFontSize: 16,
+		indexLabel: "{label} - {y}%",
+		dataPoints: [
+			{ y: 51.08, label: "Chrome" },
+			{ y: 27.34, label: "Internet Explorer" },
+			{ y: 10.62, label: "Firefox" },
+			{ y: 5.02, label: "Microsoft Edge" },
+			{ y: 4.07, label: "Safari" },
+			{ y: 1.22, label: "Opera" },
+			{ y: 0.44, label: "Others" }
+		]
+	}]
+});
+chart.render();
+}
+</script>
 </head>
-<body onload="load()">
-    <!-- preloader -->
-    <div class="placeholder">
-        <div class="overlay">
-            <div class="row">
-                <div class="col-12">
-                    <div class="loader-container">
-                        <div class="loader">
-                            <svg class="circular" viewBox="25 25 50 50">
-                                <circle class="path" cx="50" cy="50" r="10" fill="none" stroke-width="2" stroke-miterlimit="10" />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- //preloader -->
-    <div class="main-display " style="display:none">
-        <!-- header -->
+<body>
+	 <!-- header -->
         <header id="site-header" class="fixed-top">
           <section class="w3l-header-4">
             <div class="container">
@@ -149,9 +224,10 @@
           </section>
         </header>
         <!-- //header -->
-        {% block body %}
-        {% endblock %}
-        <!-- footer -->
+    <div id="chartContainer" style="height: 370px; width: 80%;margin:120px auto"></div>
+    <hr>
+    <div id="chartContainer3" style="height: 370px; width: 80%;margin:20px auto"></div>
+    <!-- footer -->
          <section class="w3l-footer-29-main mt-3" id="footer">
           <div class="footer-29 py-5">
             <div class="container pb-lg-3">
@@ -211,179 +287,6 @@
                 <a href="javascript:void(0);" class="float" ><i class="fa fa-pencil my-float"></i></a>
             {% endif %}
         </section>
-        <div class="row">
-            <div class="col-md-5 col-12 mx-auto cookie-container" style="z-index:9999;">
-                <p>We use cookie in this website to give you the best experience on our site and show you relevant ads.To find out more, read our <a class="page-refresher" href="#">privacy policy</a> and <a class="page-refresher" href="#">terms and conditions</a></p>
-                <div class="mt-2 text-center">
-                    <button class="btn cookieBtn">ok</button>
-                </div>
-            </div>
-        </div>
-        
-        <div id="myModal" class="modal fade small-model">
-          <div class="modal-dialog modal-confirm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="icon-box">
-                        <i class="fa fa-check"></i>
-                    </div>              
-                    <h4 class="modal-title w-100"></h4> 
-                </div>
-                <div class="modal-body">
-                    <p class="text-center"></p>
-                </div>
-               <div class="row">
-                    <div class="col-12 text-center">
-                        <button class="btn btn-success btn-block btn-round" data-dismiss="modal">OK</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> 
-    <!-- //small model -->
-
-    <!-- edit modal -->
-    <div class="modal fade edit-modal bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myEditModal" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="mySmallModalLabel">Edit Item</h5>
-                <button type="button" class="closser close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="editor modal-body position-relative">
-                    <div class="load-overlay" style="display:none">
-                        <span class="overlay-close btn-remove" title="close overlay">
-                            <i class="fa fa-close"></i>
-                        </span>
-                        <div class="overlay">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="loader-container">
-                                    <div class="loader">
-                                        <svg class="circular" viewBox="25 25 50 50">
-                                        <circle class="path" cx="50" cy="50" r="10" fill="none" stroke-width="2" stroke-miterlimit="10"/>
-                                        </svg>
-                                    </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="target">
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-    <script src="{% static 'panel/assets/js/jquery-3.5.1.min.js' %}"></script>
-    <script src="{% static 'panel/assets/js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'panel/assets/js/theme-change.js' %}"></script>
-    <script src="{% static 'panel/assets/js/bootstrap-select.min.js' %}"></script>
-    <script src="{% static 'panel/assets/js/custom.js' %}"></script> 
-    <script>
-        window.onscroll = function () 
-        {
-          scrollFunction()
-        };
-
-        function scrollFunction() 
-        {
-          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) 
-          {
-            document.getElementById("movetop").style.display = "block";
-          } 
-          else 
-          {
-            document.getElementById("movetop").style.display = "none";
-          }
-        }
-        function topFunction() 
-        {
-          document.body.scrollTop = 0;
-          document.documentElement.scrollTop = 0;
-        }
-      </script>
-      <script>
-      $(window).on("scroll", function () 
-      {
-        var scroll = $(window).scrollTop();
-
-        if (scroll >= 80) 
-        {
-          $("#site-header").addClass("nav-fixed");
-        } 
-        else 
-        {
-          $("#site-header").removeClass("nav-fixed");
-        }
-      });
-
-      $(".navbar-toggler").on("click", function () 
-      {
-        $("header").toggleClass("active");
-      });
-      $(document).on("ready", function () 
-      {
-        if ($(window).width() > 991) 
-        {
-          $("header").removeClass("active");
-        }
-        $(window).on("resize", function () 
-        {
-          if ($(window).width() > 991) 
-          {
-            $("header").removeClass("active");
-          }
-        });
-      });
-    </script>
-    <script>
-      $(function () 
-      {
-        $('.navbar-toggler').click(function () 
-        {
-          $('body').toggleClass('noscroll');
-        });
-      });
-    </script>
-    <script>
-        var current='';
-        $(document).on('click','.penwrapper',function()
-        {
-            var el=$(this),
-            name='';
-            if(el.parent().find('img').length)
-            {
-                name=el.parent().find('img').data('name');
-            }
-            else
-            {
-                name=el.parent().find('.content').data('name');
-                current=el;
-            }
-            $('.form-area').find("input,textarea").parent().hide();
-            $('.form-area').find("input[name='"+name+"'],textarea[name='"+name+"']").parent().show();
-            $('.target').html($('.form-area').html()).find('form').show().find("input[name='"+name+"'],textarea[name='"+name+"']").val($.trim(el.parent().find('.content').text())).addClass('editor-pallate');
-            $('.edit-modal').modal({show:true});
-        });
-        $(document).on('keyup','.editor-pallate',function()
-        {
-            current.parent().find('.content').text($(this).val());
-        });
-        $(document).ready(function()
-        {
-            $('.ti-close').click();
-        });
-    </script>
-    <script>
-        $(document).on('click','.float',function()
-        {
-           $(document).find('.editor').toggleClass('border-edit').children('i').toggle();
-        });
-    </script>
+	<script src="{% static 'panel/assets/js/canvasjs.min.js' %}"> </script>
 </body>
 </html>
