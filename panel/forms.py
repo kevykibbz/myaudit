@@ -490,6 +490,22 @@ class CostForm(forms.ModelForm):
         model=CostModel
         fields=['quantity','year','month','total_cost','rating',]
 
+    def clean_month(self):
+        month=self.cleaned_data['month']
+        if self.instance.month:
+            if month != self.instance.month:
+                if CostModel.objects.filter(month=month).exists():
+                    raise forms.ValidationError('Month already exists')
+                else:
+                    return month
+            else:
+                return month
+        else:
+            if CostModel.objects.filter(month=month).exists():
+                raise forms.ValidationError('Month already exists')
+            else:
+                return month
+
 #HomeForm
 class HomeForm(forms.ModelForm):
     h1=forms.CharField(widget=forms.TextInput(attrs={'aria-label':'h1','class':'form-control input-rounded'}),required=False)
