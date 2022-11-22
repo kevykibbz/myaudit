@@ -160,14 +160,11 @@ class ReadingModel(models.Model):
         return self.parent.name
 
 class CostModel(models.Model):
-    parent=models.ForeignKey(EquipmentModel,on_delete=models.CASCADE)
-    details=models.TextField(blank=True,null=True)
-    account=models.CharField(max_length=100,blank=True,null=True)
-    name=models.CharField(max_length=100,blank=True,null=True)
+    year=models.CharField(max_length=100,blank=True,null=True)
+    month=models.CharField(max_length=100,blank=True,null=True)
     quantity=models.CharField(max_length=100,blank=True,null=True)
-    rating=models.CharField(max_length=100,blank=True,null=True)
-    hours_used=models.CharField(max_length=100,blank=True,null=True)
     total_cost=models.FloatField(blank=True,null=True)
+    rating=models.FloatField(blank=True,null=True)
     created_on=models.DateTimeField(default=now)
     class Meta:
         db_table='cost_tbl'

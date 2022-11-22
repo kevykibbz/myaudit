@@ -55,9 +55,9 @@
 			            								</td>
 			            							</tr>
 			            							{% endfor %}
-			            							{% if reading %}
+			            							{% if readings %}
 			            							<tr>
-	                                                    <td colspan="3">Total Consuption</td>
+	                                                    <td colspan="3"><b>Total Consuption</b></td>
 	                                                    <td>{{total.meter_reading__sum|intcomma|default:0}} KW</td>
 	                                                </tr>
 	                                                {% endif %}

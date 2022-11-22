@@ -35,29 +35,16 @@
 	                        <div class="row">
 	                        	<div class="col-md-6">
 	                        		<div class="form-group">
-		                                <label for="">Name</label>
-		                                {{form.name}}
+		                                <label for="">Year</label>
+		                                {{form.year}}
 		                                <div class="feedback"></div>
 		                            </div>
 	                        	</div>
 	                        	<div class="col-md-6">
 		                            <div class="form-group">
-		                                <label for="">Account</label>
-		                                {{form.account}}
+		                                <label for="">Select Month</label>
+		                                {{form.month}}
 		                                <div class="feedback"></div>
-		                            </div>
-		                        </div>
-		                        <div class="col-md-6">
-		                        	<div class="form-group">
-		                        		<label for="">Select equipment</label>
-		                              	<select class="form-control" name="equipment" data-width="100%">
-			                                <option value="" selected disabled>Select equiment</option>
-			                                {% for item in equipments %}
-			                                <option value="{{item.id}}">{{item.name}}</option>
-			                                {% empty %}
-			                                <option value="" disabled="">No equipment(s) found</option>
-			                                {% endfor %}
-			                            </select>
 		                            </div>
 		                        </div>
 		                        <div class="col-md-6">
@@ -68,18 +55,11 @@
 		                        	</div>
 		                        </div>
 		                        <div class="col-md-6">
-		                            <div class="form-group">
-		                                <label for="">Details</label>
-		                                {{form.details}}
-		                                <div class="feedback"></div>
-		                            </div>
-		                        </div>
-		                        <div class="col-md-6">
-		                            <div class="form-group">
-		                            	<label for="">Device rating(KiloWatts)</label>
-		                            	{{form.rating}}
+		                        	<div class="form-group">
+		                        		<label for="">Rating</label>
+		                        		{{form.rating}}
 		                        		<div class="feedback"></div>
-		                            </div>
+		                        	</div>
 		                        </div>
 		                        <div class="col-12">
 		                            <div class="form-group">

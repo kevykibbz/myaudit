@@ -26,6 +26,7 @@ from django.db.models import Avg
 import timeago,datetime
 from  django.contrib.auth.models import Group
 from django.db.models import Sum
+from .serializers import CostSerializer
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
@@ -88,10 +89,20 @@ class weeklyConsuption(View):
 #analyzer
 def analyzer(request):
     obj=check_data()
+    if request.GET.get('year'):
+        year=request.GET.get('year')
+        pre_data=CostModel.objects.filter(year=year).order_by("created_on")
+        serializer=CostSerializer(pre_data,many=True)
+    else:
+        pre_data=CostModel.objects.all().order_by("created_on")
+        serializer=CostSerializer(pre_data,many=True)
+    years=CostModel.objects.all().order_by("-id")
     data={
         'title':'Analyzer',
         'obj':obj,
         'data':request.user,
+        'years':years,
+        'data':serializer.data,
     }
     return render(request,'panel/analyzer.html',context=data)
 
@@ -136,28 +147,18 @@ class costCalculator(View):
     def get(self,request):
         obj=check_data()
         form=CostForm()
-        equipments=EquipmentModel.objects.all().order_by("-id")
         data={
             'title':'Cost calculator',
             'obj':obj,
             'data':request.user,
             'form':form,
-            'equipments':equipments,
         }
         return render(request,'panel/cost_calculator.html',context=data)
     def post(self,request,*args ,**kwargs):
         form=CostForm(request.POST or None)
         site=check_data()
         if form.is_valid():
-            obj=form.save(commit=False)
-            rating=int(form.cleaned_data.get('rating',None))
-            quantity=form.cleaned_data.get('quantity',None)
-            hours_used=form.cleaned_data.get('hours_used',None)
-            total_cost=rating*int(quantity)*int(hours_used)*int(site.electricity_bill)
-            obj.total_cost=total_cost
-            equipment=EquipmentModel.objects.get(id__exact=form.cleaned_data.get('equipment',None))
-            obj.parent=equipment
-            obj.save()
+            form.save()
             return JsonResponse({'valid':True,'message':'Equipment readings submitted successfuly.'},content_type='application/json')
         else:
             return JsonResponse({'valid':False,'uform_errors':form.errors,},content_type='application/json')
@@ -217,9 +218,9 @@ class Login(View):
 
 def user_logout(request):
     logout(request)
-    return redirect('/accounts/login')
+    return redirect('/accounts/login/')
 
-@method_decorator(login_required(login_url='/accounts/login'),name='dispatch')
+@method_decorator(login_required(login_url='/accounts/login/'),name='dispatch')
 class Dashboard(View):
     def get(self,request):
         obj=check_data()
@@ -254,7 +255,7 @@ class Dashboard(View):
             else:
                 return JsonResponse({'valid':False,'uform_errors':form.errors},status=200,content_type='application/json')
 
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/accounts/login/')
 @api_view(['GET',])
 def historicalData(request):
     obj=check_data()
@@ -274,7 +275,7 @@ def historicalData(request):
 
 
 #ProfileView
-@method_decorator(login_required(login_url='/accounts/login'),name='dispatch')
+@method_decorator(login_required(login_url='/accounts/login/'),name='dispatch')
 class ProfileView(View):
     def get(self,request,username):
         obj=check_data()
@@ -324,7 +325,7 @@ class ProfileView(View):
 
 
 #profilePic
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/accounts/login/')
 @api_view(['POST',])
 def profilePic(request):
     if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
@@ -342,7 +343,7 @@ def profilePic(request):
         return JsonResponse({'valid':False,'error':'No changes made'},content_type='application/json')
 
 #social
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/accounts/login/')
 @api_view(['POST',])
 def edit_social_link(request):
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
@@ -363,7 +364,7 @@ def edit_social_link(request):
         return JsonResponse({'valid':False,'error':'No changes made'},content_type='application/json')
 
 #passwordChange
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/accounts/login/')
 @api_view(['POST',])
 def passwordChange(request):
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
@@ -380,7 +381,7 @@ def passwordChange(request):
             return JsonResponse({'valid':False,'uform_errors':passform.errors},content_type='application/json')
 
 #siteContact
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['admins'])
 @api_view(['POST',])
 def siteContact(request):
@@ -394,7 +395,7 @@ def siteContact(request):
             return JsonResponse({'valid':False,'uform_errors':form.errors},status=200,content_type='application/json')
 
 #siteSocial
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['admins'])
 @api_view(['POST',])
 def siteSocial(request):
@@ -415,7 +416,7 @@ def siteSocial(request):
             return JsonResponse({'valid':False,'uform_errors':form.errors},status=200,content_type='application/json')
 
 #addMeter
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['admins'])
 @api_view(['POST',])
 def addMeter(request):
@@ -432,7 +433,7 @@ def addMeter(request):
 
 
 #billing
-login_required(login_url='/accounts/login')
+login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['admins'])
 @api_view(['POST',])
 def setBilling(request):
@@ -446,7 +447,7 @@ def setBilling(request):
             return JsonResponse({'valid':False,'uform_errors':form.errors},status=200,content_type='application/json')
 
 #addEquipment
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['admins'])
 @api_view(['POST',])
 def addEquipment(request):
@@ -461,7 +462,7 @@ def addEquipment(request):
             return JsonResponse({'valid':False,'uform_errors':form.errors},status=200,content_type='application/json')
 
 #meters
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['admins'])
 @api_view(['GET',])
 def meters(request):
@@ -481,7 +482,7 @@ def meters(request):
     return render(request,'panel/meters.html',context=data)
 
 #equipments
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['admins'])
 @api_view(['GET',])
 def equipments(request):
@@ -501,7 +502,7 @@ def equipments(request):
     return render(request,'panel/equipments.html',context=data)
 
 #EditMeter
-@method_decorator(login_required(login_url='/accounts/login'),name='dispatch')
+@method_decorator(login_required(login_url='/accounts/login/'),name='dispatch')
 @method_decorator(allowed_users(allowed_roles=['admins']),name='dispatch')
 class EditMeter(View):
     def get(self ,request,id):
@@ -527,7 +528,7 @@ class EditMeter(View):
             return JsonResponse({'valid':False,'uform_errors':form.errors,},content_type='application/json')
 
 #deleteMeter
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['admins'])
 @api_view(['GET',])
 def deleteMeter(request,id):
@@ -535,13 +536,13 @@ def deleteMeter(request,id):
         try:
             obj=MeterModel.objects.get(id__exact=id)
             obj.delete() 
-            return JsonResponse({'valid':True,'message':'Meter name deleted successfully.','id':id},content_type='application/json')       
+            return JsonResponse({'deleted':False,'message':'Meter name deleted successfully.','id':id},content_type='application/json')       
         except ServiceModel.DoesNotExist:
-            return JsonResponse({'valid':False,'message':'Item does not exist'},content_type='application/json')
+            return JsonResponse({'deleted':True,'message':'Item does not exist'},content_type='application/json')
 
 
 #EditEquipment
-@method_decorator(login_required(login_url='/accounts/login'),name='dispatch')
+@method_decorator(login_required(login_url='/accounts/login/'),name='dispatch')
 @method_decorator(allowed_users(allowed_roles=['admins']),name='dispatch')
 class EditEquipment(View):
     def get(self ,request,id):
@@ -568,7 +569,7 @@ class EditEquipment(View):
 
 
 #deleteEquipment
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['admins'])
 @api_view(['GET',])
 def deleteEquipment(request,id):
@@ -576,12 +577,12 @@ def deleteEquipment(request,id):
         try:
             obj=EquipmentModel.objects.get(id__exact=id)
             obj.delete() 
-            return JsonResponse({'valid':True,'message':'Equipment name deleted successfully.','id':id},content_type='application/json')       
+            return JsonResponse({'deleted':False,'message':'Equipment name deleted successfully.','id':id},content_type='application/json')       
         except ServiceModel.DoesNotExist:
-            return JsonResponse({'valid':False,'message':'Item does not exist'},content_type='application/json')
+            return JsonResponse({'deleted':True,'message':'Item does not exist'},content_type='application/json')
 
 #homeUpdater
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['admins'])
 @api_view(['POST',])
 def homeUpdater(request):
@@ -597,7 +598,7 @@ def homeUpdater(request):
 
 
 #deleteHistoricalData
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/accounts/login/')
 @api_view(['GET',])
 @allowed_users(allowed_roles=['admins','customer'])
 def deleteHistoricalData(request,id):
@@ -608,7 +609,7 @@ def deleteHistoricalData(request,id):
 
 
 #addHistoricalData
-@method_decorator(login_required(login_url='/accounts/login'),name='dispatch')
+@method_decorator(login_required(login_url='/accounts/login/'),name='dispatch')
 @method_decorator(allowed_users(allowed_roles=['admins']),name='dispatch')
 class addHistoricalData(View):
     def get(self ,request):
@@ -627,16 +628,13 @@ class addHistoricalData(View):
     def post(self,request,*args ,**kwargs):
         form=CostForm(request.POST or None)
         if form.is_valid():
-            saveobj=form.save(commit=False)
-            equipment=EquipmentModel.objects.get(id__exact=form.cleaned_data.get('equipment',None))
-            saveobj.parent=equipment
-            saveobj.save()
+            form.save()
             return JsonResponse({'valid':True,'message':'Historical data added successfuly.'},content_type='application/json')
         else:
             return JsonResponse({'valid':False,'uform_errors':form.errors,},content_type='application/json')
 
 #editHistoricalData
-@method_decorator(login_required(login_url='/accounts/login'),name='dispatch')
+@method_decorator(login_required(login_url='/accounts/login/'),name='dispatch')
 @method_decorator(allowed_users(allowed_roles=['admins']),name='dispatch')
 class editHistoricalData(View):
     def get(self ,request,id):

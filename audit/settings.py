@@ -80,12 +80,12 @@ WSGI_APPLICATION = 'audit.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # DATABASES = {
 #    'default': 
@@ -197,6 +197,6 @@ EMAIL_PORT=587
 DEFAULT_FROM_EMAIL=EMAIL_HOST_USER
 
 #login
-LOGIN_URL='/accounts/login'
+LOGIN_URL='/accounts/login/'
 LOGIN_REDIRECT_URL='/dashboard'
-LOGOUT_REDIRECT_URL='/accounts/login'
+LOGOUT_REDIRECT_URL='/accounts/login/'

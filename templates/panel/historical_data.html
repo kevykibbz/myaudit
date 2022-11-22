@@ -33,13 +33,10 @@
                                 <thead>
                                    <tr>
 	                                    <th>#</th>
-	                                    <th>Name</th>
-	                                    <th>Account</th>
-	                                    <th>Equipment</th>
+	                                    <th>Year</th>
+	                                    <th>Month</th>
 	                                    <th>Quantity</th>
-	                                    <th>Details</th>
-	                                    <th>Device rating(Watts)</th>
-	                                    <th>Hours Used</th>
+	                                    <th>Rating</th>
 	                                    <th>Created on</th>
 	                                    <th>Total Cost</th>
 	                                    <th>Action</th>
@@ -49,13 +46,10 @@
                                    {% for cost in items %}
 	                            	<tr>
 	                            		<td>{{forloop.counter}}.</td>
-	                            		<td class="text-capitalize">{{cost.name|default:'Not set'}}</td>
-	                            		<td class="text-capitalize">{{cost.account|default:'Not set'}}</td>
-	                            		<td class="text-capitalize">{{cost.parent.name}}</td>
-	                            		<td>{{cost.quantity|intcomma|default:0}} </td>
-	                            		<td>{{cost.details|default:'Not set'}} </td>
-	                            		<td>{{cost.rating}} KW</td>
-	                            		<td>{{cost.hours_used|default:'Not set'}} </td>
+	                            		<td>{{cost.year}} </td>
+	                            		<td>{{cost.month}} </td>
+	                            		<td>{{cost.quantity|intcomma}}</td>
+	                            		<td>{{cost.rating|intcomma}} KWh</td>
 	                            		<td>{{cost.created_on|naturaltime}}</td>
 	                            		<td>Ksh {{cost.total_cost|intcomma|default:0}}</td>
 	                            		<td>
@@ -65,7 +59,7 @@
 	                            	</tr>
                                     {% empty %}
                                     <tr>
-                                        <td colspan="11" class="text-center">
+                                        <td colspan="8" class="text-center">
                                             <div class=" text-center py-5">
                                                 <img data-src="{% static 'panel/assets/images/search.svg' %}" class="width360 mb-3" />
                                                 <h4><i class="ti-info-alt"></i> No data found</h4>

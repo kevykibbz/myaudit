@@ -467,18 +467,28 @@ class ReadingForm(forms.ModelForm):
         model=ReadingModel
         fields=['meter_name','meter_location','meter_reading','date',]
 
+month_opts=[
+            ('January','January'),
+            ('February','February'),
+            ('March','March'),
+            ('April','April'),
+            ('May','May'),
+            ('June','June'),
+            ('July','July'),
+            ('August','August'),
+            ('October','October'),
+            ('November','November'),
+            ('December','December'),
+]
 class CostForm(forms.ModelForm):
     quantity=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','aria-label':'quantity','placeholder':'Quantity'}))
-    rating=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','aria-label':'rating','placeholder':'Equipment rating'}))
-    hours_used=forms.CharField(widget=forms.NumberInput(attrs={'class':'form-control','aria-label':'hours_used','placeholder':'Hours use'}),required=False)
-    equipment=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','aria-label':'equipment','placeholder':'Hours use'}))
-    details=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','aria-label':'details','placeholder':'Details'}))
-    account=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','aria-label':'account','placeholder':'Account'}))
-    name=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','aria-label':'name','placeholder':'Name'}))
-    total_cost=forms.CharField(widget=forms.NumberInput(attrs={'class':'form-control','aria-label':'name','placeholder':'Name'}))
+    rating=forms.CharField(widget=forms.NumberInput(attrs={'class':'form-control','aria-label':'rating','placeholder':'Rating in KWh'}))
+    year=forms.CharField(widget=forms.NumberInput(attrs={'class':'form-control','aria-label':'year','placeholder':'Year'}))
+    month=forms.ChoiceField(choices=month_opts,widget=forms.Select(attrs={'class':'form-control','aria-label':'month','placeholder':'Select Month'}))
+    total_cost=forms.CharField(widget=forms.NumberInput(attrs={'class':'form-control','aria-label':'Total cost','placeholder':'Total cost'}))
     class Meta:
         model=CostModel
-        fields=['quantity','rating','hours_used','details','account','name','total_cost',]
+        fields=['quantity','year','month','total_cost','rating',]
 
 #HomeForm
 class HomeForm(forms.ModelForm):

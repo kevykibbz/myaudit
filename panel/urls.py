@@ -9,7 +9,7 @@ urlpatterns=[
     path('',Home.as_view(),name='home'),
     path('weekly/consuption',weeklyConsuption.as_view(),name='weekly consuption'),
     path('cost/calculator',costCalculator.as_view(),name='cost calculator'),
-    path('accounts/login',Login.as_view(),name='login'),
+    path('accounts/login/',Login.as_view(),name='login'),
     path('dashboard',Dashboard.as_view(),name='dashboard'),
     path('accounts/logout',views.user_logout,name='logout'),
     path('accounts/reset/password',auth_views.PasswordResetView.as_view(form_class=UserResetPassword,extra_context={'title':'Password Reset'},template_name='panel/password_reset.html'),{'title':'Password Reset'},name='password_reset'),
