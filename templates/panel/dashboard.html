@@ -27,7 +27,6 @@
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#contact">Contact info</a></li>
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#meters">Add Meters</a></li>
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#equipments">Add Equipment</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#billing">Billing</a></li>
                     </ul>
                 </div>
             </div>
@@ -391,36 +390,6 @@
 			                    </form>
                             </div>
                         </div>                    
-                    </div>
-                    <div class="tab-pane" id="billing">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Set Electricity bill in (Ksh/unit)</h3>
-                                <div class="card-options">
-                                    <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
-                                    <a href="#" class="card-options-fullscreen" data-toggle="card-fullscreen"><i class="fe fe-maximize"></i></a>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <form class="ActiveForm" method="post" action="{% url 'billing' %}" novalidate>
-                                    {% csrf_token %}
-                                    <div class="row">
-                                        <div class="col-md-6 mx-auto">
-                                            <div class="form-group">
-                                                <label for="id_site_name">Enter bill amount in Ksh/unit <span class="text-danger">*</span></label>
-                                                {{form7.electricity_bill}}
-                                                <div class="feedback"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="col-sm-12 text-center m-t-20">
-                                                <button class="btn-round btn btn-primary"><i class="ti-save"></i> Save</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div> 
                     </div>
                 </div>
             </div>

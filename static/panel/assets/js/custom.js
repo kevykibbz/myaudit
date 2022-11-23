@@ -208,6 +208,10 @@ $(document).on('submit','.ActiveForm',function()
       success:function(callback)
       {
         el.find('button:last').html(btn_txt).attr('disabled',false);
+        if(callback.home)
+        {
+          $('.closser').click();
+        }
         if(callback.topup)
         {
           $('.small-model').modal({show:true});

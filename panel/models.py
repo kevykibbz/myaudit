@@ -171,26 +171,3 @@ class CostModel(models.Model):
         verbose_name_plural='cost_tbl'
     def __str__(self)->str:
         return f'{self.user.username} cost info'
-
-class AboutModel(models.Model):
-    user=models.ForeignKey(User,on_delete=models.CASCADE)
-    h1=models.CharField(max_length=100,null=True,blank=True)
-    h1_text=models.TextField(null=True,blank=True)
-    image=models.ImageField(upload_to='about/',null=True,blank=True)
-    created_on=models.DateTimeField(default=now)
-    class Meta:
-        db_table='home_tbl'
-        verbose_name_plural='home_tbl'
-    def __str__(self)->str:
-        return f'{self.user.username} home page settings'
-
-    def delete(self, using=None,keep_parents=False):
-        if self.image:
-            self.image.storage.delete(self.image.name)
-        super().delete()
-
-@receiver(post_save, sender=User)
-def create_home_cms(sender, instance, created, **kwargs):
-    if created and instance.is_superuser:
-        cms=AboutModel.objects.create(user_id=instance.pk)
-        cms.save()

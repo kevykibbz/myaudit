@@ -27,6 +27,7 @@ import timeago,datetime
 from  django.contrib.auth.models import Group
 from django.db.models import Sum
 from .serializers import CostSerializer
+from installation.models import AboutModel
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
@@ -44,6 +45,7 @@ class Home(View):
         meters=MeterModel.objects.all().order_by("-id")
         form=ReadingForm()
         form1=HomeForm()
+        homedata=AboutModel.objects.get(user_id=request.user.pk)
         data={
             'title':f'Welcome to {obj.site_name}',
             'obj':obj,
@@ -51,6 +53,7 @@ class Home(View):
             'meters':meters,
             'form':form,
             'form1':form1,
+            'homedata':homedata,
         }
         return render(request,'panel/index.html',context=data)
     def post(self,request,*args ,**kwargs):
@@ -96,7 +99,7 @@ def analyzer(request):
     else:
         pre_data=CostModel.objects.all().order_by("created_on")
         serializer=CostSerializer(pre_data,many=True)
-    years=CostModel.objects.all().order_by("-id")
+    years=CostModel.objects.values('year').distinct()
     data={
         'title':'Analyzer',
         'obj':obj,
@@ -587,12 +590,11 @@ def deleteEquipment(request,id):
 @api_view(['POST',])
 def homeUpdater(request):
     if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        form=HomeForm(request.POST or None)
+        data=AboutModel.objects.get(user_id=request.user.pk)
+        form=HomeForm(request.POST or None,instance=data)
         if form.is_valid():
-            usr=form.save(commit=False)
-            usr.user=request.user
-            usr.save()
-            return JsonResponse({'valid':True,'message':'data saved successfully'},status=200,content_type='application/json')
+            form.save()
+            return JsonResponse({'valid':True,'message':'data saved successfully','home':True},status=200,content_type='application/json')
         else:
             return JsonResponse({'valid':False,'uform_errors':form.errors},status=200,content_type='application/json')
 

@@ -16,7 +16,7 @@ import re
 from urllib.parse import urlparse
 from ckeditor.fields import RichTextFormField
 from ckeditor_uploader.fields import RichTextUploadingFormField
-
+from installation.models import AboutModel
 
 class UserLoginForm(forms.Form):
     username=forms.CharField(widget=forms.TextInput(attrs={'aria-required':'true','class':'form-control','placeholder':'Username ','aria-label':'username'}),error_messages={'required':'Username  is required'})
@@ -481,14 +481,13 @@ month_opts=[
             ('December','December'),
 ]
 class CostForm(forms.ModelForm):
-    quantity=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','aria-label':'quantity','placeholder':'Quantity'}))
-    rating=forms.CharField(widget=forms.NumberInput(attrs={'class':'form-control','aria-label':'rating','placeholder':'Rating in KWh'}))
+    rating=forms.CharField(widget=forms.NumberInput(attrs={'class':'form-control','aria-label':'rating','placeholder':'Rating in KW'}))
     year=forms.CharField(widget=forms.NumberInput(attrs={'class':'form-control','aria-label':'year','placeholder':'Year'}))
     month=forms.ChoiceField(choices=month_opts,widget=forms.Select(attrs={'class':'form-control','aria-label':'month','placeholder':'Select Month'}))
     total_cost=forms.CharField(widget=forms.NumberInput(attrs={'class':'form-control','aria-label':'Total cost','placeholder':'Total cost'}))
     class Meta:
         model=CostModel
-        fields=['quantity','year','month','total_cost','rating',]
+        fields=['year','month','total_cost','rating',]
 
     def clean_month(self):
         month=self.cleaned_data['month']
@@ -506,7 +505,7 @@ class CostForm(forms.ModelForm):
             else:
                 return month
 
-#HomeForm
+#
 class HomeForm(forms.ModelForm):
     h1=forms.CharField(widget=forms.TextInput(attrs={'aria-label':'h1','class':'form-control input-rounded'}),required=False)
     h1_text=forms.CharField(widget=forms.Textarea(attrs={'aria-label':'h1_text','class':'form-control'}),required=False)  

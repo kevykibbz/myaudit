@@ -8,36 +8,32 @@
             <div class="col-lg-6 col-sm-12">
             	{% if data.is_authenticated and data.is_staff %}
                 <div class="position-relative editor border-edit">
-					<h3 class="mb-md-4 mb-3 content text-capitalize" data-name="h1">{{about.h1|default:'Section title'}}</h3>
+					<h3 class="mb-md-4 mb-3 content text-capitalize" data-name="h1">{{homedata.h1|default:'Section title'}}</h3>
 					<i class="penwrapper fa fa-pencil"></i>
 				</div> 
 				{% else %}
 				<div class="position-relative">
-					<h3 class="mb-md-4 mb-3 content text-capitalize" data-name="h1">{{about.h1|default:'Section title'}}</h3>
+					<h3 class="mb-md-4 mb-3 content text-capitalize" data-name="h1">{{homedata.h1|default:'Section title'}}</h3>
 				</div>
 				{% endif %}
 				<br>
 				{% if data.is_authenticated and data.is_staff %}
                 <div class="position-relative editor border-edit">
 		        	<i class="penwrapper fa fa-pencil"></i>
-		        	<p class="content" data-name="h1_text">
-	                	Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, excepturi.
-	                    Distinctio accusantium fugit odit? Fugit ipsam. Sed ac fringilla ex. Nam mauris velit, ac
-	                    cursus quis, non leo.</p>
+		        	<p class="content" data-name="h1_text">{{homedata.h1_text|default:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, excepturi'}}</p>
 	            </div>
 	            {% else %}
 	             <div class="position-relative">
 		        	<p class="content" data-name="h1_text">
-	                	Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, excepturi.
-	                    Distinctio accusantium fugit odit? Fugit ipsam. Sed ac fringilla ex. Nam mauris velit, ac
-	                    cursus quis, non leo.</p>
+	                	{{homedata.h1_text|default:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, excepturi.
+                        Distinctio accusantium fugit odit?.'}}</p>
 	            </div>
 	            {% endif %}
                 <div class="mt-sm-5 mt-4 text-md-left text-center">
                     <a class="btn btn-primary btn-style" href="{% url 'weekly consuption' %}"> Check weekly consuptions </a>
                 </div>
             </div>
-            <div class="col-lg-5 offset-lg-1 col-md-8 col-sm-10 mt-lg-0 mt-md-5 mt-4">
+            <div class="col-lg-5 offset-lg-1 col-md-8 col-sm-10 mt-lg-0 mt-md-5 mt-4 mx-auto">
                 <div class="banner-form-w3">
                     <!-- banner form -->
                     <form class="ActiveForm" action="#" method="post" novalidate>
