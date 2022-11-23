@@ -20,13 +20,12 @@
 				{% if data.is_authenticated and data.is_staff %}
                 <div class="position-relative editor border-edit">
 		        	<i class="penwrapper fa fa-pencil"></i>
-		        	<p class="content" data-name="h1_text">{{homedata.h1_text|default:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, excepturi'}}</p>
+		        	<p class="content" data-name="h1_text">{{homedata.h1_text|default:'Lorem ipsum dolor sit adipisicing elit'}}</p>
 	            </div>
 	            {% else %}
 	             <div class="position-relative">
 		        	<p class="content" data-name="h1_text">
-	                	{{homedata.h1_text|default:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, excepturi.
-                        Distinctio accusantium fugit odit?.'}}</p>
+	                	{{homedata.h1_text|default:'Lorem ipsum dolor sit amet consectetur adipisicing elit'}}</p>
 	            </div>
 	            {% endif %}
                 <div class="mt-sm-5 mt-4 text-md-left text-center">
