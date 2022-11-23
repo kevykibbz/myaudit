@@ -28,6 +28,7 @@ from  django.contrib.auth.models import Group
 from django.db.models import Sum
 from .serializers import CostSerializer
 from installation.models import AboutModel
+import calendar
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
@@ -77,15 +78,28 @@ class weeklyConsuption(View):
         obj=check_data()
         meters=MeterModel.objects.all().order_by("created_on")
         inner_qs=MeterModel.objects.values_list('id',flat=True)
-        data=ReadingModel.objects.filter(parent_id__in=inner_qs).order_by("parent_id","-created_on")
+
+        data=ReadingModel.objects.filter(parent_id__in=inner_qs,category__icontains='daily').order_by("parent_id","-created_on")
         paginator=Paginator(data,30)
         page_num=request.GET.get('page')
-        readings=paginator.get_page(page_num)
+        daily=paginator.get_page(page_num)
+
+        data1=ReadingModel.objects.filter(parent_id__in=inner_qs,category__icontains='weekly').order_by("parent_id","-created_on")
+        paginator1=Paginator(data1,30)
+        page_num1=request.GET.get('page')
+        weekly=paginator1.get_page(page_num1)
+
+        data2=ReadingModel.objects.filter(parent_id__in=inner_qs,category__icontains='monthly').order_by("parent_id","-created_on")
+        paginator2=Paginator(data2,30)
+        page_num2=request.GET.get('page')
+        monthly=paginator2.get_page(page_num2)
         data={
-            'title':'weekly Consuption',
+            'title':'weekly Consumption',
             'obj':obj,
             'data':request.user,
-            'readings':readings,
+            'daily':daily,
+            'weekly':weekly,
+            'monthly':monthly,
             'meters':meters,
         }
         return render(request,'panel/consuption.html',context=data)
@@ -95,20 +109,21 @@ class weeklyConsuption(View):
 #analyzer
 def analyzer(request):
     obj=check_data()
-    if request.GET.get('year'):
-        year=request.GET.get('year')
-        pre_data=CostModel.objects.filter(year=year).order_by("created_on")
-        serializer=CostSerializer(pre_data,many=True)
-    else:
-        pre_data=CostModel.objects.all().order_by("created_on")
-        serializer=CostSerializer(pre_data,many=True)
-    years=CostModel.objects.values('year').distinct()
+    pre_data1=CostModel.objects.filter(category__icontains='daily').order_by("-created_on")
+    serializer1=CostSerializer(pre_data1,many=True)
+
+    pre_data2=CostModel.objects.filter(category__icontains='weekly').order_by("-created_on")
+    serializer2=CostSerializer(pre_data2,many=True) 
+
+    pre_data3=CostModel.objects.filter(category__icontains='monthly').order_by("-created_on")
+    serializer3=CostSerializer(pre_data3,many=True)
     data={
         'title':'Analyzer',
         'obj':obj,
         'data':request.user,
-        'years':years,
-        'data':serializer.data,
+        'daily':serializer1.data,
+        'weekly':serializer2.data,
+        'monthly':serializer3.data,
     }
     return render(request,'panel/analyzer.html',context=data)
 
@@ -153,18 +168,41 @@ class costCalculator(View):
     def get(self,request):
         obj=check_data()
         form=CostForm()
+        rooms=RoomModel.objects.all()
+        equipments=EquipmentModel.objects.all()
         data={
             'title':'Cost calculator',
             'obj':obj,
             'data':request.user,
             'form':form,
+            'rooms':rooms,
+            'equipments':equipments,
         }
         return render(request,'panel/cost_calculator.html',context=data)
     def post(self,request,*args ,**kwargs):
         form=CostForm(request.POST or None)
         site=check_data()
         if form.is_valid():
-            form.save()
+            obj=form.save(commit=False)
+            category=form.cleaned_data.get('category',None)
+            date=form.cleaned_data.get('date',None)
+            quantity=int(form.cleaned_data.get('quantity',None))
+            rating=float(form.cleaned_data.get('rating',None))
+            no_of_hours_used=int(form.cleaned_data.get('no_of_hours_used',None))
+            consuption=quantity*(rating/1000)*no_of_hours_used
+            cost=consuption*24.8
+            obj.consumption=consuption
+            obj.total_cost=cost
+            if 'Weekly' in category:
+                obj.datapoint=date
+            elif 'Monthly' in category:
+                result=datetime.datetime.strptime(str(date),'%Y-%m-%d')
+                month=calendar.month_abbr[result.month]
+                obj.datapoint=month
+            else:
+                day=date.strftime('%A')
+                obj.datapoint=day
+            obj.save()
             return JsonResponse({'valid':True,'message':'Equipment readings submitted successfuly.'},content_type='application/json')
         else:
             return JsonResponse({'valid':False,'uform_errors':form.errors,},content_type='application/json')
@@ -236,7 +274,7 @@ class Dashboard(View):
         form4=WorkingConfigForm(instance=obj)
         form5=MeterForm()
         form6=EquipmentForm()
-        form7=BillForm(instance=obj)
+        form7=RoomForm(instance=obj)
         obj=check_data()
         data={
             'title':'Dashboard',
@@ -278,6 +316,44 @@ def historicalData(request):
     }
     return render(request,'panel/historical_data.html',context=data)
 
+
+#icdcRooms
+@login_required(login_url='/accounts/login/')
+@api_view(['GET',])
+def icdcRooms(request):
+    obj=check_data()
+    data=RoomModel.objects.all().order_by("-id")
+    paginator=Paginator(data,30)
+    page_num=request.GET.get('page')
+    rooms=paginator.get_page(page_num)
+    data={
+        'title':'ICDC Rooms',
+        'obj':obj,
+        'data':request.user,
+        'rooms':rooms,
+        'rooms_count':paginator.count,
+    }
+    return render(request,'panel/icdc_rooms.html',context=data)
+
+
+
+#icdcEquipment
+@login_required(login_url='/accounts/login/')
+@api_view(['GET',])
+def icdcEquipment(request):
+    obj=check_data()
+    data=EquipmentModel.objects.all().order_by("-id")
+    paginator=Paginator(data,30)
+    page_num=request.GET.get('page')
+    equipments=paginator.get_page(page_num)
+    data={
+        'title':'ICDC Rooms',
+        'obj':obj,
+        'data':request.user,
+        'equipments':equipments,
+        'equipments_count':paginator.count,
+    }
+    return render(request,'panel/icdc_equipments.html',context=data)
 
 
 #ProfileView
@@ -399,6 +475,23 @@ def siteContact(request):
             return JsonResponse({'valid':True,'message':'data saved successfully'},status=200,content_type='application/json')
         else:
             return JsonResponse({'valid':False,'uform_errors':form.errors},status=200,content_type='application/json')
+
+
+#addRoom
+@login_required(login_url='/accounts/login/')
+@allowed_users(allowed_roles=['admins'])
+@api_view(['POST',])
+def addRoom(request):
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        form=RoomForm(request.POST or None)
+        if form.is_valid():
+            user=form.save(commit=False)
+            user.user_id=request.user.pk
+            user.save()
+            return JsonResponse({'valid':True,'message':'Room  added successfully'},status=200,content_type='application/json')
+        else:
+            return JsonResponse({'valid':False,'uform_errors':form.errors},status=200,content_type='application/json')
+
 
 #siteSocial
 @login_required(login_url='/accounts/login/')
@@ -543,7 +636,20 @@ def deleteMeter(request,id):
             obj=MeterModel.objects.get(id__exact=id)
             obj.delete() 
             return JsonResponse({'deleted':False,'message':'Meter name deleted successfully.','id':id},content_type='application/json')       
-        except ServiceModel.DoesNotExist:
+        except MeterModel.DoesNotExist:
+            return JsonResponse({'deleted':True,'message':'Item does not exist'},content_type='application/json')
+
+#deleteRoom
+@login_required(login_url='/accounts/login/')
+@allowed_users(allowed_roles=['admins'])
+@api_view(['GET',])
+def deleteRoom(request,id):
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        try:
+            obj=RoomModel.objects.get(id__exact=id)
+            obj.delete() 
+            return JsonResponse({'deleted':False,'message':'Room name deleted successfully.','id':id},content_type='application/json')       
+        except RoomModel.DoesNotExist:
             return JsonResponse({'deleted':True,'message':'Item does not exist'},content_type='application/json')
 
 
@@ -574,6 +680,34 @@ class EditEquipment(View):
             return JsonResponse({'valid':False,'uform_errors':form.errors,},content_type='application/json')
 
 
+
+#editRoom
+@method_decorator(login_required(login_url='/accounts/login/'),name='dispatch')
+@method_decorator(allowed_users(allowed_roles=['admins']),name='dispatch')
+class editRoom(View):
+    def get(self ,request,id):
+        obj=check_data()
+        item = get_object_or_404(RoomModel,id=id)
+        form=RoomForm(instance=item)    
+        data={
+            'title':f'Edit room / {item.name}',
+            'obj':obj,
+            'data':request.user,
+            'form':form,
+            'edit':True,
+        }
+        return render(request,'panel/edit_room.html',context=data)
+
+    def post(self,request,id,*args ,**kwargs):
+        item=get_object_or_404(RoomModel,id=id)
+        form=RoomForm(request.POST or None,instance=item)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'valid':True,'message':'Equipment name updated successfuly.'},content_type='application/json')
+        else:
+            return JsonResponse({'valid':False,'uform_errors':form.errors,},content_type='application/json')
+
+
 #deleteEquipment
 @login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['admins'])
@@ -584,7 +718,7 @@ def deleteEquipment(request,id):
             obj=EquipmentModel.objects.get(id__exact=id)
             obj.delete() 
             return JsonResponse({'deleted':False,'message':'Equipment name deleted successfully.','id':id},content_type='application/json')       
-        except ServiceModel.DoesNotExist:
+        except EquipmentModel.DoesNotExist:
             return JsonResponse({'deleted':True,'message':'Item does not exist'},content_type='application/json')
 
 #homeUpdater

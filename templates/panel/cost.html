@@ -28,9 +28,12 @@
            					<thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Year</th>
-                                    <th>Month</th>
+                                    <th>Room</th>
+                                    <th>Equipment</th>
+                                    <th>Quantity</th>
                                     <th>Rating</th>
+                                    <th>No of hours used</th>
+                                    <th>Consumption</th>
                                     <th>Created on</th>
                                     <th>Total Cost</th>
                                 </tr>
@@ -39,15 +42,18 @@
                                {% for cost in costs %}
                             	<tr>
                             		<td>{{forloop.counter}}.</td>
-                            		<td>{{cost.year}} </td>
-                            		<td>{{cost.month}} </td>
-                            		<td>{{cost.rating|intcomma}} KWh</td>
+                            		<td>{{cost.room}}</td>
+                            		<td>{{cost.equipment}} </td>
+                            		<td>{{cost.quantity|intcomma}} </td>
+                            		<td>{{cost.rating|intcomma}} W</td>
+                            		<td>{{cost.no_of_hours_used|intcomma}} Hours</td>
+                            		<td>{{cost.consumption|intcomma}} kWh</td>
                             		<td>{{cost.created_on|naturaltime}}</td>
-                            		<td>Ksh {{cost.total_cost|intcomma|default:0}}</td>
+                            		<td>Ksh {{cost.total_cost|floatformat:2|intcomma|default:0}}</td>
                             	</tr>
                                 {% empty %}
                                 <tr>
-                                    <td colspan="6" class="text-center">
+                                    <td colspan="9" class="text-center">
                                         <div class=" text-center py-5">
                                             <img data-src="{% static 'panel/assets/images/search.svg' %}" class="width360 mb-3" />
                                             <h4><i class="ti-info-alt"></i> No data found</h4>
@@ -56,9 +62,9 @@
                                 </tr>
                                 {% endfor %}
                                 {% if total %}
-    							<tr>
-                                    <td colspan="5"><b>Total Cost:</b></td>
-                                    <td>Ksh {{total.total_cost__sum|intcomma|default:0}}</td>
+    							<tr class="bg-success text-light" style="font-size:18px;font-family:'tahoma'">
+                                    <td colspan="8"><b>Total Cost:</b></td>
+                                    <td><b>Ksh {{total.total_cost__sum|floatformat:2|intcomma|default:0}}</b></td>
                                 </tr>
                                 {% endif %}
                             </tbody>

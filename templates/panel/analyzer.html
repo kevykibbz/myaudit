@@ -37,42 +37,48 @@
     <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     <link rel="shortcut icon" href="{{obj.favicon.url}}" type="image/x-icon">
-    <link rel="stylesheet" href="{% static 'panel/assets/css/bootstrap.min.css' %}" />
-    <link rel="stylesheet" href="{% static 'panel/assets/css/main.css' %}"/>
-    <link rel="stylesheet" href="{% static 'panel/assets/css/theme1.css' %}"/>
-    <script src="{% static 'panel/assets/js/jquery-3.5.1.min.js' %}"></script>
+  	<link rel="stylesheet" href="{% static 'panel/assets/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'panel/assets/css/font-awesome.min.css' %}">
+    <link href="//fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'panel/assets/css/style-starter.css' %}">
-    <link rel="stylesheet" href="{% static 'panel/assets/css/custom.css' %}"/>
-	{{data|json_script:"costs" }}
+    <link rel="stylesheet" href="{% static 'panel/assets/css/custom.css' %}" />
+	{{daily|json_script:"daily" }}
+	{{weekly|json_script:"weekly" }}
+	{{monthly|json_script:"monthly" }}
 	<script type="text/javascript">
 	window.onload = function () 
 	{
-		const json_data = JSON.parse(document.getElementById('costs').textContent);
-		const newArray1=json_data.map(({month:label,total_cost:y})=>({label,y}));
-		const newArray2=json_data.map(({month:label,rating:y})=>({label,y}));
+		const daily = JSON.parse(document.getElementById('daily').textContent);
+		const weekly = JSON.parse(document.getElementById('weekly').textContent);
+		const monthly = JSON.parse(document.getElementById('monthly').textContent);
+		const dailyArray=daily.map(({datapoint:label,consumption:y})=>({label,y}));
+		const weeklyArray=weekly.map(({datapoint:label,consumption:y})=>({label,y}));
+		const monthlyArray=monthly.map(({datapoint:label,consumption:y})=>({label,y}));
+		const monthlyArray1=monthly.map(({datapoint:label,total_cost:y})=>({label,y}));
+		const monthlyArray2=monthly.map(({datapoint:label,consumption:y})=>({label,y}));
 
 		var chart1 = new CanvasJS.Chart("chartContainer1", 
 		{
 			theme: "light1", // "light2", "dark1", "dark2"
-			animationEnabled: false, // change to true		
+			animationEnabled: true, // change to true		
 			title:{
-				text: "Cost Analyzer"
+				text: "Energy consumption"
 			},
 			axisX:{
-				title: "Months of the year",
+				title: "Days of the week",
 				crosshair: {
 					enabled: true,
 					snapToDataPoint: true
 				}
 			},
 			axisY: {
-				title: "Price in Ksh",
-				valueFormatString: "##0.00 ksh",
+				title: "Consumption in kWh",
+				valueFormatString: "##0.00 kWh",
 				crosshair: {
 					enabled: true,
 					snapToDataPoint: true,
 					labelFormatter: function(e) {
-						return "$" + CanvasJS.formatNumber(e.value, "##0.00 ksh");
+						return "kWh" + CanvasJS.formatNumber(e.value, "##0.00");
 					}
 				}
 			},
@@ -80,7 +86,7 @@
 			{
 				// Change type to "bar", "area", "spline", "pie",etc.
 				type: "column",
-				dataPoints:newArray1
+				dataPoints:dailyArray
 			}
 			]
 		});
@@ -89,7 +95,7 @@
 		var chart2 = new CanvasJS.Chart("chartContainer2", 
 		{
 			theme: "light1", // "light2", "dark1", "dark2"
-			animationEnabled: false, // change to true		
+			animationEnabled: true, // change to true		
 			title:{
 				text: "Consuption in kwh against Months"
 			},
@@ -112,7 +118,7 @@
 			{
 				// Change type to "bar", "area", "spline", "pie",etc.
 				type: "column",
-				dataPoints:newArray2
+				dataPoints:weeklyArray
 			}
 			]
 		});
@@ -121,9 +127,9 @@
 		var chart3 = new CanvasJS.Chart("chartContainer3", 
 		{
 			theme: "light1", // "light2", "dark1", "dark2"
-			animationEnabled: false, // change to true		
+			animationEnabled: true, // change to true		
 			title:{
-				text: "Consuption in kwh against Months"
+				text: "Consuption in kWh against Months"
 			},
 			axisX:{
 				title: "Months of the year",
@@ -133,7 +139,7 @@
 				}
 			},
 			axisY: {
-				title: "Consuption in KWh",
+				title: "Consuption in kWh",
 				valueFormatString: "##0.00 kwh",
 				crosshair: {
 					enabled: true,
@@ -143,8 +149,8 @@
 			data: [
 				{
 					// Change type to "bar", "area", "spline", "pie",etc.
-					type: "pie",
-					dataPoints:newArray2
+					type: "column",
+					dataPoints:monthlyArray
 				}
 			]
 		});
@@ -153,9 +159,9 @@
 		var chart4 = new CanvasJS.Chart("chartContainer4", 
 		{
 			theme: "light1", // "light2", "dark1", "dark2"
-			animationEnabled: false, // change to true		
+			animationEnabled: true, // change to true		
 			title:{
-				text: "Consuption in kwh against Months"
+				text: "Monthly cost against months"
 			},
 			axisX:{
 				title: "Months of the year",
@@ -165,8 +171,8 @@
 				}
 			},
 			axisY: {
-				title: "Consuption in KWh",
-				valueFormatString: "##0.00 kwh",
+				title: "Cost in Ksh",
+				valueFormatString: "##0.00 Ksh",
 				crosshair: {
 					enabled: true,
 					snapToDataPoint: true,
@@ -175,14 +181,52 @@
 			data: [
 			{
 				// Change type to "bar", "area", "spline", "pie",etc.
-				type: "area",
-				dataPoints:newArray2
+				type: "column",
+				dataPoints:monthlyArray1
 			}
 			]
 		});
 		chart4.render();
+
+		var chart5 = new CanvasJS.Chart("chartContainer5", 
+		{
+			theme: "light1", // "light2", "dark1", "dark2"
+			animationEnabled: true, // change to true		
+			title:{
+				text: "Monthly consumption against months"
+			},
+			axisX:{
+				title: "Months of the year",
+				crosshair: {
+					enabled: true,
+					snapToDataPoint: true
+				}
+			},
+			axisY: {
+				title: "Consumption in kWh",
+				valueFormatString: "##0.00 kWh",
+				crosshair: {
+					enabled: true,
+					snapToDataPoint: true,
+				}
+			},
+			data: [
+			{
+				// Change type to "bar", "area", "spline", "pie",etc.
+				type: "pie",
+				dataPoints:monthlyArray2
+			}
+			]
+		});
+		chart5.render();
 	}
 	</script>
+	<style>
+	.tabber .active{
+      background:#d92626  !important;
+      color:#fff !important;
+    }
+	</style>
 </head>
 <body>
 	 <!-- header -->
@@ -245,33 +289,48 @@
           </section>
         </header>
         <!-- //header -->
-
-  	<div class="container">
-  		<div class="row" style="margin-top:150px">
-	    	<div class="col-md-4 mx-auto">
-	    		<form class="ActiveForm" novalidate>
-                    <h5 class="mb-4">Select year</h5>
-                    <select name="year" id="id_year" class="form-control">
-                    	{% for item in years %}
-                    	    <option value="{{item.year}}">{{item.year}}</option>
-                    	{% empty %}
-                    	<option value="" selected="" disabled="">No year found</option>
-                    	{% endfor %}
-                    </select>  
-                    <button class="btn btn-style btn-primary w-100"> Submit</button>
-                    </div>
-                </form>
-	    	</div>
-	    </div>
-  	</div>
-
-    <div id="chartContainer1" style="height: 370px; width: 80%;margin:120px auto"></div>
-    <hr>
-    <div id="chartContainer2" style="height: 370px; width: 80%;margin:20px auto"></div>
-    <hr>
-    <div id="chartContainer3" style="height: 370px; width: 80%;margin:20px auto"></div>
-    <hr>
-    <div id="chartContainer4" style="height: 370px; width: 80%;margin:20px auto"></div>
+	<section class="w3l-about py-5" id="about">
+	  	<div class="container">
+	  		<div class="row" style="margin-top:150px">
+		    	<div class="col-md-8">
+		       		<div class="d-lg-flex justify-content-between" >
+		                <ul class="nav nav-tabs mb-3 tabber" id="pills-tab" role="tablist" style="display:inline-block;overflow-x: auto; overflow-y: hidden; flex-wrap:nowrap;">
+		                    <li class="nav-item">
+		                        <a class="nav-link active" id="pills-daily-tab" data-toggle="pill" href="#pills-daily" role="tab" aria-controls="pills-daily" aria-selected="true">Daily</a>
+		                    </li>
+		                    <li class="nav-item">
+		                        <a class="nav-link " id="pills-weekly-tab" data-toggle="pill" href="#pills-weekly" role="tab" aria-controls="pills-weekly" aria-selected="false">Weekly</a>
+		                    </li>
+		                    <li class="nav-item">
+		                        <a class="nav-link " id="pills-monthly-tab" data-toggle="pill" href="#pills-monthly" role="tab" aria-controls="pills-monthly" aria-selected="false">monthly</a>
+		                    </li>  
+		                </ul>
+		            </div>	
+		   		</div>
+		    </div>
+	  	</div>
+	  	<div class="container">
+	  		<div class="row" style="margin-top:150px">
+		   		<div class="col-12">
+		   			<div class="tab-content" id="pills-tabContent">
+			            <div class="tab-pane fade show active" id="pills-daily" role="tabpanel" aria-labelledby="pills-daily-tab">
+			            	<div id="chartContainer1" style="height: 370px; width:100%;margin:-60px auto"></div>
+			            </div>
+			            <div class="tab-pane fade" id="pills-weekly" role="tabpanel" aria-labelledby="pills-weekly-tab">
+			            	<div id="chartContainer2" style="height: 370px; width:100% !important;margin:120px auto"></div>
+			            </div>
+			            <div class="tab-pane fade" id="pills-monthly" role="tabpanel" aria-labelledby="pills-monthly-tab">
+			            	<div id="chartContainer3" style="height: 370px; width:100%;margin:20px auto"></div>
+						    <hr>
+						    <div id="chartContainer4" style="height: 370px; width:100%;margin:20px auto"></div>
+						    <hr>
+						    <div id="chartContainer5" style="height: 370px; width:100%;margin:20px auto"></div>
+			            </div>
+			        </div>
+		   		</div>
+		    </div>
+	  	</div>
+	</section>
     <!-- footer -->
          <section class="w3l-footer-29-main mt-3" id="footer">
           <div class="footer-29 py-5">

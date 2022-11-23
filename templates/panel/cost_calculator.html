@@ -23,27 +23,54 @@
         	<div class="row">
         		<div class="col-md-6 mx-auto">
         			<form action="#" method="post" class="ActiveForm" novalidate>
-                        <h5 class="mb-4">Equipment details</h5>
+                        <h5 class="mb-4 text-center"><b>Equipment details</b></h5>
                         {% csrf_token %}
                         <div class="form-style-w3ls">
                             <div class="form-group">
-                                <label for="">Year</label>
-                                {{form.year}}
-                                <div class="feedback"></div>
-                            </div> 
-                            <div class="form-group">
-                                <label for="">Select month</label>
-                                {{form.month}}
+                                <label for="">Select category</label>
+                                {{form.category}}
                                 <div class="feedback"></div>
                             </div>
                             <div class="form-group">
-                                <label for="">Rating(KW)</label>
+                                <label for=""class="changer">Date</label>
+                                {{form.date}}
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Room name</label>
+                                <select name="room" id="id_room" class="formm-control">
+                                    {% for room in rooms %}
+                                    <option value="{{room.name}}">{{room.name}}</option>
+                                    {% empty %}
+                                    <option value="" selected="" disabled="">No room found</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="feedback"></div>
+                            </div> 
+                            <div class="form-group">
+                                <label for="">Equipment</label>
+                                <select name="equipment" id="id_equipment" class="form-control">
+                                    {% for equipment in equipments %}
+                                    <option value="{{equipment.name}}">{{equipment.name}}</option>
+                                    {% empty %}
+                                    <option value="" selected="" disabled="">No equipment found</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="feedback"></div>
+                            </div> 
+                            <div class="form-group">
+                                <label for="">Rating(W)</label>
                                 {{form.rating}}
                                 <div class="feedback"></div>
                             </div>
                             <div class="form-group">
-                                <label for="">Amount</label>
-                                {{form.total_cost}}
+                                <label for="">Quantity</label>
+                                {{form.quantity}}
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="">No of hours used</label>
+                                {{form.no_of_hours_used}}
                                 <div class="feedback"></div>
                             </div>
                             <button class="btn btn-style btn-primary w-100"> Submit</button>

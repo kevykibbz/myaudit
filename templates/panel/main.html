@@ -237,6 +237,12 @@
                     <li>
                         <a href="{% url 'historical data'  %}"><i class="fa fa-align-left"></i> Historical data</a>
                     </li> 
+                    <li>
+                        <a href="{% url 'icdc rooms'  %}"><i class="ti-home"></i> ICDC Rooms</a>
+                    </li> 
+                    <li>
+                        <a href="{% url 'equipments'  %}"><i class="ti-hummer"></i> ICDC Equipments</a>
+                    </li> 
                     {% endif %}   
                     {% if request.user.is_authenticated %}
                     <li class="d-md-none d-block">

@@ -45,7 +45,7 @@
                                     <td><span>{{equipment.created_on|naturaltime}}</span></td>
                                     <td>
                                     	<a  href="{% url 'edit equipment' id=equipment.id %}" class="btn btn-success btn-round" type="button"><i class="zmdi zmdi-edit"></i> Edit</a>
-                                    	<a  data-host="{% url 'equipments' %}" href="{% url 'delete equipment' id=equipment.id %}" class="del-data btn btn-danger btn-round" type="button"><i class="zmdi zmdi-delete"></i> Delete</a>
+                                        <button data-url="{% url 'delete equipment' id=equipment.id %}"  class="delete-button btn btn-danger btn-round" type="button"><i class="zmdi zmdi-delete"></i> Delete </button>
                                     </td>
                                 </tr>
                                 {% empty %}

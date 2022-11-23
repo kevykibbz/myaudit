@@ -11,7 +11,7 @@
                         <div class="col-12">
                             <ol class="breadcrumb" style="background-color:transparent!important;">
                                 <li class="breadcrumb-item"><a class="fg-theme" href="{% url 'dashboard' %}">Home</a></li>
-                                <li class="breadcrumb-item"><a class="fg-theme" href="{% url 'equipments' %}">ICDC Equipments</a></li>
+                                <li class="breadcrumb-item"><a class="fg-theme" href="{% url 'icdc rooms' %}">ICDC Rooms</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">{{title}}</li>
                             </ol>
                         </div>
@@ -33,7 +33,7 @@
                         <form class="ActiveForm" method="post" novalidate>
                             {% csrf_token %}
                             <div class="form-group">
-                                <label>Equipment name</label>
+                                <label>Room name</label>
                                 {{form.name}}
                                 <div class="feedback"></div>
                             </div>

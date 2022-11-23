@@ -10496,7 +10496,7 @@ ol.w3l-right li:before {
 /*-- //subscribe --*/
 /* middle */
 .middle {
-  background: url(../images/banner.jpg) no-repeat top;
+  background: url(../images/iStock-519094857.webp) no-repeat top;
   background-size: cover;
   -webkit-background-size: cover;
   -o-background-size: cover;
@@ -10548,6 +10548,7 @@ ol.w3l-right li:before {
 .w3l-bottom-grids-6 {
   background: var(--bg-grey);
   position: relative;
+  margin-top:-18px;
   z-index: 1; }
 
 .w3l-bottom-grids-6 .area-box {
@@ -10609,7 +10610,7 @@ ol.w3l-right li:before {
   .w3l-bottom-grids-6 {
     position: relative;
     z-index: 1;
-    margin-top: 0px; } }
+    margin-top:-18px; } }
 
 @media (max-width: 480px) {
   .w3l-bottom-grids-6 h4 a.title-head {
@@ -11574,7 +11575,7 @@ button.owl-next {
 
 .breadcrumb-bg-about {
   background-size: cover;
-  background-image: linear-gradient(to right, rgba(25, 25, 25, 0.7), rgba(0, 0, 0, 0.7)), url(../images/banner.jpg);
+  background-image: linear-gradient(to right, rgba(25, 25, 25, 0.7), rgba(0, 0, 0, 0.7)), url(../images/iStock-519094857.webpjpg);
   background-repeat: no-repeat, no-repeat, no-repeat;
   background-position: center;
   background-attachment: fixed; }

@@ -145,8 +145,22 @@ class EquipmentModel(models.Model):
     def __unicode__(self):
         return self.name
 
+
+class RoomModel(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    name=models.CharField(max_length=100,blank=True,null=True)
+    created_on=models.DateTimeField(default=now)
+    class Meta:
+        db_table='room_tbl'
+        verbose_name_plural='room_tbl'
+    def __str__(self)->str:
+        return f'{self.user.username} room info'
+    def __unicode__(self):
+        return self.name
+
 class ReadingModel(models.Model):
     parent=models.ForeignKey(MeterModel,on_delete=models.CASCADE)
+    category=models.CharField(max_length=100,blank=True,null=True)
     meter_location=models.CharField(max_length=100,blank=True,null=True)
     meter_reading=models.FloatField(blank=True,null=True)
     date=models.DateField(blank=True,null=True)
@@ -160,9 +174,14 @@ class ReadingModel(models.Model):
         return self.parent.name
 
 class CostModel(models.Model):
-    year=models.CharField(max_length=100,blank=True,null=True)
-    month=models.CharField(max_length=100,blank=True,null=True)
-    quantity=models.CharField(max_length=100,blank=True,null=True)
+    datapoint=models.CharField(max_length=100,blank=True,null=True)
+    room=models.CharField(max_length=100,blank=True,null=True)
+    equipment=models.CharField(max_length=100,blank=True,null=True)
+    consumption=models.IntegerField(blank=True,null=True)
+    category=models.CharField(max_length=100,blank=True,null=True)
+    room=models.CharField(max_length=100,blank=True,null=True)
+    no_of_hours_used=models.IntegerField(blank=True,null=True)
+    quantity=models.IntegerField(blank=True,null=True)
     total_cost=models.FloatField(blank=True,null=True)
     rating=models.FloatField(blank=True,null=True)
     created_on=models.DateTimeField(default=now)

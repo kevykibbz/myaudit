@@ -27,7 +27,7 @@ urlpatterns=[
     path('delete/meter/<int:id>',views.deleteMeter,name='delete meter'),
     path('add/equipment/',views.addEquipment,name='add equipment'),
     path('meters/',views.meters,name='meters'),
-    path('equipments/',views.equipments,name='equipments'),
+    path('icdc/equipments/',views.equipments,name='equipments'),
     path('edit/equipment/<int:id>',EditEquipment.as_view(),name='edit equipment'),
     path('delete/equipment/<int:id>',views.deleteEquipment,name='delete equipment'),
     #home updater
@@ -40,4 +40,9 @@ urlpatterns=[
     path('add/historical/data',addHistoricalData.as_view(),name='add historical data'),
     path('edit/historical/data/<int:id>',editHistoricalData.as_view(),name='edit data'),
     path('data/analyzer',views.analyzer,name='analyzer'),
+    path('add/room',views.addRoom,name='add room'),
+    #icdc rooms
+    path('icdc/rooms',views.icdcRooms,name='icdc rooms'),
+    path('edit/icdc/room/<int:id>',editRoom.as_view(),name='edit room'),
+    path('delete/room/<int:id>',views.deleteRoom,name='delete room'),
 ]

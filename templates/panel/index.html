@@ -6,30 +6,15 @@
     <div class="container py-lg-5 py-md-4">
         <div class="row align-items-center py-lg-4 py-md-3">
             <div class="col-lg-6 col-sm-12">
-            	{% if data.is_authenticated and data.is_staff %}
-                <div class="position-relative editor border-edit">
-					<h3 class="mb-md-4 mb-3 content text-capitalize" data-name="h1">{{homedata.h1|default:'Section title'}}</h3>
-					<i class="penwrapper fa fa-pencil"></i>
-				</div> 
-				{% else %}
-				<div class="position-relative">
-					<h3 class="mb-md-4 mb-3 content text-capitalize" data-name="h1">{{homedata.h1|default:'Section title'}}</h3>
-				</div>
-				{% endif %}
+            	<div class="position-relative">
+                    <h3 class="mb-md-4 mb-3 content text-capitalize" data-name="h1">ICDC COMPLEX</h3>
+                </div>
 				<br>
-				{% if data.is_authenticated and data.is_staff %}
-                <div class="position-relative editor border-edit">
-		        	<i class="penwrapper fa fa-pencil"></i>
-		        	<p class="content" data-name="h1_text">{{homedata.h1_text|default:'Lorem ipsum dolor sit adipisicing elit'}}</p>
-	            </div>
-	            {% else %}
-	             <div class="position-relative">
-		        	<p class="content" data-name="h1_text">
-	                	{{homedata.h1_text|default:'Lorem ipsum dolor sit amet consectetur adipisicing elit'}}</p>
-	            </div>
-	            {% endif %}
+				<div class="position-relative">
+                    <p class="content" data-name="h1_text">Energy management for ICDC complex,Moi University.</p>
+                </div>
                 <div class="mt-sm-5 mt-4 text-md-left text-center">
-                    <a class="btn btn-primary btn-style" href="{% url 'weekly consuption' %}"> Check weekly consuptions </a>
+                    <a class="btn btn-primary btn-style" href="{% url 'weekly consuption' %}"> Check weekly Consumptions </a>
                 </div>
             </div>
             <div class="col-lg-5 offset-lg-1 col-md-8 col-sm-10 mt-lg-0 mt-md-5 mt-4 mx-auto">
@@ -37,16 +22,21 @@
                     <!-- banner form -->
                     <form class="ActiveForm" action="#" method="post" novalidate>
                     	{% csrf_token %}
-                        <h5 class="mb-4">Enter weekly meter reading</h5>
+                        <h5 class="mb-4">Enter meter reading</h5>
                         <div class="form-style-w3ls">
                         	<div class="form-group">
-                        		<label for="">Date</label>
-                        		{{form.date}}
-                        		<div class="feedback"></div>
-                        	</div>
+                                <label for="">Select meter reading category</label>
+                                {{form.category}}
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for=""class="changer">Date</label>
+                                {{form.date}}
+                                <div class="feedback"></div>
+                            </div>
                             <div class="form-group">
                               	<select class="form-control" name="meter_name" data-width="100%">
-	                                <option value="" selected disabled>Select meter name*</option>
+	                                <option value="" selected disabled>Select meter number*</option>
 	                                {% for item in meters %}
 		                                <option value="{{item.pk}}">{{item.name}}</option>
 		                            {% empty %}
@@ -61,7 +51,7 @@
                             	<div class="feedback"></div>
                             </div>
                             <div class="form-group">
-                            	<label for="">Meter reading(KW)</label>
+                            	<label for="">Meter reading(kWh)</label>
                             	{{form.meter_reading}}
                             	<div class="feedback"></div>
                             </div>
@@ -74,35 +64,7 @@
         </div>
     </div>
 </section>
-<section class="w3l-bottom-grids-6 py-5" id="who">
-    <div class="container py-lg-5 py-md-4">
-        <div class="grids-area-hny main-cont-wthree-fea row pt-lg-4">
-            <div class="col-lg-4 col-md-6 grids-feature">
-                <div class="area-box">
-                    <span class="fa fa-plug"></span>
-                    <div class="info">
-                        <h4><a href="#feature" class="title-head">Weekly Consuption</a></h4>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 grids-feature mt-md-0 mt-4">
-                <div class="area-box">
-                    <span class="fa fa-cog"></span>
-                    <div class="info">
-                        <h4><a href="#feature" class="title-head">Analyzer</a></h4>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 grids-feature mt-lg-0 mt-4">
-                <div class="area-box">
-                    <span class="fa fa-money"></span>
-                    <div class="info">
-                        <h4><a href="#feature" class="title-head">Cost calculator</a></h4>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<section class="w3l-bottom-grids-6" id="who">
     <div class="row" style="display:none">
     	<div class="col-md-6 col-12 mx-auto">
 			<div class="form-area">

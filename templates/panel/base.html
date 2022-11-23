@@ -71,6 +71,11 @@
         border-bottom:3px solid #fff;
         border-right-color:3px solid #fff;
     }
+    .tabber .active
+    {
+      background:#d92626  !important;
+      color:#fff !important;
+    }
     </style>
 </head>
 <body onload="load()">
@@ -115,7 +120,7 @@
                       <a class="nav-link" href="{% url 'home' %}">Home </a>
                     </li>
                     <li class="nav-item @@services__active">
-                      <a class="nav-link" href="{% url 'weekly consuption' %}">Weekly consuption</a>
+                      <a class="nav-link" href="{% url 'weekly consuption' %}">Energy Consumption</a>
                     </li> 
                     <li class="nav-item @@services__active">
                       <a class="nav-link" href="{% url 'analyzer' %}">Analyzer</a>
@@ -166,9 +171,6 @@
                       <p><span class="fa fa-map-marker"></span>{{obj.site_name}}, {{obj.address}},
                         {{obj.location}}</p>
                     </li>
-                    <li><a href="tel:{{obj.phone}}"><span class="fa fa-phone"></span> {{obj.phone}}</a></li>
-                    <li><a href="mailto:{{obj.site_email}}" class="mail"><span class="fa fa-envelope-open-o"></span>
-                        {{obj.site_email}}</a></li>
                   </ul>
                   <div class="main-social-footer-29 text-md-left text-center">
                     <a target="_blank" href="{{obj.facebook}}" class="facebook"><span class="fa fa-facebook"></span></a>
@@ -182,7 +184,7 @@
                   <ul>
                     <h6 class="footer-title-29">Quick Links</h6>
                     <li><a href="{% url 'home' %}">Home page</a></li>
-                    <li><a href="{% url 'weekly consuption' %}">Weekly Consuption</a></li>
+                    <li><a href="{% url 'weekly consuption' %}">Energy Consumption</a></li>
                     <li><a href="#">Analyzer</a></li>
                     <li class="text-md-left text-center"><a href="{% url 'cost calculator' %}">Cost calculator</a></li>
                   </ul>
@@ -387,6 +389,24 @@
         {
            $(document).find('.editor').toggleClass('border-edit').children('i').toggle();
         });
+    </script>
+    <script>
+      function myChanger(data)
+      {
+        var category=$(data).val()
+        if(category == 'Weekly' )
+        {
+          $(data).parents('form').find('.changer').html('Week ending in ');
+        } 
+        else if(category =='Monthly' )
+        {
+          $(data).parents('form').find('.changer').html('Month ending in ');
+        }
+        else
+        {
+          $(data).parents('form').find('.changer').html('Date');
+        }
+      }
     </script>
 </body>
 </html>

@@ -1,0 +1,81 @@
+{% extends 'panel/main.html' %}
+{% load static %}
+{% load humanize %}
+{% block body %}
+<div class="section-body mt-3">
+    <div class="container-fluid">
+        <div class="row clearfix">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+                <div class="container">
+                    <ol class="breadcrumb" style="background-color:transparent!important;">
+                        <li class="breadcrumb-item"><a class="fg-theme" href="{% url 'dashboard' %}">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{title}}</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+        </div>
+        <div class="row clearfix">
+            <div class="col-12 text-right">
+                <a href="{% url 'dashboard' %}" class="btn btn-primary btn-round"><i class="ti-plus"></i> Add</a>
+            </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Total rooms records (<span class="spanner">{{rooms_count|intcomma}}</span>)</h3>
+                        <div class="card-options">
+                            <a href="javascript:void(0);" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                            <a href="javascript:void(0);" class="card-options-fullscreen" data-toggle="card-fullscreen"><i class="fe fe-maximize"></i></a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive table-results">
+                            <table class="table table-hover table-striped table-vcenter mb-0 dataTable js-exportable text-nowrap">
+                                <thead>
+                                   <tr>
+	                                    <th>#</th>
+	                                    <th>Room name</th>
+	                                    <th>Created on</th>
+	                                    <th>Action</th>
+	                                </tr>
+                                </thead>
+                                <tbody>
+                                   {% for room in rooms %}
+	                            	<tr>
+	                            		<td>{{forloop.counter}}.</td>
+	                            		<td>{{room.name}}</td>
+	                            		<td>{{room.created_on|naturaltime}}</td>
+	                            		<td>
+                                            <a  href="{% url 'edit room' id=room.id %}" class="btn btn-success btn-round" type="button"><i class="ti-pencil"></i> Edit</a>
+                                            <button data-url="{% url 'delete room' id=room.id %}"  class="delete-button btn btn-danger btn-round" type="button"><i class="zmdi zmdi-delete"></i> Delete </button>
+                                        </td>
+	                            	</tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="3" class="text-center">
+                                            <div class=" text-center py-5">
+                                                <img data-src="{% static 'panel/assets/images/search.svg' %}" class="width360 mb-3" />
+                                                <h4><i class="ti-info-alt"></i> No data found</h4>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <ul class="pagination pagination-primary">
+                            {% if items.has_previous %}
+                            <li class="page-item active"><a class="page-link" href="{% url 'historical data' %}?page={{items.previous_page_number}}"><i class="zmdi zmdi-chevron-left"></i></a></li>
+                            {% endif %}
+                            {% if items.has_next %}
+                            <li class="page-item active"><a class="page-link" href="{% url 'historical data' %}?page={{items.next_page_number}}"><i class="zmdi zmdi-chevron-right"></i></a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

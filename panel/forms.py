@@ -456,16 +456,45 @@ class EquipmentForm(forms.ModelForm):
             if EquipmentModel.objects.filter(name=name).exists():
                 raise forms.ValidationError('Equipment name already exists')
             else:
+  
                 return name
 
+class RoomForm(forms.ModelForm):
+    name=forms.CharField(widget=forms.TextInput(attrs={'aria-label':'name','class':'form-control input-rounded'}))
+    class Meta:
+        model=RoomModel
+        fields=['name',]
+    def clean_name(self):
+        name=self.cleaned_data['name']
+        if self.instance.name:
+            if name != self.instance.name:
+                if RoomModel.objects.filter(name=name).exists():
+                    raise forms.ValidationError('Room name already exists')
+                else:
+                    return name
+            else:
+                return name
+        else:
+            if RoomModel.objects.filter(name=name).exists():
+                raise forms.ValidationError('Room name already exists')
+            else:
+                return name
+
+
+choice_opts=[
+        ('Daily','Daily'),
+        ('Weekly','Weekly'),
+        ('Monthly','Monthly'),
+]
 class ReadingForm(forms.ModelForm):
+    category=forms.ChoiceField(choices=choice_opts,widget=forms.Select(attrs={'aria-label':'category','placeholder':'Meter name','onchange':'myChanger(this);'}))
     meter_name=forms.CharField(widget=forms.TextInput(attrs={'aria-label':'meter_name','placeholder':'Meter name'}))
     meter_location=forms.CharField(widget=forms.TextInput(attrs={'aria-label':'meter_location','placeholder':'Meter reading location'}))
     meter_reading=forms.CharField(widget=forms.NumberInput(attrs={'aria-label':'meter_reading','placeholder':'Meter reading'}))
     date=forms.DateField(widget=forms.DateInput(attrs={'type':'date','aria-label':'date','placeholder':'Date of meter reading'}))
     class Meta:
         model=ReadingModel
-        fields=['meter_name','meter_location','meter_reading','date',]
+        fields=['meter_name','meter_location','meter_reading','date','category',]
 
 month_opts=[
             ('January','January'),
@@ -480,14 +509,19 @@ month_opts=[
             ('November','November'),
             ('December','December'),
 ]
+
+
 class CostForm(forms.ModelForm):
-    rating=forms.CharField(widget=forms.NumberInput(attrs={'class':'form-control','aria-label':'rating','placeholder':'Rating in KW'}))
-    year=forms.CharField(widget=forms.NumberInput(attrs={'class':'form-control','aria-label':'year','placeholder':'Year'}))
-    month=forms.ChoiceField(choices=month_opts,widget=forms.Select(attrs={'class':'form-control','aria-label':'month','placeholder':'Select Month'}))
-    total_cost=forms.CharField(widget=forms.NumberInput(attrs={'class':'form-control','aria-label':'Total cost','placeholder':'Total cost'}))
+    category=forms.ChoiceField(choices=choice_opts,widget=forms.Select(attrs={'aria-label':'category','placeholder':'Meter name','onchange':'myChanger(this);'}))
+    room=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','aria-label':'room','placeholder':'Select room'}))
+    rating=forms.CharField(widget=forms.NumberInput(attrs={'class':'form-control','aria-label':'rating','placeholder':'Rating in kW'}))
+    quantity=forms.CharField(widget=forms.NumberInput(attrs={'class':'form-control','aria-label':'quantity','placeholder':'Quantity'}))
+    equipment=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','aria-label':'equipment','placeholder':'Enter Equipment'}))
+    no_of_hours_used=forms.CharField(widget=forms.NumberInput(attrs={'class':'form-control','aria-label':'no_of_hours_used','placeholder':'No of hours used'}))
+    date=forms.DateField(widget=forms.DateInput(attrs={'type':'date','aria-label':'date','placeholder':'Date of meter reading'}))
     class Meta:
         model=CostModel
-        fields=['year','month','total_cost','rating',]
+        fields=['rating','no_of_hours_used','room','quantity','equipment','category',]
 
     def clean_month(self):
         month=self.cleaned_data['month']
