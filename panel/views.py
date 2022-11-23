@@ -45,7 +45,10 @@ class Home(View):
         meters=MeterModel.objects.all().order_by("-id")
         form=ReadingForm()
         form1=HomeForm()
-        homedata=AboutModel.objects.get(user_id=request.user.pk)
+        if AboutModel.objects.filter(user_id=request.user.pk).exists():
+            homedata=AboutModel.objects.get(user_id=request.user.pk)
+        else:
+            homedata=''
         data={
             'title':f'Welcome to {obj.site_name}',
             'obj':obj,
