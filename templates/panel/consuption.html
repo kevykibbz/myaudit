@@ -62,23 +62,23 @@
 					            						<tbody>
 					            							{% for reading in daily %}
 					            								{% if reading.parent_id == meter.id %}
-					            								<tr>
+					            								<tr id="id_{{reading.id}}">
 						            								<td>{{forloop.counter}}.</td>
-						            								<td>{{reading.created_on}}</td>
+						            								<td>{{reading.date}}</td>
 						            								<td>{{reading.meter_location}}</td>
 						            								<td>{{reading.meter_reading}} kWh</td>
-						            								<td>{{reading.cost|intcomma|floatformat:2}} Ksh</td>
+						            								<td>{{reading.cost|default:0|intcomma}} Ksh</td>
 						            							</tr>
 					            								{% endif %}
 					            							{% empty %}
 					            							<tr>
-					            								<td colspan="4" class="text-center">
+					            								<td colspan="5" class="text-center">
 					            									<p><i class="fa fa-exclamation-circle"></i> No daily reading data found.</p>
 					            								</td>
 					            							</tr>
 					            							{% endfor %}
 					            							<tr>
-					            								<td colspan="4" class="text-center">
+					            								<td colspan="5" class="text-center">
 					            									<a href="{% url 'view meter' id=meter.id %}">view</a>
 					            								</td>
 					            							</tr>
@@ -117,26 +117,28 @@
 				            							<th>Date</th>
 				            							<th>Meter location</th>
 				            							<th>Meter reading</th>
+				            							<th>Cost (Ksh)</th>
 				            						</tr>
 				            						<tbody>
 				            							{% for reading in weekly %}
 				            								{% if reading.parent_id == meter.id %}
-				            								<tr>
+				            								<tr id="id_{{reading.id}}">
 					            								<td>{{forloop.counter}}.</td>
-					            								<td>{{reading.created_on}}</td>
+					            								<td>{{reading.date}}</td>
 					            								<td>{{reading.meter_location}}</td>
 					            								<td>{{reading.meter_reading}} kWh</td>
+					            								<td>{{reading.cost|default:0|intcomma}} Ksh</td>
 					            							</tr>
 				            								{% endif %}
 				            							{% empty %}
 				            							<tr>
-				            								<td colspan="4" class="text-center">
+				            								<td colspan="5" class="text-center">
 				            									<p><i class="fa fa-exclamation-circle"></i> No weekly reading data found.</p>
 				            								</td>
 					            						</tr>
 				            							{% endfor %}
 				            							<tr>
-				            								<td colspan="4" class="text-center">
+				            								<td colspan="5" class="text-center">
 				            									<a href="{% url 'view meter' id=meter.id %}">view</a>
 				            								</td>
 				            							</tr>
@@ -175,26 +177,28 @@
 					            							<th>Date</th>
 					            							<th>Meter location</th>
 					            							<th>Meter reading</th>
+					            							<th>Cost (Ksh)</th>
 					            						</tr>
 					            						<tbody>
 					            							{% for reading in monthly %}
 					            								{% if reading.parent_id == meter.id %}
-					            								<tr>
+					            								<tr id="id_{{reading.id}}">
 						            								<td>{{forloop.counter}}.</td>
-						            								<td>{{reading.created_on}}</td>
+						            								<td>{{reading.date}}</td>
 						            								<td>{{reading.meter_location}}</td>
 						            								<td>{{reading.meter_reading}} kWh</td>
+						            								<td>{{reading.cost|default:0|intcomma}} Ksh</td>
 						            							</tr>
 					            								{% endif %}
 					            							{% empty %}
 					            							<tr>
-					            								<td colspan="4" class="text-center">
+					            								<td colspan="5" class="text-center">
 					            									<p><i class="fa fa-exclamation-circle"></i> No monthly reading data found.</p>
 					            								</td>
 					            							</tr>
 					            							{% endfor %}
 					            							<tr>
-					            								<td colspan="4" class="text-center">
+					            								<td colspan="5" class="text-center">
 					            									<a href="{% url 'view meter' id=meter.id %}">view</a>
 					            								</td>
 					            							</tr>

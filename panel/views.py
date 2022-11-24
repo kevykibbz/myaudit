@@ -138,7 +138,7 @@ def openMeter(request,id):
     page_num=request.GET.get('page')
     readings=paginator.get_page(page_num)
     data={
-        'title':'Energy Consuption',
+        'title':'Energy Consumption',
         'obj':obj,
         'data':request.user,
         'readings':readings,
