@@ -15,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY =env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 if DEBUG:
     ALLOWED_HOSTS = ['*']
@@ -87,39 +87,39 @@ WSGI_APPLICATION = 'audit.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-   'default': 
-            {
-
-                'ENGINE': 'mysql.connector.django',
-                'NAME':'myauditer',
-                'USER':'root',
-                'PASSWORD':'',
-                'HOST':'localhost',
-                'PORT':3306,
-                'OPTIONS':
-                {
-                    'autocommit':True,
-                },
-            }
-}
-
 # DATABASES = {
-#     'default': 
+#    'default': 
 #             {
 
-#                 'ENGINE': 'django.db.backends.postgresql',
-#                 'NAME':env('DATABASE_NAME'),
-#                 'USER':env('DATABASE_USER'),
-#                 'PASSWORD':env('DATABASE_PASSWORD'),
-#                 'HOST':env('DATABASE_HOST'),
-#                 'PORT':env('DATABASE_PORT'),
+#                 'ENGINE': 'mysql.connector.django',
+#                 'NAME':'myauditer',
+#                 'USER':'root',
+#                 'PASSWORD':'',
+#                 'HOST':'localhost',
+#                 'PORT':3306,
+#                 'OPTIONS':
+#                 {
+#                     'autocommit':True,
+#                 },
 #             }
 # }
 
-# import dj_database_url
-# db_from_env=dj_database_url.config(conn_max_age=600)
-# DATABASES['default'].update(db_from_env)
+DATABASES = {
+    'default': 
+            {
+
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME':env('DATABASE_NAME'),
+                'USER':env('DATABASE_USER'),
+                'PASSWORD':env('DATABASE_PASSWORD'),
+                'HOST':env('DATABASE_HOST'),
+                'PORT':env('DATABASE_PORT'),
+            }
+}
+
+import dj_database_url
+db_from_env=dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -181,8 +181,8 @@ CACHE_TTL = 60 * 15
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        #"LOCATION": os.environ.get('REDIS_URL','redis://127.0.0.1:6379/1'),
-        "LOCATION":"redis://127.0.0.1:6379/1",
+        "LOCATION": os.environ.get('REDIS_URL','redis://127.0.0.1:6379/1'),
+        #"LOCATION":"redis://127.0.0.1:6379/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
