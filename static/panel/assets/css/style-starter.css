@@ -10091,7 +10091,7 @@ button.navbar-toggler.collapsed .icon-expand {
 
 /*-- banner --*/
 .w3l-banner {
-  background: url(../images/iStock-519094857.webp) no-repeat center;
+  background: url(../images/IMG-20221124-WA0002.jpg) no-repeat center;
   -ms-background-size: cover;
   background-size: cover;
   z-index: 0;
@@ -11575,35 +11575,35 @@ button.owl-next {
 
 .breadcrumb-bg-about {
   background-size: cover;
-  background-image: linear-gradient(to right, rgba(25, 25, 25, 0.7), rgba(0, 0, 0, 0.7)), url(../images/iStock-519094857.webpjpg);
+  background-image: linear-gradient(to right, rgba(25, 25, 25, 0.7), rgba(0, 0, 0, 0.7)), url(../images/IMG-20221124-WA0004.jpg);
   background-repeat: no-repeat, no-repeat, no-repeat;
   background-position: center;
   background-attachment: fixed; }
 
 .breadcrumb-bg-services {
   background-size: cover;
-  background-image: linear-gradient(to right, rgba(25, 25, 25, 0.7), rgba(0, 0, 0, 0.7)), url(../images/slide5.jpg);
+  background-image: linear-gradient(to right, rgba(25, 25, 25, 0.7), rgba(0, 0, 0, 0.7)), url(../images/IMG-20221124-WA0004.jpg);
   background-repeat: no-repeat, no-repeat, no-repeat;
   background-position: center;
   background-attachment: fixed; }
 
 .breadcrumb-bg-blog {
   background-size: cover;
-  background-image: linear-gradient(to right, rgba(25, 25, 25, 0.7), rgba(0, 0, 0, 0.7)), url(../images/slide1.jpg);
+  background-image: linear-gradient(to right, rgba(25, 25, 25, 0.7), rgba(0, 0, 0, 0.7)), url(../images/IMG-20221124-WA0004.jpg);
   background-repeat: no-repeat, no-repeat, no-repeat;
   background-position: center;
   background-attachment: fixed; }
 
 .breadcrumb-bg-blog-single {
   background-size: cover;
-  background-image: linear-gradient(to right, rgba(25, 25, 25, 0.7), rgba(0, 0, 0, 0.7)), url(../images/slide2.jpg);
+  background-image: linear-gradient(to right, rgba(25, 25, 25, 0.7), rgba(0, 0, 0, 0.7)), url(../images/IMG-20221124-WA0004.jpg);
   background-repeat: no-repeat, no-repeat, no-repeat;
   background-position: center;
   background-attachment: fixed; }
 
 .breadcrumb-bg-contact {
   background-size: cover;
-  background-image: linear-gradient(to right, rgba(25, 25, 25, 0.7), rgba(0, 0, 0, 0.7)), url(../images/slide3.jpg);
+  background-image: linear-gradient(to right, rgba(25, 25, 25, 0.7), rgba(0, 0, 0, 0.7)), url(../images/IMG-20221124-WA0004.jpg);
   background-repeat: no-repeat, no-repeat, no-repeat;
   background-position: center;
   background-attachment: fixed; }
