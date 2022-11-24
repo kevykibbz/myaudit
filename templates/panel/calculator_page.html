@@ -1,0 +1,105 @@
+{% extends 'panel/main.html' %}
+{% load static %}
+{% load humanize %}
+{% block body %}
+<div class="section-body mt-3">
+    <div class="container-fluid">
+    	<div class="row clearfix">
+	        <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3" >
+	            <div class="container">
+	                <ol class="breadcrumb" style="background-color:transparent!important;">
+	                    <li class="breadcrumb-item"><a class="fg-theme" href="{% url 'dashboard' %}">Home</a></li>
+	                    <li class="breadcrumb-item active" aria-current="page">{{title}}</li>
+	                </ol>
+	            </div><!-- End .container -->
+	        </nav><!-- End .breadcrumb-nav -->
+    	</div>
+        <div class="row clearfix">
+        	<div class="col-12 text-right">
+        		<a href="{% url 'dashboard' %}" class="btn btn-primary btn-round"><i class="ti-plus"></i> Add</a>
+        	</div>
+            <div class="col-12">
+                <div class="card">
+                	<div class="card-header">
+                        <h3 class="card-title">{{title}} (<span class="spanner">{{costs_count|intcomma}}</span>)</span></h3>
+                        <div class="card-options">
+                            <a href="javascript:void(0);" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                            <a href="javascript:void(0);" class="card-options-fullscreen" data-toggle="card-fullscreen"><i class="fe fe-maximize"></i></a>
+                        </div>
+                    </div>
+                    <div class="table-responsive table-results">
+                        <table class="table table-hover table-striped table-vcenter mb-0 text-nowrap">
+                           <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Room</th>
+                                    <th>Equipment</th>
+                                    <th>Quantity</th>
+                                    <th>Rating</th>
+                                    <th>No of hours used</th>
+                                    <th>Consumption</th>
+                                    <th>Created on</th>
+                                    <th>Total Cost</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               {% for cost in costs %}
+                                <tr>
+                                    <td>{{forloop.counter}}.</td>
+                                    <td>{{cost.room}}</td>
+                                    <td>{{cost.equipment}} </td>
+                                    <td>{{cost.quantity|intcomma}} </td>
+                                    <td>{{cost.rating|intcomma}} W</td>
+                                    <td>{{cost.no_of_hours_used|intcomma}} Hours</td>
+                                    <td>{{cost.consumption|intcomma}} kWh</td>
+                                    <td>{{cost.created_on|naturaltime}}</td>
+                                    <td>Ksh {{cost.total_cost|floatformat:2|intcomma|default:0}}</td>
+                                    <td>
+                                        <a  href="{% url 'edit calculator' id=cost.id %}" class="btn btn-success btn-round" type="button"><i class="zmdi zmdi-edit"></i> Edit</a>
+                                        <button data-url="{% url 'delete calculator' id=cost.id %}"  class="delete-button btn btn-danger btn-round" type="button"><i class="zmdi zmdi-delete"></i> Delete </button>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="9" class="text-center">
+                                        <div class=" text-center py-5">
+                                            <img data-src="{% static 'panel/assets/images/search.svg' %}" class="width360 mb-3" />
+                                            <h4><i class="ti-info-alt"></i> No data found</h4>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                {% if total.total_cost__sum > 0 %}
+                                <tr class="bg-success text-light" style="font-size:18px;font-family:'tahoma'">
+                                    <td colspan="8"><b>Total Cost:</b></td>
+                                    <td><b>Ksh {{total.total_cost__sum|floatformat:2|intcomma|default:0}}</b></td>
+                                </tr>
+                                {% endif %}
+                            </tbody>
+                            <div>
+                                <ul class="mt-2 ml-2 pagination pagination-primary">
+                                    {% if items.has_previous %}
+                                    <li class="page-item active"><a class="page-link" href="{% url 'historical data' %}?page={{items.previous_page_number}}"><i class="zmdi zmdi-chevron-left"></i></a></li>
+                                    {% endif %}
+                                    {% if items.has_next %}
+                                    <li class="page-item active"><a class="page-link" href="{% url 'historical data' %}?page={{items.next_page_number}}"><i class="zmdi zmdi-chevron-right"></i></a></li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </table>
+                    </div>
+                </div>
+                <ul class="mt-2 ml-2 pagination pagination-primary">
+                    {% if equipments.has_previous %}
+                    <li class="page-item active"><a class="page-link" href="{% url 'equipments' %}?page={{equipments.previous_page_number}}"><i class="zmdi zmdi-chevron-left"></i></a></li>
+                    {% endif %}
+                    {% if equipments.has_next %}
+                    <li class="page-item active"><a class="page-link" href="{% url 'equipments' %}?page={{equipments.next_page_number}}"><i class="zmdi zmdi-chevron-right"></i></a></li>
+                    {% endif %}
+	            </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

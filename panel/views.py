@@ -129,6 +129,24 @@ def analyzer(request):
     return render(request,'panel/analyzer.html',context=data)
 
 
+#calculatorPage
+@login_required(login_url='/accounts/login/')
+@api_view(['GET',])
+def calculatorPage(request):
+    obj=check_data()
+    data=CostModel.objects.all().order_by("-id")
+    paginator=Paginator(data,30)
+    page_num=request.GET.get('page')
+    costs=paginator.get_page(page_num)
+    data={
+        'title':'Manage Cost Calculator Page',
+        'obj':obj,
+        'data':request.user,
+        'costs':costs,
+        'costs_count':paginator.count,
+    }
+    return render(request,'panel/calculator_page.html',context=data)
+
 def openMeter(request,id):
     obj=check_data()
     meter=get_object_or_404(MeterModel,id__exact=id)
@@ -640,6 +658,22 @@ def deleteMeter(request,id):
         except MeterModel.DoesNotExist:
             return JsonResponse({'deleted':True,'message':'Item does not exist'},content_type='application/json')
 
+
+
+
+#deleteCalculator
+@login_required(login_url='/accounts/login/')
+@allowed_users(allowed_roles=['admins'])
+@api_view(['GET',])
+def deleteCalculator(request,id):
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        try:
+            obj=CostModel.objects.get(id__exact=id)
+            obj.delete() 
+            return JsonResponse({'deleted':True,'message':'Item deleted successfully.','id':id},content_type='application/json')       
+        except CostModel.DoesNotExist:
+            return JsonResponse({'deleted':False,'message':'Item does not exist'},content_type='application/json')
+
 #deleteRoom
 @login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['admins'])
@@ -680,6 +714,36 @@ class EditEquipment(View):
         else:
             return JsonResponse({'valid':False,'uform_errors':form.errors,},content_type='application/json')
 
+
+#editCalculator
+@method_decorator(login_required(login_url='/accounts/login/'),name='dispatch')
+@method_decorator(allowed_users(allowed_roles=['admins']),name='dispatch')
+class editCalculator(View):
+    def get(self ,request,id):
+        obj=check_data()
+        item = get_object_or_404(CostModel,id=id)
+        form=CostForm(instance=item)    
+        rooms=RoomModel.objects.all()
+        equipments=EquipmentModel.objects.all()
+        data={
+            'title':f'Edit item / {item.room}',
+            'obj':obj,
+            'data':request.user,
+            'form':form,
+            'edit':True,
+            'rooms':rooms,
+            'equipments':equipments
+        }
+        return render(request,'panel/edit_calculator_page.html',context=data)
+
+    def post(self,request,id,*args ,**kwargs):
+        item=get_object_or_404(CostModel,id=id)
+        form=CostForm(request.POST or None,instance=item)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'valid':True,'message':'Item updated successfuly.'},content_type='application/json')
+        else:
+            return JsonResponse({'valid':False,'uform_errors':form.errors,},content_type='application/json')
 
 
 #editRoom

@@ -512,13 +512,13 @@ month_opts=[
 
 
 class CostForm(forms.ModelForm):
-    category=forms.ChoiceField(choices=choice_opts,widget=forms.Select(attrs={'aria-label':'category','placeholder':'Meter name','onchange':'myChanger(this);'}))
+    category=forms.ChoiceField(choices=choice_opts,widget=forms.Select(attrs={'class':'form-control','aria-label':'category','placeholder':'Meter name','onchange':'myChanger(this);'}))
     room=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','aria-label':'room','placeholder':'Select room'}))
-    rating=forms.CharField(widget=forms.NumberInput(attrs={'class':'form-control','aria-label':'rating','placeholder':'Rating in kW'}))
+    rating=forms.CharField(widget=forms.NumberInput(attrs={'class':'form-control','aria-label':'rating','placeholder':'Rating in W'}))
     quantity=forms.CharField(widget=forms.NumberInput(attrs={'class':'form-control','aria-label':'quantity','placeholder':'Quantity'}))
     equipment=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','aria-label':'equipment','placeholder':'Enter Equipment'}))
     no_of_hours_used=forms.CharField(widget=forms.NumberInput(attrs={'class':'form-control','aria-label':'no_of_hours_used','placeholder':'No of hours used'}))
-    date=forms.DateField(widget=forms.DateInput(attrs={'type':'date','aria-label':'date','placeholder':'Date of meter reading'}))
+    date=forms.DateField(widget=forms.DateInput(attrs={'class':'form-control','type':'date','aria-label':'date','placeholder':'Date of meter reading'}))
     class Meta:
         model=CostModel
         fields=['rating','no_of_hours_used','room','quantity','equipment','category',]

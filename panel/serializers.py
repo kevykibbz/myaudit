@@ -5,4 +5,4 @@ from .models import *
 class CostSerializer(serializers.ModelSerializer):
 	class Meta:
 		model=CostModel
-		fields=('consumption','total_cost','datapoint',)
+		fields=('consumption','total_cost','datapoint','room',)

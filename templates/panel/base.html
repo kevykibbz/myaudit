@@ -138,20 +138,6 @@
 
                   <!-- //toggle switch for light and dark theme -->
                 </div>
-                <!-- toggle switch for light and dark theme -->
-                <div class="mobile-position">
-                  <nav class="navigation">
-                    <div class="theme-switch-wrapper">
-                      <label class="theme-switch" for="checkbox">
-                        <input type="checkbox" id="checkbox">
-                        <div class="mode-container" style="cursor:pointer;">
-                          <i class="gg-sun"></i>
-                          <i class="gg-moon"></i>
-                        </div>
-                      </label>
-                    </div>
-                  </nav>
-                </div>
               </nav>
             </div>
           </section>
@@ -212,9 +198,6 @@
           <button onclick="topFunction()" id="movetop" class="bg-primary" title="Go to top">
             <span class="fa fa-level-up"></span>
           </button>
-            {% if data.is_authenticated and data.is_staff and request.path == '/' %}
-                <a href="javascript:void(0);" class="float" ><i class="fa fa-pencil my-float"></i></a>
-            {% endif %}
         </section>
         <div class="row">
             <div class="col-md-5 col-12 mx-auto cookie-container" style="z-index:9999;">

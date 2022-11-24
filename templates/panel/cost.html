@@ -61,7 +61,7 @@
                                     </td>
                                 </tr>
                                 {% endfor %}
-                                {% if total %}
+                                {% if total.total_cost__sum > 0 %}
     							<tr class="bg-success text-light" style="font-size:18px;font-family:'tahoma'">
                                     <td colspan="8"><b>Total Cost:</b></td>
                                     <td><b>Ksh {{total.total_cost__sum|floatformat:2|intcomma|default:0}}</b></td>

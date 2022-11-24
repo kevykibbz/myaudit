@@ -45,4 +45,7 @@ urlpatterns=[
     path('icdc/rooms',views.icdcRooms,name='icdc rooms'),
     path('edit/icdc/room/<int:id>',editRoom.as_view(),name='edit room'),
     path('delete/room/<int:id>',views.deleteRoom,name='delete room'),
+    path('manage/cost/calculator',views.calculatorPage,name='calculator page'),
+    path('delete/item/calculator/<int:id>',views.deleteCalculator,name='delete calculator'),
+    path('edit/item/data/<int:id>',editCalculator.as_view(),name='edit calculator'),
 ]

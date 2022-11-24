@@ -50,12 +50,10 @@
     <link rel="stylesheet" href="{% static 'panel/assets/css/theme1.css' %}"/>
     <link rel="stylesheet" href="{% static 'panel/assets/css/custom2.css' %}"/>
     <style>
-       .sidebar
-       {
+       .sidebar{
         overflow:hidden !important;
        } 
-        .sidebar:hover
-       {
+        .sidebar:hover{
         overflow:auto;
        } 
     </style>
@@ -192,8 +190,8 @@
                         <img style="width:80px;height:80px;" class="img-responsive card-profile-img" src="{% static 'panel/assets/images/loader.gif' %}" data-src="{{data.extendedauthuser.profile_pic.url}}" alt="{{data.get_full_name}}" title="{{data.get_full_name}}"/>
                     </a>
                     {% endif %}
-                    <h6 class="mb-0">{{data.get_full_name}}</h6>
-                    <span>{{data.email}}</span>
+                    <h6 class="mb-0">ICDC Complex</h6>
+                    <span>Energy Management Audit App</span>
                </div>
                 <hr>
                 <p>Activity</p>
@@ -245,6 +243,9 @@
                     </li>  
                     <li>
                         <a href="{% url 'meters'  %}"><i class="fa fa-dashboard"></i> ICDC Meters</a>
+                    </li> 
+                     <li>
+                        <a href="{% url 'calculator page'  %}"><i class="fa fa-align-right"></i> Cost Calculator</a>
                     </li> 
                     {% endif %}   
                     {% if request.user.is_authenticated %}

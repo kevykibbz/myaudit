@@ -1,0 +1,93 @@
+{% extends 'panel/main.html' %}
+{% load static %}
+{% load humanize %}
+{% block body %}
+<div class="section-body">
+    <div class="container-fluid">
+        <div class="row clearfix">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <ol class="breadcrumb" style="background-color:transparent!important;">
+                                <li class="breadcrumb-item"><a class="fg-theme" href="{% url 'dashboard' %}">Home</a></li>
+                                <li class="breadcrumb-item"><a class="fg-theme" href="{% url 'historical data' %}">Historical Data</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">{{title}}</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+        </div>
+        <div class="row clearfix">
+            <div class="col-md-6 col-12 mx-auto">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">{% if edit %} {{title}}{% else %} {{title}} {% endif %}</h3>
+                        <div class="card-options">
+                            <a href="javascript:void(0);" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                            <a href="javascript:void(0);" class="card-options-fullscreen" data-toggle="card-fullscreen"><i class="fe fe-maximize"></i></a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                       	<form action="#" method="post" class="ActiveForm" novalidate>
+	                        <h5 class="mb-4 text-center"><b>Equipment details</b></h5>
+	                        {% csrf_token %}
+	                        <div class="form-style-w3ls">
+	                            <div class="form-group">
+	                                <label for="">Select category</label>
+	                                {{form.category}}
+	                                <div class="feedback"></div>
+	                            </div>
+	                            <div class="form-group">
+	                                <label for=""class="changer">Date</label>
+	                                {{form.date}}
+	                                <div class="feedback"></div>
+	                            </div>
+	                            <div class="form-group">
+	                                <label for="">Room name</label>
+	                                <select name="room" id="id_room" class="form-control">
+	                                    {% for room in rooms %}
+	                                    <option value="{{room.name}}">{{room.name}}</option>
+	                                    {% empty %}
+	                                    <option value="" selected="" disabled="">No room found</option>
+	                                    {% endfor %}
+	                                </select>
+	                                <div class="feedback"></div>
+	                            </div> 
+	                            <div class="form-group">
+	                                <label for="">Equipment</label>
+	                                <select name="equipment" id="id_equipment" class="form-control">
+	                                    {% for equipment in equipments %}
+	                                    <option value="{{equipment.name}}">{{equipment.name}}</option>
+	                                    {% empty %}
+	                                    <option value="" selected="" disabled="">No equipment found</option>
+	                                    {% endfor %}
+	                                </select>
+	                                <div class="feedback"></div>
+	                            </div> 
+	                            <div class="form-group">
+	                                <label for="">Rating(W)</label>
+	                                {{form.rating}}
+	                                <div class="feedback"></div>
+	                            </div>
+	                            <div class="form-group">
+	                                <label for="">Quantity</label>
+	                                {{form.quantity}}
+	                                <div class="feedback"></div>
+	                            </div>
+	                            <div class="form-group">
+	                                <label for="">No of hours used</label>
+	                                {{form.no_of_hours_used}}
+	                                <div class="feedback"></div>
+	                            </div>
+	                            <button class="btn btn-style btn-primary btn-round w-100"> Submit</button>
+	                        </div>
+	                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
