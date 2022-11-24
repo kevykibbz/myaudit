@@ -372,5 +372,22 @@
     <script src="{% static 'panel/assets/plugins/nouislider/nouislider.js' %}"></script>
     <script src="{% static 'panel/assets/js/page/jquery-datatable.js' %}"></script>
     <script src="{% static 'panel/assets/js/custom.js' %}"></script>
+    <script>
+      function myChanger(data){
+        var category=$(data).val()
+        if(category == 'Weekly' )
+        {
+          $(data).parents('form').find('.changer').html('Week ending in ');
+        } 
+        else if(category =='Monthly' )
+        {
+          $(data).parents('form').find('.changer').html('Month ending in ');
+        }
+        else
+        {
+          $(data).parents('form').find('.changer').html('Date');
+        }
+      }
+    </script>
 </body>
 </html>

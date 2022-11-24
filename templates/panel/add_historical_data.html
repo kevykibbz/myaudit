@@ -30,41 +30,42 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="post" class="ActiveForm" novalidate>
-	                        {% csrf_token %}
-	                        <div class="row">
-	                        	<div class="col-md-6">
-	                        		<div class="form-group">
-		                                <label for="">Year</label>
-		                                {{form.year}}
-		                                <div class="feedback"></div>
-		                            </div>
-	                        	</div>
-	                        	<div class="col-md-6">
-		                            <div class="form-group">
-		                                <label for="">Select Month</label>
-		                                {{form.month}}
-		                                <div class="feedback"></div>
-		                            </div>
-		                        </div>
-		                        <div class="col-md-6">
-		                        	<div class="form-group">
-		                        		<label for="">Rating</label>
-		                        		{{form.rating}}
-		                        		<div class="feedback"></div>
-		                        	</div>
-		                        </div>
-		                        <div class="col-md-6">
-		                            <div class="form-group">
-		                            	<label for="">Amount</label>
-		                            	{{form.total_cost}}
-		                        		<div class="feedback"></div>
-		                            </div>
-		                        </div>
-		                       <div class="col-md-12 mx-auto">
-	                            	<button class="btn btn-round btn-outline-primary btn-block"> Submit</button>
+                        <form class="ActiveForm" action="#" method="post" novalidate>
+	                    	{% csrf_token %}
+	                        <div class="form-style-w3ls">
+	                        	<div class="form-group">
+	                                <label for="">Select meter reading category</label>
+	                                {{form.category}}
+	                                <div class="feedback"></div>
 	                            </div>
-	                        </div> 
+	                            <div class="form-group">
+	                                <label for=""class="changer">Date</label>
+	                                {{form.date}}
+	                                <div class="feedback"></div>
+	                            </div>
+	                            <div class="form-group">
+	                              	<select class="form-control" name="meter_name" data-width="100%">
+		                                <option value="" selected disabled>Select meter number*</option>
+		                                {% for item in meters %}
+			                                <option value="{{item.pk}}">{{item.name}}</option>
+			                            {% empty %}
+		                                	<option value="" disabled="">No meter(s) found</option>
+		                                {% endfor %}
+		                            </select>
+		                            <div class="feedback"></div>
+	                            </div>
+	                            <div class="form-group">
+	                            	<label for="">Meter location</label>
+	                            	{{form.meter_location}}
+	                            	<div class="feedback"></div>
+	                            </div>
+	                            <div class="form-group">
+	                            	<label for="">Meter reading(kWh)</label>
+	                            	{{form.meter_reading}}
+	                            	<div class="feedback"></div>
+	                            </div>
+	                            <button class="btn btn-style btn-primary btn-round w-100"> Submit</button>
+	                        </div>
 	                    </form>
                     </div>
                 </div>

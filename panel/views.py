@@ -304,7 +304,7 @@ class Dashboard(View):
 @api_view(['GET',])
 def historicalData(request):
     obj=check_data()
-    data=CostModel.objects.all().order_by("-id")
+    data=ReadingModel.objects.all().order_by("-created_on")
     paginator=Paginator(data,30)
     page_num=request.GET.get('page')
     items=paginator.get_page(page_num)
@@ -743,7 +743,7 @@ def homeUpdater(request):
 @allowed_users(allowed_roles=['admins','customer'])
 def deleteHistoricalData(request,id):
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        obj=get_object_or_404(CostModel,id=id)
+        obj=get_object_or_404(ReadingModel,id=id)
         obj.delete()
         return JsonResponse({'deleted':False,'message':'Data deleted successfuly.'},content_type='application/json')
 
@@ -754,19 +754,21 @@ def deleteHistoricalData(request,id):
 class addHistoricalData(View):
     def get(self ,request):
         obj=check_data()
-        form=CostForm() 
+        form=ReadingForm() 
         equipments=EquipmentModel.objects.all().order_by("-id")   
+        meters=MeterModel.objects.all().order_by("-id")
         data={
             'title':'Add Historical Data',
             'obj':obj,
             'data':request.user,
             'form':form,
             'equipments':equipments,
+            'meters':meters,
         }
         return render(request,'panel/add_historical_data.html',context=data)
 
     def post(self,request,*args ,**kwargs):
-        form=CostForm(request.POST or None)
+        form=ReadingForm(request.POST or None)
         if form.is_valid():
             form.save()
             return JsonResponse({'valid':True,'message':'Historical data added successfuly.'},content_type='application/json')
@@ -779,21 +781,23 @@ class addHistoricalData(View):
 class editHistoricalData(View):
     def get(self ,request,id):
         obj=check_data()
-        data=get_object_or_404(CostModel,id__exact=id)
-        form=CostForm(instance=data) 
-        equipments=EquipmentModel.objects.all().order_by("-id")   
+        data=get_object_or_404(ReadingModel,id__exact=id)
+        form=ReadingForm(instance=data) 
+        equipments=EquipmentModel.objects.all().order_by("-id") 
+        meters=MeterModel.objects.all().order_by("-id")  
         data={
             'title':'Edit Historical Data',
             'obj':obj,
             'data':request.user,
             'form':form,
             'equipments':equipments,
+            'meters':meters,
         }
         return render(request,'panel/add_historical_data.html',context=data)
 
     def post(self,request,id,*args ,**kwargs):
-        data=get_object_or_404(CostModel,id__exact=id)
-        form=CostForm(request.POST or None,instance=data)
+        data=get_object_or_404(ReadingModel,id__exact=id)
+        form=ReadingForm(request.POST or None,instance=data)
         if form.is_valid():
             form.save()
             return JsonResponse({'valid':True,'message':'Historical data edited successfuly.'},content_type='application/json')

@@ -15,9 +15,9 @@
             </nav><!-- End .breadcrumb-nav -->
         </div>
         <div class="row clearfix">
-            <div class="col-12 text-right">
+           <!--  <div class="col-12 text-right">
                 <a href="{% url 'add historical data' %}" class="btn btn-primary btn-round"><i class="ti-plus"></i> Add</a>
-            </div>
+            </div> -->
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
@@ -33,12 +33,12 @@
                                 <thead>
                                    <tr>
 	                                    <th>#</th>
-	                                    <th>Year</th>
-	                                    <th>Month</th>
-	                                    <th>Quantity</th>
-	                                    <th>Rating</th>
+	                                    <th>Date</th>
+	                                    <th>Meter Location</th>
+	                                    <th>Meter Reading</th>
+	                                    <th>Cost</th>
 	                                    <th>Created on</th>
-	                                    <th>Total Cost</th>
+	                                    <th>category</th>
 	                                    <th>Action</th>
 	                                </tr>
                                 </thead>
@@ -46,12 +46,12 @@
                                    {% for cost in items %}
 	                            	<tr>
 	                            		<td>{{forloop.counter}}.</td>
-	                            		<td>{{cost.year}} </td>
-	                            		<td>{{cost.month}} </td>
-	                            		<td>{{cost.quantity|intcomma}}</td>
-	                            		<td>{{cost.rating|intcomma}} KW</td>
+	                            		<td>{{cost.date}} </td>
+	                            		<td>{{cost.meter_location}} </td>
+	                            		<td>{{cost.meter_reading}}</td>
+                                        <td>Ksh {{cost.cost|default:0|intcomma}}</td>
 	                            		<td>{{cost.created_on|naturaltime}}</td>
-	                            		<td>Ksh {{cost.total_cost|intcomma|default:0}}</td>
+                                        <td>{{cost.category}}</td>
 	                            		<td>
                                             <a  href="{% url 'edit data' id=cost.id %}" class="btn btn-success btn-round" type="button"><i class="ti-pencil"></i> Edit</a>
                                             <button data-url="{% url 'delete data' id=cost.id %}"  class="delete-button btn btn-danger btn-round" type="button"><i class="zmdi zmdi-delete"></i> Delete </button>

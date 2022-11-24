@@ -487,11 +487,11 @@ choice_opts=[
         ('Monthly','Monthly'),
 ]
 class ReadingForm(forms.ModelForm):
-    category=forms.ChoiceField(choices=choice_opts,widget=forms.Select(attrs={'aria-label':'category','placeholder':'Meter name','onchange':'myChanger(this);'}))
-    meter_name=forms.CharField(widget=forms.TextInput(attrs={'aria-label':'meter_name','placeholder':'Meter name'}))
-    meter_location=forms.CharField(widget=forms.TextInput(attrs={'aria-label':'meter_location','placeholder':'Meter reading location'}))
-    meter_reading=forms.CharField(widget=forms.NumberInput(attrs={'aria-label':'meter_reading','placeholder':'Meter reading'}))
-    date=forms.DateField(widget=forms.DateInput(attrs={'type':'date','aria-label':'date','placeholder':'Date of meter reading'}))
+    category=forms.ChoiceField(choices=choice_opts,widget=forms.Select(attrs={'class':'form-control','aria-label':'category','placeholder':'Meter name','onchange':'myChanger(this);'}))
+    meter_name=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','aria-label':'meter_name','placeholder':'Meter name'}))
+    meter_location=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','aria-label':'meter_location','placeholder':'Meter reading location'}))
+    meter_reading=forms.CharField(widget=forms.NumberInput(attrs={'class':'form-control','aria-label':'meter_reading','placeholder':'Meter reading'}))
+    date=forms.DateField(widget=forms.DateInput(attrs={'class':'form-control','type':'date','aria-label':'date','placeholder':'Date of meter reading'}))
     class Meta:
         model=ReadingModel
         fields=['meter_name','meter_location','meter_reading','date','category',]
