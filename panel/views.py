@@ -66,6 +66,7 @@ class Home(View):
             meter=MeterModel.objects.get(id__exact=form.cleaned_data.get('meter_name',None))
             obj=form.save(commit=False)
             obj.user=request.user
+            obj.cost=int(form.cleaned_data.get('meter_reading',None))*24.87
             obj.parent=meter
             obj.save()
             return JsonResponse({'valid':True,'message':'Meter readings submitted successfuly.'},content_type='application/json')
@@ -94,7 +95,7 @@ class weeklyConsuption(View):
         page_num2=request.GET.get('page')
         monthly=paginator2.get_page(page_num2)
         data={
-            'title':'weekly Consumption',
+            'title':'Energy Consumption',
             'obj':obj,
             'data':request.user,
             'daily':daily,
@@ -137,7 +138,7 @@ def openMeter(request,id):
     page_num=request.GET.get('page')
     readings=paginator.get_page(page_num)
     data={
-        'title':'weekly Consuption',
+        'title':'Energy Consuption',
         'obj':obj,
         'data':request.user,
         'readings':readings,

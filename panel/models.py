@@ -160,6 +160,7 @@ class RoomModel(models.Model):
 
 class ReadingModel(models.Model):
     parent=models.ForeignKey(MeterModel,on_delete=models.CASCADE)
+    cost=models.FloatField(blank=True,null=True)
     category=models.CharField(max_length=100,blank=True,null=True)
     meter_location=models.CharField(max_length=100,blank=True,null=True)
     meter_reading=models.FloatField(blank=True,null=True)
