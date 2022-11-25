@@ -44,7 +44,7 @@
 	                            	<tr>
 	                            		<td>{{forloop.counter}}.</td>
 	                            		<td>{{room.name}}</td>
-	                            		<td>{{room.operating_condition}} kWh</td>
+	                            		<td>{{room.operating_condition|default:0.00}} kWh</td>
 	                            		<td>{{room.created_on|naturaltime}}</td>
 	                            		<td>
                                             <a  href="{% url 'edit room' id=room.id %}" class="btn btn-success btn-round" type="button"><i class="ti-pencil"></i> Edit</a>

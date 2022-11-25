@@ -461,7 +461,7 @@ class EquipmentForm(forms.ModelForm):
 
 class RoomForm(forms.ModelForm):
     name=forms.CharField(widget=forms.TextInput(attrs={'aria-label':'name','class':'form-control input-rounded'}))
-    operating_condition=forms.CharField(widget=forms.TextInput(attrs={'aria-label':'operating_condition','class':'form-control input-rounded'}))
+    operating_condition=forms.CharField(widget=forms.TextInput(attrs={'aria-label':'operating_condition','class':'form-control input-rounded'}),initial=0,required=False)
     class Meta:
         model=RoomModel
         fields=['name','operating_condition',]

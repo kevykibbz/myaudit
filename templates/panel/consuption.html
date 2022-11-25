@@ -48,46 +48,58 @@
 					            				<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_{{meter.id}}" aria-expanded="true" aria-controls="collapse_{{meter.id}}">{{forloop.counter}}.{{meter.name}}</button>
 					            			</h5>
 					            		</div>
-					            		<div id="collapse_{{meter.id}}" class="collapse show" aria-labelledby="heading_{{meter.id}}" data-parent="#accordionExample">
-					            			<div class="card-body">
-					            				<div class="tabel-responsive">
-					            					<table class="table table-hover table-stripped">
-					            						<tr>
-					            							<th>#</th>
-					            							<th>Date</th>
-					            							<th>Meter location</th>
-					            							<th>Meter reading</th>
-					            							<th>Consumption (kWh)</th>
-					            							<th>Cost (Ksh)</th>
-					            						</tr>
-					            						<tbody>
-					            							{% for reading in daily %}
-					            								{% if reading.parent_id == meter.id %}
-					            								<tr id="id_{{reading.id}}">
-						            								<td>{{forloop.counter}}.</td>
-						            								<td>{{reading.date}}</td>
-						            								<td>{{reading.meter_location}}</td>
-						            								<td>{{reading.meter_reading}} kWh</td>
-						            								<td>{{reading.consumption|default:0.0|intcomma}} kWh</td>
-						            								<td>{{reading.cost|floatformat:2|default:0.00|intcomma}} Ksh</td>
+					            		<div class="card-body">
+					            			<div id="collapse_{{meter.id}}" class="collapse show" aria-labelledby="heading_{{meter.id}}" data-parent="#accordionExample">
+						            			<div class="card-body">
+						            				<div class="tabel-responsive">
+						            					<table class="table table-hover table-stripped">
+						            						<tr>
+						            							<th>#</th>
+						            							<th>Date</th>
+						            							<th>Meter location</th>
+						            							<th>Meter reading</th>
+						            							<th>Consumption (kWh)</th>
+						            							<th>Cost (Ksh)</th>
+						            						</tr>
+						            						<tbody>
+						            							{% for reading in daily %}
+						            								{% if reading.parent_id == meter.id %}
+						            								<tr id="id_{{reading.id}}">
+							            								<td>{{forloop.counter}}.</td>
+							            								<td>{{reading.date}}</td>
+							            								<td>{{reading.meter_location}}</td>
+							            								<td>{{reading.meter_reading}} kWh</td>
+							            								<td>{{reading.consumption|default:0.0|intcomma}} kWh</td>
+							            								<td>{{reading.cost|floatformat:2|default:0.00|intcomma}} Ksh</td>
+							            							</tr>
+						            								{% endif %}
+						            							{% empty %}
+						            							<tr>
+						            								<td colspan="5" class="text-center">
+						            									<p><i class="fa fa-exclamation-circle"></i> No daily reading data found.</p>
+						            								</td>
 						            							</tr>
-					            								{% endif %}
-					            							{% empty %}
-					            							<tr>
-					            								<td colspan="5" class="text-center">
-					            									<p><i class="fa fa-exclamation-circle"></i> No daily reading data found.</p>
-					            								</td>
-					            							</tr>
-					            							{% endfor %}
-					            							<tr>
-					            								<td colspan="6" class="text-center">
-					            									<a href="{% url 'view meter' id=meter.id %}">view</a>
-					            								</td>
-					            							</tr>
-					            						</tbody>
-					            					</table>
-					            				</div>
-					            			</div>
+						            							{% endfor %}
+						            							<tr>
+						            								<td colspan="6" class="text-center">
+						            									<a href="{% url 'view meter' id=meter.id %}">view</a>
+						            								</td>
+						            							</tr>
+						            						</tbody>
+						            					</table>
+						            				</div>
+						            			</div>
+						            		</div>
+					            		</div>
+					            		<div class="card-footer">
+					            			<ul class="mt-2 ml-2 pagination pagination-primary">
+					                            {% if daily.has_previous %}
+					                            <li class="page-item active"><a class="page-link" href="{% url 'weekly consuption' %}?page={{daily.previous_page_number}}"><i class="zmdi zmdi-chevron-left"></i></a></li>
+					                            {% endif %}
+					                            {% if daily.has_next %}
+					                            <li class="page-item active"><a class="page-link" href="{% url 'weekly consuption' %}?page={{daily.next_page_number}}"><i class="zmdi zmdi-chevron-right"></i></a></li>
+					                            {% endif %}
+					                        </ul>
 					            		</div>
 					            	</div>
 				            	{% empty %}
@@ -110,46 +122,58 @@
 				            				<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_{{meter.id}}" aria-expanded="true" aria-controls="collapse_{{meter.id}}">{{forloop.counter}}.{{meter.name}}</button>
 				            			</h5>
 				            		</div>
-				            		<div id="collapse_{{meter.id}}" class="collapse show" aria-labelledby="heading_{{meter.id}}" data-parent="#accordionExample">
-				            			<div class="card-body">
-				            				<div class="tabel-responsive">
-				            					<table class="table table-hover table-stripped">
-				            						<tr>
-				            							<th>#</th>
-				            							<th>Date</th>
-				            							<th>Meter location</th>
-				            							<th>Meter reading</th>
-				            							<th>Consumption (kWh)</th>
-				            							<th>Cost (Ksh)</th>
-				            						</tr>
-				            						<tbody>
-				            							{% for reading in weekly %}
-				            								{% if reading.parent_id == meter.id %}
-				            								<tr id="id_{{reading.id}}">
-					            								<td>{{forloop.counter}}.</td>
-					            								<td>{{reading.date}}</td>
-					            								<td>{{reading.meter_location}}</td>
-					            								<td>{{reading.meter_reading}} kWh</td>
-					            								<td>{{reading.consumption|default:0.0|intcomma}} kWh</td>
-					            								<td>{{reading.cost|floatformat:2|default:0.00|intcomma}} Ksh</td>
-					            							</tr>
-				            								{% endif %}
-				            							{% empty %}
-				            							<tr>
-				            								<td colspan="6" class="text-center">
-				            									<p><i class="fa fa-exclamation-circle"></i> No weekly reading data found.</p>
-				            								</td>
+				            		<div class="card-body">
+				            			<div id="collapse_{{meter.id}}" class="collapse show" aria-labelledby="heading_{{meter.id}}" data-parent="#accordionExample">
+					            			<div class="card-body">
+					            				<div class="tabel-responsive">
+					            					<table class="table table-hover table-stripped">
+					            						<tr>
+					            							<th>#</th>
+					            							<th>Date</th>
+					            							<th>Meter location</th>
+					            							<th>Meter reading</th>
+					            							<th>Consumption (kWh)</th>
+					            							<th>Cost (Ksh)</th>
 					            						</tr>
-				            							{% endfor %}
-				            							<tr>
-				            								<td colspan="6" class="text-center">
-				            									<a href="{% url 'view meter' id=meter.id %}">view</a>
-				            								</td>
-				            							</tr>
-				            						</tbody>
-				            					</table>
-				            				</div>
-				            			</div>
+					            						<tbody>
+					            							{% for reading in weekly %}
+					            								{% if reading.parent_id == meter.id %}
+					            								<tr id="id_{{reading.id}}">
+						            								<td>{{forloop.counter}}.</td>
+						            								<td>{{reading.date}}</td>
+						            								<td>{{reading.meter_location}}</td>
+						            								<td>{{reading.meter_reading}} kWh</td>
+						            								<td>{{reading.consumption|default:0.0|intcomma}} kWh</td>
+						            								<td>{{reading.cost|floatformat:2|default:0.00|intcomma}} Ksh</td>
+						            							</tr>
+					            								{% endif %}
+					            							{% empty %}
+					            							<tr>
+					            								<td colspan="6" class="text-center">
+					            									<p><i class="fa fa-exclamation-circle"></i> No weekly reading data found.</p>
+					            								</td>
+						            						</tr>
+					            							{% endfor %}
+					            							<tr>
+					            								<td colspan="6" class="text-center">
+					            									<a href="{% url 'view meter' id=meter.id %}">view</a>
+					            								</td>
+					            							</tr>
+					            						</tbody>
+					            					</table>
+					            				</div>
+					            			</div>
+					            		</div>
+				            		</div>
+				            		<div class="card-footer">
+				            			<ul class="mt-2 ml-2 pagination pagination-primary">
+				                            {% if weekly.has_previous %}
+				                            <li class="page-item active"><a class="page-link" href="{% url 'weekly consuption' %}?page={{weekly.previous_page_number}}"><i class="zmdi zmdi-chevron-left"></i></a></li>
+				                            {% endif %}
+				                            {% if weekly.has_next %}
+				                            <li class="page-item active"><a class="page-link" href="{% url 'weekly consuption' %}?page={{weekly.next_page_number}}"><i class="zmdi zmdi-chevron-right"></i></a></li>
+				                            {% endif %}
+					                    </ul>
 				            		</div>
 				            	</div>
 			            	{% empty %}
@@ -172,46 +196,58 @@
 					            				<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_{{meter.id}}" aria-expanded="true" aria-controls="collapse_{{meter.id}}">{{forloop.counter}}.{{meter.name}}</button>
 					            			</h5>
 					            		</div>
-					            		<div id="collapse_{{meter.id}}" class="collapse show" aria-labelledby="heading_{{meter.id}}" data-parent="#accordionExample">
-					            			<div class="card-body">
-					            				<div class="tabel-responsive">
-					            					<table class="table table-hover table-stripped">
-					            						<tr>
-					            							<th>#</th>
-					            							<th>Date</th>
-					            							<th>Meter location</th>
-					            							<th>Meter reading (kWh)</td>
-					            							<th>Consumption (kWh)</th>
-					            							<th>Cost (Ksh)</th>
-					            						</tr>
-					            						<tbody>
-					            							{% for reading in monthly %}
-					            								{% if reading.parent_id == meter.id %}
-					            								<tr id="id_{{reading.id}}">
-						            								<td>{{forloop.counter}}.</td>
-						            								<td>{{reading.date}}</td>
-						            								<td>{{reading.meter_location}}</td>
-						            								<td>{{reading.meter_reading}} kWh</td>
-						            								<td>{{reading.consumption|default:0.0|intcomma}} kWh</td>
-						            								<td>{{reading.cost|floatformat:2|default:0.00|intcomma}} Ksh</td>
+					            		<div class="card-body">
+					            			<div id="collapse_{{meter.id}}" class="collapse show" aria-labelledby="heading_{{meter.id}}" data-parent="#accordionExample">
+						            			<div class="card-body">
+						            				<div class="tabel-responsive">
+						            					<table class="table table-hover table-stripped">
+						            						<tr>
+						            							<th>#</th>
+						            							<th>Date</th>
+						            							<th>Meter location</th>
+						            							<th>Meter reading (kWh)</th>
+						            							<th>Consumption (kWh)</th>
+						            							<th>Cost (Ksh)</th>
+						            						</tr>
+						            						<tbody>
+						            							{% for reading in monthly %}
+						            								{% if reading.parent_id == meter.id %}
+						            								<tr id="id_{{reading.id}}">
+							            								<td>{{forloop.counter}}.</td>
+							            								<td>{{reading.date}}</td>
+							            								<td>{{reading.meter_location}}</td>
+							            								<td>{{reading.meter_reading}} kWh</td>
+							            								<td>{{reading.consumption|default:0.0|intcomma}} kWh</td>
+							            								<td>{{reading.cost|floatformat:2|default:0.00|intcomma}} Ksh</td>
+							            							</tr>
+						            								{% endif %}
+						            							{% empty %}
+						            							<tr>
+						            								<td colspan="5" class="text-center">
+						            									<p><i class="fa fa-exclamation-circle"></i> No monthly reading data found.</p>
+						            								</td>
 						            							</tr>
-					            								{% endif %}
-					            							{% empty %}
-					            							<tr>
-					            								<td colspan="5" class="text-center">
-					            									<p><i class="fa fa-exclamation-circle"></i> No monthly reading data found.</p>
-					            								</td>
-					            							</tr>
-					            							{% endfor %}
-					            							<tr>
-					            								<td colspan="6" class="text-center">
-					            									<a href="{% url 'view meter' id=meter.id %}">view</a>
-					            								</td>
-					            							</tr>
-					            						</tbody>
-					            					</table>
-					            				</div>
-					            			</div>
+						            							{% endfor %}
+						            							<tr>
+						            								<td colspan="6" class="text-center">
+						            									<a href="{% url 'view meter' id=meter.id %}">view</a>
+						            								</td>
+						            							</tr>
+						            						</tbody>
+						            					</table>
+						            				</div>
+						            			</div>
+						            		</div>
+					            		</div>
+					            		<div class="card-footer">
+					            			<ul class="mt-2 ml-2 pagination pagination-primary">
+					                            {% if monthly.has_previous %}
+					                            <li class="page-item active"><a class="page-link" href="{% url 'weekly consuption' %}?page={{monthly.previous_page_number}}"><i class="zmdi zmdi-chevron-left"></i></a></li>
+					                            {% endif %}
+					                            {% if monthly.has_next %}
+					                            <li class="page-item active"><a class="page-link" href="{% url 'weekly consuption' %}?page={{monthly.next_page_number}}"><i class="zmdi zmdi-chevron-right"></i></a></li>
+					                            {% endif %}
+						                    </ul>
 					            		</div>
 					            	</div>
 				            	{% empty %}

@@ -106,11 +106,11 @@
                             </tbody>
                             <div>
 		                        <ul class="mt-2 ml-2 pagination pagination-primary">
-		                            {% if items.has_previous %}
-		                            <li class="page-item active"><a class="page-link" href="{% url 'historical data' %}?page={{items.previous_page_number}}"><i class="zmdi zmdi-chevron-left"></i></a></li>
+		                            {% if costs.has_previous %}
+		                            <li class="page-item active"><a class="page-link" href="{% url 'cost' %}?page={{costs.previous_page_number}}"><i class="zmdi zmdi-chevron-left"></i></a></li>
 		                            {% endif %}
-		                            {% if items.has_next %}
-		                            <li class="page-item active"><a class="page-link" href="{% url 'historical data' %}?page={{items.next_page_number}}"><i class="zmdi zmdi-chevron-right"></i></a></li>
+		                            {% if costs.has_next %}
+		                            <li class="page-item active"><a class="page-link" href="{% url 'cost' %}?page={{costs.next_page_number}}"><i class="zmdi zmdi-chevron-right"></i></a></li>
 		                            {% endif %}
 		                        </ul>
 		                    </div>
