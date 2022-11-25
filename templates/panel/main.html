@@ -19,7 +19,6 @@
     <meta property="og:url" content="{{obj.site_url}}">
     <meta http-equiv="Content-type" content="text/html;charset:utf-8">
     <meta property="og:type" content="website"> 
-    <meta property="og:type" content="website"> 
     <meta property="twitter:site" content="https://twitter.com/Kevin36285655">
     <meta property="twitter:title" content="@Kevin36285655">
     <meta property="twitter:image" content="https://twitter.com/Kevin36285655/photo">
@@ -245,10 +244,21 @@
                         <a href="{% url 'meters'  %}"><i class="fa fa-dashboard"></i> ICDC Meters</a>
                     </li> 
                     <li>
-                        <a href="{% url 'calculator page'  %}"><i class="fa fa-align-right"></i> Cost Calculator</a>
+                        <a href="{% url 'calculator page'  %}"><i class="fa fa-align-right"></i> Cost Calculator Page</a>
                     </li>  
                     <li>
                         <a href="/"><i class="fa fa-home"></i> Back home</a>
+                    </li> 
+                    <li>
+                        <a href="{% url 'weekly consuption' %}"><i class="ti-pulse"></i> Energy Consumption</a>
+                    </li> <li>
+                        <a href="{% url 'analyzer' %}"><i class="ti-bar-chart-alt"></i> Analyzer</a>
+                    </li> 
+                    <li>
+                        <a href="{% url 'cost' %}"><i class="ti-money"></i> Cost results</a>
+                    </li>  
+                    <li>
+                        <a href="{% url 'cost calculator' %}"><i class="ti-panel"></i> Cost calculator</a>
                     </li> 
                     {% endif %}   
                     {% if request.user.is_authenticated %}

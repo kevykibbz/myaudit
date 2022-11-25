@@ -48,7 +48,7 @@
 	                                <label for="">Room name</label>
 	                                <select name="room" id="id_room" class="form-control">
 	                                    {% for room in rooms %}
-	                                    <option value="{{room.name}}">{{room.name}}</option>
+	                                    <option value="{{room.id}}">{{room.name}}</option>
 	                                    {% empty %}
 	                                    <option value="" selected="" disabled="">No room found</option>
 	                                    {% endfor %}

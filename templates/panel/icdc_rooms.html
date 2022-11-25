@@ -34,6 +34,7 @@
                                    <tr>
 	                                    <th>#</th>
 	                                    <th>Room name</th>
+	                                    <th>Operating condition in kWh</th>
 	                                    <th>Created on</th>
 	                                    <th>Action</th>
 	                                </tr>
@@ -43,6 +44,7 @@
 	                            	<tr>
 	                            		<td>{{forloop.counter}}.</td>
 	                            		<td>{{room.name}}</td>
+	                            		<td>{{room.operating_condition}} kWh</td>
 	                            		<td>{{room.created_on|naturaltime}}</td>
 	                            		<td>
                                             <a  href="{% url 'edit room' id=room.id %}" class="btn btn-success btn-round" type="button"><i class="ti-pencil"></i> Edit</a>
@@ -51,7 +53,7 @@
 	                            	</tr>
                                     {% empty %}
                                     <tr>
-                                        <td colspan="3" class="text-center">
+                                        <td colspan="4" class="text-center">
                                             <div class=" text-center py-5">
                                                 <img data-src="{% static 'panel/assets/images/search.svg' %}" class="width360 mb-3" />
                                                 <h4><i class="ti-info-alt"></i> No data found</h4>

@@ -149,6 +149,7 @@ class EquipmentModel(models.Model):
 class RoomModel(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     name=models.CharField(max_length=100,blank=True,null=True)
+    operating_condition=models.FloatField(blank=True,null=True)
     created_on=models.DateTimeField(default=now)
     class Meta:
         db_table='room_tbl'
@@ -163,7 +164,7 @@ class ReadingModel(models.Model):
     cost=models.FloatField(blank=True,null=True)
     datapoint=models.CharField(max_length=100,blank=True,null=True)
     category=models.CharField(max_length=100,blank=True,null=True)
-    consumption=models.IntegerField(blank=True,null=True)
+    consumption=models.FloatField(blank=True,null=True)
     meter_location=models.CharField(max_length=100,blank=True,null=True)
     meter_reading=models.FloatField(blank=True,null=True)
     date=models.DateField(blank=True,null=True)
@@ -177,10 +178,11 @@ class ReadingModel(models.Model):
         return self.category
 
 class CostModel(models.Model):
+    parent=models.ForeignKey(RoomModel,on_delete=models.CASCADE)
     datapoint=models.CharField(max_length=100,blank=True,null=True)
     room=models.CharField(max_length=100,blank=True,null=True)
     equipment=models.CharField(max_length=100,blank=True,null=True)
-    consumption=models.IntegerField(blank=True,null=True)
+    consumption=models.FloatField(blank=True,null=True)
     category=models.CharField(max_length=100,blank=True,null=True)
     room=models.CharField(max_length=100,blank=True,null=True)
     no_of_hours_used=models.IntegerField(blank=True,null=True)

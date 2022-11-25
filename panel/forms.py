@@ -461,9 +461,10 @@ class EquipmentForm(forms.ModelForm):
 
 class RoomForm(forms.ModelForm):
     name=forms.CharField(widget=forms.TextInput(attrs={'aria-label':'name','class':'form-control input-rounded'}))
+    operating_condition=forms.CharField(widget=forms.TextInput(attrs={'aria-label':'operating_condition','class':'form-control input-rounded'}))
     class Meta:
         model=RoomModel
-        fields=['name',]
+        fields=['name','operating_condition',]
     def clean_name(self):
         name=self.cleaned_data['name']
         if self.instance.name:
@@ -494,7 +495,7 @@ class ReadingForm(forms.ModelForm):
     date=forms.DateField(widget=forms.DateInput(attrs={'class':'form-control','type':'date','aria-label':'date','placeholder':'Date of meter reading'}))
     class Meta:
         model=ReadingModel
-        fields=['meter_name','meter_location','meter_reading','date','category',]
+        fields=['meter_name','meter_location','meter_reading','date','category',]    
 
 month_opts=[
             ('January','January'),

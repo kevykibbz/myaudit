@@ -36,33 +36,37 @@
 			            					<table class="table table-hover table-stripped">
 			            						<tr>
 			            							<th>#</th>
-			            							<th>Week ending</th>
+			            							<th>Date</th>
 			            							<th>Meter location</th>
-			            							<th>Meter reading</th>
+			            							<th>Meter reading (kWh)</td>
+			            							<th>Cost (Ksh)</th>
+			            							<th>Consumption (kWh)</th>
 			            						</tr>
 			            						<tbody>
 			            							{% for reading in readings %}
 			            								<tr>
 				            								<td>{{forloop.counter}}.</td>
-				            								<td>{{reading.created_on|naturaltime}}</td>
+				            								<td>{{reading.date}}</td>
 				            								<td>{{reading.meter_location}}</td>
-				            								<td>{{reading.meter_reading}} KW</td>
+				            								<td>{{reading.meter_reading}} kWh</td>
+				            								<td>{{reading.cost|default:0|intcomma}} Ksh</td>
+				            								<td>{{reading.consumption}} kWh</td>
 				            							</tr>
 			            							{% empty %}
 			            							<tr>
-			            								<td colspan="4" class="text-center">
+			            								<td colspan="6" class="text-center">
 			            									<p><i class="fa fa-exclamation-circle"></i> No data found</p>
 			            								</td>
 			            							</tr>
 			            							{% endfor %}
 			            							{% if readings %}
-			            							<tr>
-	                                                    <td colspan="3"><b>Total Consuption</b></td>
-	                                                    <td>{{total.meter_reading__sum|intcomma|default:0}} KW</td>
+			            							<tr class="bg-success text-light" style="font-size:18px;font-family:'tahoma'">
+	                                                    <td colspan="5"><b>Total Consuption</b></td>
+	                                                    <td>{{total.meter_reading__sum|intcomma|default:0}} kWh</td>
 	                                                </tr>
 	                                                {% endif %}
 	                                                <tr>
-	                                                	<td colspan="4">
+	                                                	<td colspan="6">
 	                                                		<a href="{% url 'weekly consuption' %}"><i class="fa fa-arrow-left"></i> Back</a>
 	                                                	</td>
 	                                                </tr>

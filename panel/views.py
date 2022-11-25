@@ -66,7 +66,7 @@ class Home(View):
             obj=form.save(commit=False)
             category=form.cleaned_data.get('category',None)
             date=form.cleaned_data.get('date',None)
-            meter_reading=int(form.cleaned_data.get('meter_reading',None))
+            meter_reading=float(form.cleaned_data.get('meter_reading',None))
             meter_name=form.cleaned_data.get('meter_name',None)
             meter_location=form.cleaned_data.get('meter_location',None)
             if ReadingModel.objects.filter(id__isnull=False):
@@ -274,6 +274,9 @@ class costCalculator(View):
         site=check_data()
         if form.is_valid():
             obj=form.save(commit=False)
+            room=RoomModel.objects.get(id__exact=form.cleaned_data.get('room',None))
+            obj.parent=room
+            obj.room=room.name
             category=form.cleaned_data.get('category',None)
             date=form.cleaned_data.get('date',None)
             quantity=int(form.cleaned_data.get('quantity',None))

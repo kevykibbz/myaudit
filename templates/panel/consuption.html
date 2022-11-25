@@ -37,7 +37,7 @@
 	                    </ul>
 	                </div>	
            		</div>
-           		<div class="col-md-8 mx-auto">
+           		<div class="col-12">
            			<div class="tab-content" id="pills-tabContent">
                         <div class="tab-pane fade show active" id="pills-daily" role="tabpanel" aria-labelledby="pills-daily-tab">
                         	<div class="accordion" id="accordionExample">
@@ -68,7 +68,7 @@
 						            								<td>{{reading.date}}</td>
 						            								<td>{{reading.meter_location}}</td>
 						            								<td>{{reading.meter_reading}} kWh</td>
-						            								<td>{{reading.consumption|default:0|intcomma}} kWh</td>
+						            								<td>{{reading.consumption|default:0.0|intcomma}} kWh</td>
 						            								<td>{{reading.cost|default:0|intcomma}} Ksh</td>
 						            							</tr>
 					            								{% endif %}
@@ -80,7 +80,7 @@
 					            							</tr>
 					            							{% endfor %}
 					            							<tr>
-					            								<td colspan="5" class="text-center">
+					            								<td colspan="6" class="text-center">
 					            									<a href="{% url 'view meter' id=meter.id %}">view</a>
 					            								</td>
 					            							</tr>
@@ -130,7 +130,7 @@
 					            								<td>{{reading.date}}</td>
 					            								<td>{{reading.meter_location}}</td>
 					            								<td>{{reading.meter_reading}} kWh</td>
-					            								<td>{{reading.consumption|default:0|intcomma}} kWh</td>
+					            								<td>{{reading.consumption|default:0.0|intcomma}} kWh</td>
 					            								<td>{{reading.cost|default:0|intcomma}} Ksh</td>
 					            							</tr>
 				            								{% endif %}
@@ -192,7 +192,7 @@
 						            								<td>{{reading.date}}</td>
 						            								<td>{{reading.meter_location}}</td>
 						            								<td>{{reading.meter_reading}} kWh</td>
-						            								<td>{{reading.consumption|default:0|intcomma}} kWh</td>
+						            								<td>{{reading.consumption|default:0.0|intcomma}} kWh</td>
 						            								<td>{{reading.cost|default:0|intcomma}} Ksh</td>
 						            							</tr>
 					            								{% endif %}
@@ -204,7 +204,7 @@
 					            							</tr>
 					            							{% endfor %}
 					            							<tr>
-					            								<td colspan="5" class="text-center">
+					            								<td colspan="6" class="text-center">
 					            									<a href="{% url 'view meter' id=meter.id %}">view</a>
 					            								</td>
 					            							</tr>

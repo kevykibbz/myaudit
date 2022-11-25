@@ -28,6 +28,7 @@
            					<thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Health Status</th>
                                     <th>Room</th>
                                     <th>Equipment</th>
                                     <th>Quantity</th>
@@ -40,20 +41,55 @@
                             </thead>
                             <tbody>
                                {% for cost in costs %}
-                            	<tr>
+                               {% if cost.consumption > cost.parent.operating_condition %}
+                            	<tr class="bg-danger text-light">
+                            	{% else %}
+                            	<tr >
+                            	{% endif %}
                             		<td>{{forloop.counter}}.</td>
+                            		{% if cost.consumption > cost.parent.operating_condition %}
+                            			<td><a style="color:#fff !important" href="#largeModel_{{cost.id}}" data-toggle="modal" data-target="#largeModel_{{cost.id}}"><i class="fa fa-exclamation-circle"></i> View message</a></td>
+                            		{% else %}
+                            			<td class="text-success"><i class="fa fa-check-circle"></i> Good</td>
+                            		{% endif %}
                             		<td>{{cost.room}}</td>
                             		<td>{{cost.equipment}} </td>
                             		<td>{{cost.quantity|intcomma}} </td>
                             		<td>{{cost.rating|intcomma}} W</td>
                             		<td>{{cost.no_of_hours_used|intcomma}} Hours</td>
-                            		<td>{{cost.consumption|intcomma}} kWh</td>
+                            		<td>{{cost.consumption|intcomma|floatformat:2}} kWh</td>
                             		<td>{{cost.created_on|naturaltime}}</td>
                             		<td>Ksh {{cost.total_cost|floatformat:2|intcomma|default:0}}</td>
                             	</tr>
+                            	<div class="modal fade  bd-example-modal-lg" id="largeModel_{{cost.id}}" tabindex="-1" role="dialog" aria-labelledby="largeModel_{{cost.id}}" aria-hidden="true">
+                                    <div class="modal-dialog  modal-dialog-scrollable modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title text-center" id="mySmallModalLabel"><b>Room {{cost.room}}</b></h5>
+                                                <hr>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Energy consumed in this room exceeds the avarage consumption of <strong class="text-info">{{cost.parent.operating_condition}} kWh.</strong></p>
+                                                <br>
+                                                <h4>Recommendations</h4>
+                                                <ol>
+                                                	<li>Turn of the lights</li>
+                                                </ol>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <div class="row">
+                                                    <div class="col-12 text-center">
+                                                        <button class="btn btn-success btn-block btn-round" data-dismiss="modal"><i class="ti-close"> </i> Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 {% empty %}
                                 <tr>
-                                    <td colspan="9" class="text-center">
+                                    <td colspan="10" class="text-center">
                                         <div class=" text-center py-5">
                                             <img data-src="{% static 'panel/assets/images/search.svg' %}" class="width360 mb-3" />
                                             <h4><i class="ti-info-alt"></i> No data found</h4>
@@ -63,7 +99,7 @@
                                 {% endfor %}
                                 {% if total.total_cost__sum > 0 %}
     							<tr class="bg-success text-light" style="font-size:18px;font-family:'tahoma'">
-                                    <td colspan="8"><b>Total Cost:</b></td>
+                                    <td colspan="9"><b>Total Cost:</b></td>
                                     <td><b>Ksh {{total.total_cost__sum|floatformat:2|intcomma|default:0}}</b></td>
                                 </tr>
                                 {% endif %}
