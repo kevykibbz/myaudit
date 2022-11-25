@@ -161,7 +161,9 @@ class RoomModel(models.Model):
 class ReadingModel(models.Model):
     parent=models.ForeignKey(MeterModel,on_delete=models.CASCADE)
     cost=models.FloatField(blank=True,null=True)
+    datapoint=models.CharField(max_length=100,blank=True,null=True)
     category=models.CharField(max_length=100,blank=True,null=True)
+    consumption=models.IntegerField(blank=True,null=True)
     meter_location=models.CharField(max_length=100,blank=True,null=True)
     meter_reading=models.FloatField(blank=True,null=True)
     date=models.DateField(blank=True,null=True)
@@ -170,9 +172,9 @@ class ReadingModel(models.Model):
         db_table='meter_readings_tbl'
         verbose_name_plural='meter_readings_tbl'
     def __str__(self)->str:
-        return f'{self.user.username} meter reading info'
+        return f'{self.category} meter reading info'
     def __unicode__(self):
-        return self.parent.name
+        return self.category
 
 class CostModel(models.Model):
     datapoint=models.CharField(max_length=100,blank=True,null=True)

@@ -26,7 +26,7 @@ from django.db.models import Avg
 import timeago,datetime
 from  django.contrib.auth.models import Group
 from django.db.models import Sum
-from .serializers import CostSerializer
+from .serializers import *
 from installation.models import AboutModel
 import calendar
 
@@ -63,12 +63,79 @@ class Home(View):
     def post(self,request,*args ,**kwargs):
         form=ReadingForm(request.POST or None)
         if form.is_valid():
-            meter=MeterModel.objects.get(id__exact=form.cleaned_data.get('meter_name',None))
             obj=form.save(commit=False)
-            obj.user=request.user
-            obj.cost=int(form.cleaned_data.get('meter_reading',None))*24.87
-            obj.parent=meter
-            obj.save()
+            category=form.cleaned_data.get('category',None)
+            date=form.cleaned_data.get('date',None)
+            meter_reading=int(form.cleaned_data.get('meter_reading',None))
+            meter_name=form.cleaned_data.get('meter_name',None)
+            meter_location=form.cleaned_data.get('meter_location',None)
+            if ReadingModel.objects.filter(id__isnull=False):
+                if ReadingModel.objects.filter(category__icontains=category).exists():
+                    data=ReadingModel.objects.filter(category__icontains=category).last()
+                    if data.category =='Weekly':
+                        initial_data=data.meter_reading
+                        datapoint=date
+                    elif data.category == 'Monthly':
+                        initial_data=data.meter_reading
+                        result=datetime.datetime.strptime(str(date),'%Y-%m-%d')
+                        month=calendar.month_abbr[result.month]
+                        datapoint=month
+                    else:
+                        day=date.strftime('%A')
+                        datapoint=day
+                        initial_data=data.meter_reading
+                else:
+                    initial_data=0
+                    if category =='Weekly':
+                        datapoint=date
+                    elif category == 'Monthly':
+                        result=datetime.datetime.strptime(str(date),'%Y-%m-%d')
+                        month=calendar.month_abbr[result.month]
+                        datapoint=month
+                    else:
+                        day=date.strftime('%A')
+                        datapoint=day
+                if ReadingModel.objects.filter(datapoint__icontains=datapoint).exists():
+                    saver=ReadingModel.objects.filter(datapoint__icontains=datapoint).last()
+                    consumption=meter_reading-int(initial_data)
+                    meter=MeterModel.objects.get(id__exact=meter_name)
+                    saver.consumption=consumption
+                    saver.cost=consumption*24.87
+                    saver.meter_reading=meter_reading
+                    saver.meter_name=meter_name
+                    saver.date=date
+                    saver.category=category
+                    saver.meter_location=meter_location
+                    saver.datapoint=datapoint
+                    saver.save()
+                else:
+                    consumption=meter_reading-int(initial_data)
+                    meter=MeterModel.objects.get(id__exact=meter_name)
+                    obj.user=request.user
+                    obj.consumption=consumption
+                    obj.cost=consumption*24.87
+                    obj.parent=meter
+                    obj.datapoint=datapoint
+                    obj.save()
+            else:
+                initial_data=0
+                if 'Weekly' in category:
+                    datapoint=date
+                elif 'Monthly' in category:
+                    result=datetime.datetime.strptime(str(date),'%Y-%m-%d')
+                    month=calendar.month_abbr[result.month]
+                    datapoint=month
+                else:
+                    day=date.strftime('%A')
+                    datapoint=day
+                consumption=int(form.cleaned_data.get('meter_reading',None))-int(initial_data)
+                meter=MeterModel.objects.get(id__exact=form.cleaned_data.get('meter_name',None))
+                obj.user=request.user
+                obj.consumption=consumption
+                obj.cost=consumption*24.87
+                obj.parent=meter
+                obj.datapoint=datapoint
+                obj.save()
             return JsonResponse({'valid':True,'message':'Meter readings submitted successfuly.'},content_type='application/json')
         else:
             return JsonResponse({'valid':False,'uform_errors':form.errors,},content_type='application/json')
@@ -110,14 +177,17 @@ class weeklyConsuption(View):
 #analyzer
 def analyzer(request):
     obj=check_data()
-    pre_data1=CostModel.objects.filter(category__icontains='daily').order_by("-created_on")
-    serializer1=CostSerializer(pre_data1,many=True)
+    pre_data1=ReadingModel.objects.filter(category__icontains='Daily').order_by("-created_on")
+    serializer1=ReadingSerializer(pre_data1,many=True)
 
-    pre_data2=CostModel.objects.filter(category__icontains='weekly').order_by("-created_on")
-    serializer2=CostSerializer(pre_data2,many=True) 
+    pre_data2=ReadingModel.objects.filter(category__icontains='Weekly').order_by("-created_on")
+    serializer2=ReadingSerializer(pre_data2,many=True) 
 
-    pre_data3=CostModel.objects.filter(category__icontains='monthly').order_by("-created_on")
-    serializer3=CostSerializer(pre_data3,many=True)
+    pre_data3=ReadingModel.objects.filter(category__icontains='Monthly').order_by("-created_on")
+    serializer3=ReadingSerializer(pre_data3,many=True)
+
+    pre_data4=CostModel.objects.all().order_by("-created_on")
+    serializer4=CostSerializer(pre_data4,many=True)
     data={
         'title':'Analyzer',
         'obj':obj,
@@ -125,6 +195,7 @@ def analyzer(request):
         'daily':serializer1.data,
         'weekly':serializer2.data,
         'monthly':serializer3.data,
+        'rooms':serializer4.data,
     }
     return render(request,'panel/analyzer.html',context=data)
 

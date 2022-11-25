@@ -5,4 +5,9 @@ from .models import *
 class CostSerializer(serializers.ModelSerializer):
 	class Meta:
 		model=CostModel
-		fields=('consumption','total_cost','datapoint','room',)
+		fields=('total_cost','room','consumption',)
+
+class ReadingSerializer(serializers.ModelSerializer):
+	class Meta:
+		model=ReadingModel
+		fields=('consumption','datapoint','cost',)

@@ -244,8 +244,11 @@
                     <li>
                         <a href="{% url 'meters'  %}"><i class="fa fa-dashboard"></i> ICDC Meters</a>
                     </li> 
-                     <li>
+                    <li>
                         <a href="{% url 'calculator page'  %}"><i class="fa fa-align-right"></i> Cost Calculator</a>
+                    </li>  
+                    <li>
+                        <a href="/"><i class="fa fa-home"></i> Back home</a>
                     </li> 
                     {% endif %}   
                     {% if request.user.is_authenticated %}

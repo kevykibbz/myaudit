@@ -57,6 +57,7 @@
 					            							<th>Date</th>
 					            							<th>Meter location</th>
 					            							<th>Meter reading</th>
+					            							<th>Consumption (kWh)</th>
 					            							<th>Cost (Ksh)</th>
 					            						</tr>
 					            						<tbody>
@@ -67,6 +68,7 @@
 						            								<td>{{reading.date}}</td>
 						            								<td>{{reading.meter_location}}</td>
 						            								<td>{{reading.meter_reading}} kWh</td>
+						            								<td>{{reading.consumption|default:0|intcomma}} kWh</td>
 						            								<td>{{reading.cost|default:0|intcomma}} Ksh</td>
 						            							</tr>
 					            								{% endif %}
@@ -117,6 +119,7 @@
 				            							<th>Date</th>
 				            							<th>Meter location</th>
 				            							<th>Meter reading</th>
+				            							<th>Consumption (kWh)</th>
 				            							<th>Cost (Ksh)</th>
 				            						</tr>
 				            						<tbody>
@@ -127,18 +130,19 @@
 					            								<td>{{reading.date}}</td>
 					            								<td>{{reading.meter_location}}</td>
 					            								<td>{{reading.meter_reading}} kWh</td>
+					            								<td>{{reading.consumption|default:0|intcomma}} kWh</td>
 					            								<td>{{reading.cost|default:0|intcomma}} Ksh</td>
 					            							</tr>
 				            								{% endif %}
 				            							{% empty %}
 				            							<tr>
-				            								<td colspan="5" class="text-center">
+				            								<td colspan="6" class="text-center">
 				            									<p><i class="fa fa-exclamation-circle"></i> No weekly reading data found.</p>
 				            								</td>
 					            						</tr>
 				            							{% endfor %}
 				            							<tr>
-				            								<td colspan="5" class="text-center">
+				            								<td colspan="6" class="text-center">
 				            									<a href="{% url 'view meter' id=meter.id %}">view</a>
 				            								</td>
 				            							</tr>
@@ -176,7 +180,8 @@
 					            							<th>#</th>
 					            							<th>Date</th>
 					            							<th>Meter location</th>
-					            							<th>Meter reading</th>
+					            							<th>Meter reading (kWh)</td>
+					            							<th>Consumption (kWh)</th>
 					            							<th>Cost (Ksh)</th>
 					            						</tr>
 					            						<tbody>
@@ -187,6 +192,7 @@
 						            								<td>{{reading.date}}</td>
 						            								<td>{{reading.meter_location}}</td>
 						            								<td>{{reading.meter_reading}} kWh</td>
+						            								<td>{{reading.consumption|default:0|intcomma}} kWh</td>
 						            								<td>{{reading.cost|default:0|intcomma}} Ksh</td>
 						            							</tr>
 					            								{% endif %}
