@@ -22,7 +22,7 @@
         <div class="about-block">
             <h6 class="title-small text-center">Available weekly energy consuption in ICDC</h6>
            	<div class="mt-2 row">
-           		<div class="col-md-8 mx-auto">
+           		<div class="col-12">
            			<div class="accordion" id="accordionExample">
            					<div class="card">
 		            			<div class="card-header" id="heading_{{meter.id}}">
@@ -49,7 +49,7 @@
 				            								<td>{{reading.date}}</td>
 				            								<td>{{reading.meter_location}}</td>
 				            								<td>{{reading.meter_reading}} kWh</td>
-				            								<td>{{reading.cost|default:0|intcomma}} Ksh</td>
+				            								<td>{{reading.cost|floatformat:2|default:0.0|intcomma}} Ksh</td>
 				            								<td>{{reading.consumption}} kWh</td>
 				            							</tr>
 			            							{% empty %}
