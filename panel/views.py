@@ -842,7 +842,7 @@ class editRoom(View):
         form=RoomForm(request.POST or None,instance=item)
         if form.is_valid():
             form.save()
-            return JsonResponse({'valid':True,'message':'Equipment name updated successfuly.'},content_type='application/json')
+            return JsonResponse({'valid':True,'message':'Room name updated successfuly.'},content_type='application/json')
         else:
             return JsonResponse({'valid':False,'uform_errors':form.errors,},content_type='application/json')
 
