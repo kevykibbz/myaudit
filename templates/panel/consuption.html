@@ -69,7 +69,7 @@
 						            								<td>{{reading.meter_location}}</td>
 						            								<td>{{reading.meter_reading}} kWh</td>
 						            								<td>{{reading.consumption|default:0.0|intcomma}} kWh</td>
-						            								<td>{{reading.cost|default:0|intcomma}} Ksh</td>
+						            								<td>{{reading.cost|floatformat:2|default:0.00|intcomma}} Ksh</td>
 						            							</tr>
 					            								{% endif %}
 					            							{% empty %}
@@ -131,7 +131,7 @@
 					            								<td>{{reading.meter_location}}</td>
 					            								<td>{{reading.meter_reading}} kWh</td>
 					            								<td>{{reading.consumption|default:0.0|intcomma}} kWh</td>
-					            								<td>{{reading.cost|default:0|intcomma}} Ksh</td>
+					            								<td>{{reading.cost|floatformat:2|default:0.00|intcomma}} Ksh</td>
 					            							</tr>
 				            								{% endif %}
 				            							{% empty %}
@@ -193,7 +193,7 @@
 						            								<td>{{reading.meter_location}}</td>
 						            								<td>{{reading.meter_reading}} kWh</td>
 						            								<td>{{reading.consumption|default:0.0|intcomma}} kWh</td>
-						            								<td>{{reading.cost|default:0|intcomma}} Ksh</td>
+						            								<td>{{reading.cost|floatformat:2|default:0.00|intcomma}} Ksh</td>
 						            							</tr>
 					            								{% endif %}
 					            							{% empty %}

@@ -59,7 +59,7 @@
                             		<td>{{cost.no_of_hours_used|intcomma}} Hours</td>
                             		<td>{{cost.consumption|intcomma|floatformat:2}} kWh</td>
                             		<td>{{cost.created_on|naturaltime}}</td>
-                            		<td>Ksh {{cost.total_cost|floatformat:2|intcomma|default:0}}</td>
+                            		<td>Ksh {{cost.total_cost|floatformat:2|intcomma|default:0.00}}</td>
                             	</tr>
                             	<div class="modal fade  bd-example-modal-lg" id="largeModel_{{cost.id}}" tabindex="-1" role="dialog" aria-labelledby="largeModel_{{cost.id}}" aria-hidden="true">
                                     <div class="modal-dialog  modal-dialog-scrollable modal-lg">
