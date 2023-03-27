@@ -25,7 +25,7 @@ django-ckeditor
 django-debug_toolbar
 channels
 asgiref==3.5.2
-redis== 4.3.4
+redis== 4.5.3
 msgpack==1.0.4
 asgi_redis
 timeago
